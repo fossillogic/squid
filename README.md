@@ -4,7 +4,7 @@
 
 ### A Command-Line Power Utility by **Fossil Logic**
 
-**Squid** is the ultimate **admin and power-user CLI**, designed for system operators, DevOps, and security engineers. Squid allows you to **manage, monitor, secure, and audit your system**, with traceable actions, comprehensive logging, and safe sandboxed testing. Its nautilus mascot represents **flexibility, intelligence, and depth** in system operations.
+**Squid** is the ultimate **admin and power-user CLI**, designed for system operators, DevOps, and security engineers. Squid allows you to **manage, monitor, secure, and audit your system**, with traceable actions, and comprehensive logging. Its nautilus mascot represents **flexibility, intelligence, and depth** in system operations.
 
 ---
 
