@@ -8,7 +8,7 @@ If you find a potential vulnerability:
 
 1. **Do not disclose details publicly.**
 
-2. Open a [🔒 Security Issue](https://github.com/fossillogic/app-c/issues/new?template=security.md) and provide a high-level summary.
+2. Open a [🔒 Security Issue](https://github.com/fossillogic/squid/issues/new?template=security.md) and provide a high-level summary.
 
 3. Optionally include your contact information so maintainers can follow up privately.
 
