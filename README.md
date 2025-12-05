@@ -14,7 +14,7 @@
 
 | **Command** | **Description** | **Common Flags** |
 |-------------|-----------------|-----------------|
-| `process` | Manage running processes. | `--pid <pid>` Target process<br>`--kill` Terminate process<br>`--tree` Show process hierarchy |
+| `process` | Manage running processes. | `--id <pid>` Target process<br>`--kill` Terminate process<br>`--tree` Show process hierarchy |
 | `manage` | General system management. | `--user <username>` Specify user<br>`--group <group>` Specify group |
 | `network` | Inspect and configure network. | `--interface <iface>` Specify network interface<br>`--status` Show network status<br>`--firewall` Manage rules |
 | `secure` | Security operations. | `--audit` Run security audit<br>`--policy <policy>` Apply security policy |
