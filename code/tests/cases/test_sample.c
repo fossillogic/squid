@@ -24,7 +24,7 @@
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
 // Define the test suite and add test cases
-FOSSIL_TEST_SUITE(c_sample_suite);
+FOSSIL_SUITE(c_sample_suite);
 
 // Setup function for the test suite
 FOSSIL_SETUP(c_sample_suite) {
