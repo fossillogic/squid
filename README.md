@@ -84,73 +84,86 @@ Ensure you have the following installed before starting:
 
 ---
 
-### Core System Commands
+## Core System Commands
 
 | **Command** | **Description** | **Flags** |
 |-------------|-----------------|-----------|
-| `process` | Display and manage system processes. | `-a`, `--all` (show all processes)<br>`-u`, `--user <name>` (filter by user)<br>`-p`, `--pid <id>` (specific process)<br>`--name <pattern>` (filter by name)<br>`--sort <key>` (cpu/mem/pid/time)<br>`--tree` (process hierarchy)<br>`--kill <signal>` (send signal to process)<br>`--watch` (live refresh)<br>`--limit <n>` (limit results) |
-| `system` | Display system configuration and environment information. | `--cpu` (CPU info)<br>`--memory` (memory info)<br>`--kernel` (kernel version)<br>`--os` (operating system)<br>`--hardware` (hardware details)<br>`--uptime` (system uptime)<br>`--load` (load averages)<br>`--env` (environment variables)<br>`--json` (structured output) |
-| `monitor` | Real-time monitoring of system resources. | `--cpu`<br>`--memory`<br>`--disk`<br>`--network`<br>`--process`<br>`--top <n>` (top resource consumers)<br>`-t`, `--interval <n>` (refresh interval)<br>`--watch` (continuous monitoring) |
-| `health` | Perform system health diagnostics. | `--quick` (basic health check)<br>`--full` (complete diagnostics)<br>`--cpu` (CPU health)<br>`--memory` (memory health)<br>`--disk` (disk health)<br>`--network` (network health)<br>`--report <file>` (export report)<br>`--json` (structured report output) |
-| `audit` | Audit system activity and security events. | `--logins` (login history)<br>`--services` (service activity)<br>`--process` (process activity)<br>`--files` (file access events)<br>`--since <time>` (time filter)<br>`--user <name>` (filter by user)<br>`--export <file>` (write audit report) |
-| `inspect` | Deep inspection of system resources. | `--process <pid>` (inspect process)<br>`--memory` (memory layout)<br>`--threads` (thread usage)<br>`--fds` (file descriptors)<br>`--network` (network sockets)<br>`--limits` (resource limits)<br>`--json` (structured output) |
-| `perm` | Inspect and modify system permissions. | `--user <name>` (inspect user permissions)<br>`--group <name>` (inspect group permissions)<br>`--set <mode>` (set permission mode)<br>`--recursive` (apply recursively)<br>`--audit` (show permission anomalies) |
-| `service` | Manage system services. | `start <name>` (start service)<br>`stop <name>` (stop service)<br>`restart <name>` (restart service)<br>`reload <name>` (reload service config)<br>`status <name>` (service status)<br>`--enable` (enable at boot)<br>`--disable` (disable at boot)<br>`--watch` (monitor service state) |
-| `network` | Display and analyze network information. | `--interfaces` (network interfaces)<br>`--connections` (active connections)<br>`--ports` (open ports)<br>`--routes` (routing table)<br>`--stats` (traffic statistics)<br>`--tcp` (TCP connections)<br>`--udp` (UDP connections)<br>`--watch` (live network activity) |
+| `process` | Display and manage system processes. | `-a`, `--all` (show all processes)<br>`-u`, `--user <name>` (filter by user)<br>`-p`, `--pid <id>` (specific process)<br>`--name <pattern>` (filter by name)<br>`--sort <key>` (cpu/mem/pid/time)<br>`--tree` (process hierarchy)<br>`--kill <signal>` (send signal)<br>`--watch` (live refresh)<br>`--limit <n>` (limit results) |
+| `monitor` | Real-time monitoring of system resources. | `--cpu`<br>`--memory`<br>`--disk`<br>`--network`<br>`--process`<br>`--top <n>` (top consumers)<br>`-t`, `--interval <n>` (refresh interval)<br>`--watch` (continuous monitoring) |
+| `health` / `doctor` | Perform system health diagnostics and performance checks. | `--quick` (basic health check)<br>`--full` (complete diagnostics)<br>`--cpu` (CPU health)<br>`--memory` (memory health)<br>`--disk` (disk health)<br>`--network` (network health)<br>`--report <file>` (export report)<br>`--fix` (attempt automatic repair)<br>`--json` (structured report output) |
+| `inspect` | Deep inspection of system resources and processes. | `--process <pid>` (inspect process)<br>`--memory` (memory layout)<br>`--threads` (thread usage)<br>`--fds` (file descriptors)<br>`--network` (network sockets)<br>`--limits` (resource limits)<br>`--json` (structured output) |
+| `introspect` | Low-level introspection of kernel, hardware, and runtime environment. | `--kernel` (kernel info)<br>`--modules` (loaded modules)<br>`--hardware` (hardware details)<br>`--boot` (boot metadata)<br>`--firmware` (firmware info)<br>`--fson` (structured output) |
+| `this` | Display detailed information about the current host system. | `--os` (operating system)<br>`--arch` (architecture)<br>`--hostname` (system hostname)<br>`--uptime` (system uptime)<br>`--load` (load averages)<br>`--all` (complete system profile) |
+| `network` | Display and analyze network information and perform diagnostics. | `--interfaces` (network interfaces)<br>`--connections` (active connections)<br>`--ports` (open ports)<br>`--routes` (routing table)<br>`--stats` (traffic statistics)<br>`--ping <host>` (ping host)<br>`--trace <host>` (traceroute)<br>`--dns <host>` (DNS lookup)<br>`--watch` (live network activity) |
+| `service` | Manage system services. | `start <name>` (start service)<br>`stop <name>` (stop service)<br>`restart <name>` (restart service)<br>`reload <name>` (reload config)<br>`status <name>` (service status)<br>`--enable` (enable at boot)<br>`--disable` (disable at boot)<br>`--list` (list services)<br>`--watch` (monitor state) |
+| `system` | Execute system-level control tasks similar to `systemctl`. | `--reboot` (reboot system)<br>`--shutdown` (shutdown system)<br>`--suspend` (suspend system)<br>`--hibernate` (hibernate system)<br>`--targets` (list system targets)<br>`--default-target <name>` (set default target) |
+| `permit` | Inspect and modify system permissions and policies. | `--user <name>` (inspect user permissions)<br>`--group <name>` (inspect group permissions)<br>`--grant <mode>` (grant permissions)<br>`--revoke <mode>` (revoke permissions)<br>`--recursive` (apply recursively)<br>`--audit` (permission anomalies) |
+| `notebook` | View and query system journal logs (similar to `journalctl`). | `--boot` (current boot logs)<br>`--service <name>` (service logs)<br>`--since <time>` (logs since time)<br>`--tail <n>` (last lines)<br>`--follow` (live logs) |
+| `view` | Modern pager for viewing logs, streams, or files. | `--follow` (live follow)<br>`--search <pattern>` (search text)<br>`--lines <n>` (limit lines)<br>`--color` (syntax highlight) |
+| `echo` | Output formatted text, encoded text, or spoken responses. | `--cipher <type>` (encode text)<br>`--speak` (text-to-speech)<br>`--repeat <n>` (repeat output)<br>`--format <mode>` (styled output) |
+| `env` | Display and manage environment variables. | `--list` (list variables)<br>`--get <name>` (retrieve variable)<br>`--set <name=value>` (set variable)<br>`--unset <name>` (remove variable) |
+| `calc` | Built-in calculator supporting arithmetic expressions. | `--expr <expression>` (evaluate expression)<br>`--base <n>` (number base)<br>`--scientific` (scientific mode)<br>`--precision <n>` (decimal precision) |
 | `help` | Display help for commands. | `--examples` (usage examples)<br>`--man` (full manual) |
 
 ---
 
-### Global Flags (Available to All Commands)
+## Global Flags (Available to All Commands)
 
 | **Flag** | **Description** |
 |-----------|-----------------|
 | `--help` | Show command help. |
-| `--version` | Display Shark Tool version. |
+| `--version` | Display Squid Tool version. |
 | `-v, --verbose` | Enable detailed output. |
 | `-q, --quiet` | Suppress standard output. |
 | `--dry-run` | Simulate actions without changes. |
 | `--color` | Colorize output where applicable. |
 | `--time` | Display timestamps in output. |
+| `--json` | Structured JSON output. |
 
 ---
 
-### Usage Examples
+## Usage Examples
 
 | **Example** | **Description** |
 |---|---|
 | `squid process -a --sort mem --limit 10` | List top 10 processes by memory usage. |
 | `squid process --tree --user admin` | Display process hierarchy for admin user. |
-| `squid system --cpu --memory --json` | Show CPU and memory info in JSON format. |
 | `squid monitor --cpu --memory --interval 5` | Real-time monitoring with 5-second refresh. |
 | `squid health --full --report health.txt` | Run complete diagnostics and export report. |
-| `squid audit --logins --since "2024-01-01"` | View login history from specific date. |
 | `squid inspect --process 1234 --threads` | Inspect process 1234 with thread details. |
-| `squid perm --user john --audit` | Check john's permissions and anomalies. |
-| `squid service status nginx` | Display nginx service status. |
-| `squid service restart apache2 --watch` | Restart Apache and monitor state changes. |
-| `squid network --connections --watch` | Monitor active network connections live. |
-| `squid network --ports --stats` | Show open ports with traffic statistics. |
-| `squid help --examples` | Display command help with usage examples. |
+| `squid introspect --kernel --modules` | Display kernel and loaded module information. |
+| `squid this --all` | Display full system profile of the current host. |
+| `squid notebook --service nginx --tail 50` | View last 50 nginx logs. |
+| `squid service restart nginx` | Restart nginx service. |
+| `squid network --ping google.com` | Ping a host from Squid. |
+| `squid env --list` | List environment variables. |
+| `squid calc --expr "12*(5+3)"` | Evaluate mathematical expression. |
+| `squid echo --cipher base64 "hello"` | Encode text using Base64. |
+| `squid help --examples` | Display help with usage examples. |
 
 ---
 
-### Command Comparison (Squid vs Traditional Tools)
+## Command Comparison (Squid vs Traditional Tools)
 
-Squid Tool consolidates many common command-line utilities into a **single consistent interface**.  
-Below is a comparison between **Squid commands** and their traditional equivalents.
+Squid Tool consolidates many common **system administration utilities** into a **single consistent interface**.
 
 | **Squid Command** | **Traditional Commands** | **Purpose** |
 |---|---|---|
-| `squid process` | `ps`, `top`, `pgrep`, `kill` | Display, filter, sort, and manage processes with live monitoring. |
-| `squid system` | `uname`, `lsb_release`, `lscpu`, `free` | Comprehensive system information in unified format. |
-| `squid monitor` | `top`, `htop`, `iotop`, `nethogs` | Real-time monitoring of CPU, memory, disk, and network. |
-| `squid health` | `systemctl`, diagnostics scripts | System health checks and diagnostic reports. |
-| `squid audit` | `journalctl`, `ausearch`, `last`, `ac` | Security and activity auditing with event tracking. |
-| `squid inspect` | `proc`, `lsof`, `nm`, `objdump` | Deep inspection of processes and system resources. |
-| `squid perm` | `chmod`, `chown`, `getfacl`, `setfacl` | Permission inspection and modification. |
-| `squid service` | `systemctl`, `service`, `chkconfig` | Service lifecycle management. |
-| `squid network` | `ifconfig`, `netstat`, `ss`, `route`, `ping` | Network configuration and connection analysis. |
+| `squid process` | `ps`, `top`, `pgrep`, `kill` | Display and manage processes with filtering and signals. |
+| `squid monitor` | `top`, `htop`, `iotop`, `nethogs` | Real-time system monitoring. |
+| `squid health` | diagnostics scripts | System health diagnostics and performance analysis. |
+| `squid inspect` | `lsof`, `/proc`, `pmap` | Deep inspection of processes and resources. |
+| `squid introspect` | `uname`, `lsmod`, `lshw`, `dmidecode` | Kernel and hardware introspection. |
+| `squid this` | `hostnamectl`, `uptime`, `uname` | Quick overview of the current system. |
+| `squid service` | `systemctl`, `service` | Service lifecycle management. |
+| `squid system` | `systemctl`, `shutdown`, `reboot` | System-level control operations. |
+| `squid notebook` | `journalctl` | System log querying and filtering. |
+| `squid network` | `ifconfig`, `ss`, `netstat`, `ping`, `traceroute` | Network diagnostics and analysis. |
+| `squid permit` | `chmod`, `chown`, `setfacl` | Permission and policy management. |
+| `squid view` | `less`, `tail -f` | Modern pager for logs and streams. |
+| `squid env` | `env`, `printenv`, `export` | Environment variable management. |
+| `squid calc` | `bc`, `expr` | Command-line calculator. |
+| `squid echo` | `echo`, `say`, encoding tools | Advanced text output, encoding, and speech. |
 
 ---
 
