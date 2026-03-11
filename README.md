@@ -4,35 +4,37 @@
 
 ### A System Monitoring Power Utility by **Fossil Logic**
 
-Squid Tool is the ultimate **all-in-one system administration and monitoring utility** for admins, developers, and system engineers. It consolidates essential process management, system diagnostics, and real-time monitoring into a single command-line interface—eliminating tool fragmentation. Unique commands like `health` for system diagnostics, `audit` for security event tracking, and `inspect` for deep resource analysis provide capabilities rarely found in traditional utilities, delivering the precision and control professionals demand.
+Squid Tool is the ultimate **all-in-one system administration and monitoring utility** for admins, developers, and system engineers. It consolidates essential process management, system diagnostics, and real-time monitoring into a single command-line interface—eliminating tool fragmentation. Unique commands like `health` for comprehensive diagnostics, `audit` for security tracking, `inspect` for deep analysis, and `introspect` for kernel-level insights provide capabilities rarely found in traditional utilities, delivering the precision and control professionals demand.
 
 ---
 
 ## Features
 
-- **Process management and monitoring** — `process`, `inspect`, `watch` with filtering, sorting, and signaling
-- **System information and diagnostics** — CPU, memory, disk, network, kernel, and hardware details
-- **Real-time resource monitoring** — Live CPU, memory, disk, and network monitoring with customizable intervals
-- **System health diagnostics** — Quick and comprehensive health checks with detailed reporting
-- **Security and audit logging** — Track logins, services, processes, and file access events
-- **Cross-platform support** — Seamless operation on Linux, macOS, and Windows
-- **Deep resource inspection** — Process details, memory layout, threads, file descriptors, and limits
-- **Permission management** — Inspect and modify user/group permissions with anomaly detection
-- **Service management** — Start, stop, restart, reload, and monitor system services
-- **Network analysis** — Interfaces, connections, ports, routes, and traffic statistics
+- **Process Management** — `process` command with filtering, sorting, hierarchy view, and signal control
+- **Real-Time Monitoring** — `monitor` for live CPU, memory, disk, and network metrics with customizable intervals
+- **System Health & Diagnostics** — `health`/`doctor` commands for quick and comprehensive system analysis with auto-repair
+- **Deep Resource Inspection** — `inspect` for process details, memory layout, threads, file descriptors, and limits
+- **Kernel & Hardware Introspection** — `introspect` for kernel info, modules, hardware details, and firmware data
+- **System Overview** — `this` command for quick host system profile and statistics
+- **Network Analysis** — `network` for interfaces, connections, ports, routes, ping, traceroute, and DNS lookup
+- **Service Management** — `service` for lifecycle control and monitoring of system services
+- **System Control** — `system` for reboot, shutdown, suspend, and target management
+- **Permission Management** — `permit` to inspect and modify user/group permissions with anomaly detection
+- **Log Viewing** — `notebook` for journalctl-like log querying and `view` for modern paging
+- **Environment & Utilities** — `env` for variable management, `calc` for expressions, `echo` for formatted output and encoding
+- **Cross-Platform Support** — Seamless operation on Linux, macOS, and Windows
+
 
 ## **Why Choose Squid Tool?**
+- **Unified Command Suite**: One tool replaces `ps`, `top`, `systemctl`, `journalctl`, `ifconfig`, `netstat`, `lsof`, and more—eliminating context switching.
+- **Unique Advanced Commands**: `health`/`doctor` for comprehensive diagnostics with auto-repair, `audit` for security tracking, `inspect` for deep process analysis, and `introspect` for kernel-level insights.
+- **Real-Time Monitoring**: Live CPU, memory, disk, and network metrics with customizable intervals via the `monitor` command.
+- **Deep System Visibility**: From process hierarchies and file descriptors to kernel modules and hardware details—complete transparency in one utility.
+- **Built for Professionals**: Designed specifically for system administrators, engineers, and developers who demand precision and control.
+- **Cross-Platform**: Seamless operation on Linux, macOS, and Windows with consistent command syntax.
+- **Modern & Extensible**: Built with Meson for performance, with structured JSON output and advanced formatting options.
 
-Unlike traditional CLI utilities that require juggling multiple tools, Squid consolidates essential system administration and monitoring into a single, intuitive command-line interface. Here's what sets it apart:
-
-- **All-in-One Solution**: Eliminate tool switching. Process management, system monitoring, diagnostics, and auditing all in one place.
-- **Unique Advanced Features**: Commands like `health` for comprehensive diagnostics, `audit` for security tracking, and `inspect` for deep analysis go beyond standard utilities.
-- **Admin-Friendly**: Built specifically for system administrators and engineers who need power and visibility without complexity.
-- **Cross-Platform**: Works seamlessly across Linux, macOS, and Windows.
-- **Real-Time Insights**: Live monitoring with customizable refresh intervals and structured output formats.
-- **Modern Architecture**: Built with Meson and designed for performance and extensibility.
-
-Squid Tool is the unified solution for professionals who demand more from their system administration utilities.
+Squid Tool is the comprehensive solution for professionals who need power, visibility, and efficiency in system administration.
 
 ---
 
