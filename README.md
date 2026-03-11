@@ -118,7 +118,6 @@ Ensure you have the following installed before starting:
 | `--dry-run` | Simulate actions without changes. |
 | `--color` | Colorize output where applicable. |
 | `--time` | Display timestamps in output. |
-| `--json` | Structured JSON output. |
 
 ---
 
