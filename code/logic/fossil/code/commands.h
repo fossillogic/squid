@@ -22,16 +22,20 @@
  * Copyright (C) 2014-2025 Fossil Logic. All rights reserved.
  * -----------------------------------------------------------------------------
  */
-#ifndef FOSSIL_APP_COMMON_H
-#define FOSSIL_APP_COMMON_H
+#ifndef FOSSIL_APP_COMMANDS_H
+#define FOSSIL_APP_COMMANDS_H
 
-#include <fossil/sys/framework.h>
-#include <fossil/io/framework.h>
-#include <fossil/math/framework.h>
-#include <fossil/type/framework.h>
-#include <fossil/cryptic/framework.h>
+#include "common.h"
 
-#define FOSSIL_APP_NAME "Sample App"
-#define FOSSIL_APP_VERSION "0.1.0"
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
-#endif /* FOSSIL_APP_CODE_H */
+// command prototypes here
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* FOSSIL_APP_COMMANDS_H */
