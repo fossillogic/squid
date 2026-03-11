@@ -44,12 +44,12 @@ FOSSIL_TEARDOWN(c_sample_suite) {
 // as samples for library usage.
 // * * * * * * * * * * * * * * * * * * * * * * * *
 
-FOSSIL_TEST_CASE(c_test_app_name) {
+FOSSIL_TEST(c_test_app_name) {
     const char *app_name = FOSSIL_APP_NAME;
     ASSUME_ITS_EQUAL_CSTR("Sample App", app_name);
 }
 
-FOSSIL_TEST_CASE(c_test_app_version) {
+FOSSIL_TEST(c_test_app_version) {
     const char *app_version = FOSSIL_APP_VERSION;
     ASSUME_ITS_EQUAL_CSTR("0.1.0", app_version);
 }
