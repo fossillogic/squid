@@ -106,12 +106,12 @@ Ensure you have the following installed before starting:
 | **Flag** | **Description** |
 |-----------|-----------------|
 | `--help` | Show command help. |
-| `--version` | Display Squid Tool version. |
+| `--version` | Display Shark Tool version. |
 | `-v, --verbose` | Enable detailed output. |
 | `-q, --quiet` | Suppress standard output. |
-| `--json` | Output in JSON format. |
+| `--dry-run` | Simulate actions without changes. |
 | `--color` | Colorize output where applicable. |
-| `-t, --interval <n>` | Set refresh interval in seconds. |
+| `--time` | Display timestamps in output. |
 
 ---
 
