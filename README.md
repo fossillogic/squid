@@ -2,63 +2,39 @@
     <img src=".github/logo.png" alt="Squid Tool Logo" width="620"/>
 </p>
 
-### A Command-Line Power Utility by **Fossil Logic**
+### A System Monitoring Power Utility by **Fossil Logic**
 
-**Squid** is the ultimate **admin and power-user CLI**, designed for system operators, DevOps, and security engineers. Squid allows you to **manage, monitor, secure, and audit your system**, with traceable actions, and comprehensive logging. Its nautilus mascot represents **flexibility, intelligence, and depth** in system operations.
-
----
-
-## Command Palette
-
-### Core System Operations
-
-| **Command** | **Description** | **Common Flags** |
-|-------------|-----------------|-----------------|
-| `process` | Manage running processes. | `--id <pid>` Target process<br>`--kill` Terminate process<br>`--tree` Show process hierarchy |
-| `manage` | General system management. | `--user <username>` Specify user<br>`--group <group>` Specify group |
-| `network` | Inspect and configure network. | `--interface <iface>` Specify network interface<br>`--status` Show network status<br>`--firewall` Manage rules |
-| `secure` | Security operations. | `--audit` Run security audit<br>`--policy <policy>` Apply security policy |
-| `notebook` | System journaling (journalctl based). | `--unit <unit>` Filter by systemd unit<br>`--follow` Tail logs in real-time |
-| `service` | Manage system services. | `--start/stop/restart` Control service<br>`--enable/disable` Boot-time control |
-| `storage` | Manage disks and filesystems. | `--mount <path>` Mount a disk<br>`--usage` Show usage stats |
-| `audit` | System and security auditing. | `--report` Generate audit report<br>`--fson` Output FSON |
-| `backup` | Backup and restore files or system state. | `--source <path>` Source path<br>`--dest <path>` Destination path<br>`--encrypt` Encrypt backup |
-| `monitor` | Live system performance monitoring. | `--cpu` CPU stats<br>`--mem` Memory stats<br>`--interval <s>` Refresh interval |
-| `logbook` | Aggregated log analysis. | `--filter <pattern>` Filter logs<br>`--tail` Tail logs<br>`--json` Output JSON |
-| `system` | System overview and diagnostics. | `--info` Basic info<br>`--health` Health check |
-| `help` | Display help and examples. | `--examples` Usage examples<br>`--man` Full manual |
+Squid Tool is the ultimate **all-in-one system administration and monitoring utility** for admins, developers, and system engineers. It consolidates essential process management, system diagnostics, and real-time monitoring into a single command-line interface—eliminating tool fragmentation. Unique commands like `health` for system diagnostics, `audit` for security event tracking, and `inspect` for deep resource analysis provide capabilities rarely found in traditional utilities, delivering the precision and control professionals demand.
 
 ---
 
-### Global Flags (Available to All Commands)
+## Features
 
-| **Flag** | **Description** |
-|-----------|-----------------|
-| `--help` | Show help for command. |
-| `--version` | Display Squid version. |
-| `-v, --verbose` | Enable detailed output. |
-| `-q, --quiet` | Suppress output. |
-| `--dry-run` | Simulate without changing system. |
-| `--color` | Colorize output. |
+- **Process management and monitoring** — `process`, `inspect`, `watch` with filtering, sorting, and signaling
+- **System information and diagnostics** — CPU, memory, disk, network, kernel, and hardware details
+- **Real-time resource monitoring** — Live CPU, memory, disk, and network monitoring with customizable intervals
+- **System health diagnostics** — Quick and comprehensive health checks with detailed reporting
+- **Security and audit logging** — Track logins, services, processes, and file access events
+- **Cross-platform support** — Seamless operation on Linux, macOS, and Windows
+- **Deep resource inspection** — Process details, memory layout, threads, file descriptors, and limits
+- **Permission management** — Inspect and modify user/group permissions with anomaly detection
+- **Service management** — Start, stop, restart, reload, and monitor system services
+- **Network analysis** — Interfaces, connections, ports, routes, and traffic statistics
+
+## **Why Choose Squid Tool?**
+
+Unlike traditional CLI utilities that require juggling multiple tools, Squid consolidates essential system administration and monitoring into a single, intuitive command-line interface. Here's what sets it apart:
+
+- **All-in-One Solution**: Eliminate tool switching. Process management, system monitoring, diagnostics, and auditing all in one place.
+- **Unique Advanced Features**: Commands like `health` for comprehensive diagnostics, `audit` for security tracking, and `inspect` for deep analysis go beyond standard utilities.
+- **Admin-Friendly**: Built specifically for system administrators and engineers who need power and visibility without complexity.
+- **Cross-Platform**: Works seamlessly across Linux, macOS, and Windows.
+- **Real-Time Insights**: Live monitoring with customizable refresh intervals and structured output formats.
+- **Modern Architecture**: Built with Meson and designed for performance and extensibility.
+
+Squid Tool is the unified solution for professionals who demand more from their system administration utilities.
 
 ---
-
-### Usage Examples
-
-| **Example** | **Description** |
-|-------------|-----------------|
-| `squid process list` | List all running processes. |
-| `squid process kill --pid 1234` | Terminate a specific process. |
-| `squid network status` | Show network interface status. |
-| `squid secure audit --fson` | Run a system security audit with structured output. |
-| `squid notebook view --unit sshd` | View SSH daemon logs. |
-| `squid service restart nginx` | Restart the nginx service. |
-| `squid storage usage --disk /dev/sda` | Check disk usage of a specific disk. |
-| `squid backup create --source /etc --dest /backups/etc.tar.gz --encrypt` | Backup system configuration files. |
-| `squid monitor cpu --interval 5` | Monitor CPU usage every 5 seconds. |
-| `squid logbook tail --filter ERROR` | Tail logs containing “ERROR”. |
-| `squid system info` | Show general system information. |
-| `squid help monitor` | Show usage examples for monitoring commands. |
 
 ## **Prerequisites**
 
@@ -101,12 +77,86 @@ Ensure you have the following installed before starting:
 5. **Run the Project**:
 
     ```sh
-    squid
+    squid --help
     ```
+
+## Command Palette
+
+---
+
+### Core System Commands
+
+| **Command** | **Description** | **Flags** |
+|-------------|-----------------|-----------|
+| `process` | Display and manage system processes. | `-a`, `--all` (show all processes)<br>`-u`, `--user <name>` (filter by user)<br>`-p`, `--pid <id>` (specific process)<br>`--name <pattern>` (filter by name)<br>`--sort <key>` (cpu/mem/pid/time)<br>`--tree` (process hierarchy)<br>`--kill <signal>` (send signal to process)<br>`--watch` (live refresh)<br>`--limit <n>` (limit results) |
+| `system` | Display system configuration and environment information. | `--cpu` (CPU info)<br>`--memory` (memory info)<br>`--kernel` (kernel version)<br>`--os` (operating system)<br>`--hardware` (hardware details)<br>`--uptime` (system uptime)<br>`--load` (load averages)<br>`--env` (environment variables)<br>`--json` (structured output) |
+| `monitor` | Real-time monitoring of system resources. | `--cpu`<br>`--memory`<br>`--disk`<br>`--network`<br>`--process`<br>`--top <n>` (top resource consumers)<br>`-t`, `--interval <n>` (refresh interval)<br>`--watch` (continuous monitoring) |
+| `health` | Perform system health diagnostics. | `--quick` (basic health check)<br>`--full` (complete diagnostics)<br>`--cpu` (CPU health)<br>`--memory` (memory health)<br>`--disk` (disk health)<br>`--network` (network health)<br>`--report <file>` (export report)<br>`--json` (structured report output) |
+| `audit` | Audit system activity and security events. | `--logins` (login history)<br>`--services` (service activity)<br>`--process` (process activity)<br>`--files` (file access events)<br>`--since <time>` (time filter)<br>`--user <name>` (filter by user)<br>`--export <file>` (write audit report) |
+| `inspect` | Deep inspection of system resources. | `--process <pid>` (inspect process)<br>`--memory` (memory layout)<br>`--threads` (thread usage)<br>`--fds` (file descriptors)<br>`--network` (network sockets)<br>`--limits` (resource limits)<br>`--json` (structured output) |
+| `perm` | Inspect and modify system permissions. | `--user <name>` (inspect user permissions)<br>`--group <name>` (inspect group permissions)<br>`--set <mode>` (set permission mode)<br>`--recursive` (apply recursively)<br>`--audit` (show permission anomalies) |
+| `service` | Manage system services. | `start <name>` (start service)<br>`stop <name>` (stop service)<br>`restart <name>` (restart service)<br>`reload <name>` (reload service config)<br>`status <name>` (service status)<br>`--enable` (enable at boot)<br>`--disable` (disable at boot)<br>`--watch` (monitor service state) |
+| `network` | Display and analyze network information. | `--interfaces` (network interfaces)<br>`--connections` (active connections)<br>`--ports` (open ports)<br>`--routes` (routing table)<br>`--stats` (traffic statistics)<br>`--tcp` (TCP connections)<br>`--udp` (UDP connections)<br>`--watch` (live network activity) |
+| `help` | Display help for commands. | `--examples` (usage examples)<br>`--man` (full manual) |
+
+---
+
+### Global Flags (Available to All Commands)
+
+| **Flag** | **Description** |
+|-----------|-----------------|
+| `--help` | Show command help. |
+| `--version` | Display Squid Tool version. |
+| `-v, --verbose` | Enable detailed output. |
+| `-q, --quiet` | Suppress standard output. |
+| `--json` | Output in JSON format. |
+| `--color` | Colorize output where applicable. |
+| `-t, --interval <n>` | Set refresh interval in seconds. |
+
+---
+
+### Usage Examples
+
+| **Example** | **Description** |
+|---|---|
+| `squid process -a --sort mem --limit 10` | List top 10 processes by memory usage. |
+| `squid process --tree --user admin` | Display process hierarchy for admin user. |
+| `squid system --cpu --memory --json` | Show CPU and memory info in JSON format. |
+| `squid monitor --cpu --memory --interval 5` | Real-time monitoring with 5-second refresh. |
+| `squid health --full --report health.txt` | Run complete diagnostics and export report. |
+| `squid audit --logins --since "2024-01-01"` | View login history from specific date. |
+| `squid inspect --process 1234 --threads` | Inspect process 1234 with thread details. |
+| `squid perm --user john --audit` | Check john's permissions and anomalies. |
+| `squid service status nginx` | Display nginx service status. |
+| `squid service restart apache2 --watch` | Restart Apache and monitor state changes. |
+| `squid network --connections --watch` | Monitor active network connections live. |
+| `squid network --ports --stats` | Show open ports with traffic statistics. |
+| `squid help --examples` | Display command help with usage examples. |
+
+---
+
+### Command Comparison (Squid vs Traditional Tools)
+
+Squid Tool consolidates many common command-line utilities into a **single consistent interface**.  
+Below is a comparison between **Squid commands** and their traditional equivalents.
+
+| **Squid Command** | **Traditional Commands** | **Purpose** |
+|---|---|---|
+| `squid process` | `ps`, `top`, `pgrep`, `kill` | Display, filter, sort, and manage processes with live monitoring. |
+| `squid system` | `uname`, `lsb_release`, `lscpu`, `free` | Comprehensive system information in unified format. |
+| `squid monitor` | `top`, `htop`, `iotop`, `nethogs` | Real-time monitoring of CPU, memory, disk, and network. |
+| `squid health` | `systemctl`, diagnostics scripts | System health checks and diagnostic reports. |
+| `squid audit` | `journalctl`, `ausearch`, `last`, `ac` | Security and activity auditing with event tracking. |
+| `squid inspect` | `proc`, `lsof`, `nm`, `objdump` | Deep inspection of processes and system resources. |
+| `squid perm` | `chmod`, `chown`, `getfacl`, `setfacl` | Permission inspection and modification. |
+| `squid service` | `systemctl`, `service`, `chkconfig` | Service lifecycle management. |
+| `squid network` | `ifconfig`, `netstat`, `ss`, `route`, `ping` | Network configuration and connection analysis. |
+
+---
 
 ## **Contributing**
 
-Interested in contributing? Please open pull requests or create issues on the [GitHub repository](https://github.com/fossillogic/app-c).
+Interested in contributing? Please open pull requests or create issues on the [GitHub repository](https://github.com/fossillogic/squid).
 
 ## **Feedback and Support**
 
@@ -114,4 +164,4 @@ For issues, questions, or feedback, open an issue on the [GitHub repository](htt
 
 ## **License**
 
-This project is licensed under the [Apache 2.0 License](LICENSE).
+This project is licensed under the [Apache Public License](LICENSE).
