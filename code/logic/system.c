@@ -34,8 +34,6 @@ int fossil_squid_system(bool reboot,
                         bool targets,
                         ccstring default_target)
 {
-    char cmd[256];
-
     /* reboot system */
     if (reboot) {
         fossil_io_printf("{cyan}Rebooting system...{reset}\n");
@@ -92,6 +90,7 @@ int fossil_squid_system(bool reboot,
             fossil_io_printf("{cyan}Default target setting not supported on Windows{reset}\n");
             return 0;
         #else
+            char cmd[256];
             snprintf(cmd, sizeof(cmd),
                      "systemctl set-default %s",
                      default_target);
