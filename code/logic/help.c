@@ -326,4 +326,5 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("{cyan,italic}------------------------------------------------------------{normal}\n");
         }
     }
+    return 0;
 }
