@@ -25,7 +25,6 @@ void show_commands(char *app_name)
 
     fossil_io_printf("{cyan}  process          {reset}Display and manage system processes\n");
     fossil_io_printf("{bright_black}    -a, --all           Show all processes\n");
-    fossil_io_printf("{bright_black}    -u, --user <name>   Filter by user\n");
     fossil_io_printf("{bright_black}    -p, --pid <id>      Specific process\n");
     fossil_io_printf("{bright_black}    --name <pattern>    Filter by name\n");
     fossil_io_printf("{bright_black}    --sort <key>        cpu/mem/pid/time\n");
@@ -34,37 +33,34 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --watch             Live refresh\n");
     fossil_io_printf("{bright_black}    --limit <n>         Limit results\n");
 
-    fossil_io_printf("{cyan}  monitor          {reset}Real-time system resource monitoring\n");
+    fossil_io_printf("{cyan}  monitor          {reset}Real-time monitoring of system resources\n");
     fossil_io_printf("{bright_black}    --cpu               CPU metrics\n");
     fossil_io_printf("{bright_black}    --memory            Memory usage\n");
     fossil_io_printf("{bright_black}    --disk              Disk usage\n");
-    fossil_io_printf("{bright_black}    --network           Network activity\n");
     fossil_io_printf("{bright_black}    --process           Process metrics\n");
     fossil_io_printf("{bright_black}    --top <n>           Top consumers\n");
     fossil_io_printf("{bright_black}    -t, --interval <n>  Refresh interval\n");
     fossil_io_printf("{bright_black}    --watch             Continuous monitoring\n");
 
-    fossil_io_printf("{cyan}  health, doctor   {reset}System health diagnostics\n");
+    fossil_io_printf("{cyan}  health, doctor   {reset}Perform system health diagnostics and performance checks\n");
     fossil_io_printf("{bright_black}    --quick             Basic health check\n");
     fossil_io_printf("{bright_black}    --full              Complete diagnostics\n");
     fossil_io_printf("{bright_black}    --cpu               CPU health\n");
     fossil_io_printf("{bright_black}    --memory            Memory health\n");
     fossil_io_printf("{bright_black}    --disk              Disk health\n");
-    fossil_io_printf("{bright_black}    --network           Network health\n");
     fossil_io_printf("{bright_black}    --report <file>     Export report\n");
     fossil_io_printf("{bright_black}    --fix               Automatic repair\n");
     fossil_io_printf("{bright_black}    --json              Structured output\n");
 
-    fossil_io_printf("{cyan}  inspect          {reset}Deep inspection of resources\n");
+    fossil_io_printf("{cyan}  inspect          {reset}Deep inspection of system resources and processes\n");
     fossil_io_printf("{bright_black}    --process <pid>     Inspect process\n");
     fossil_io_printf("{bright_black}    --memory            Memory layout\n");
     fossil_io_printf("{bright_black}    --threads           Thread usage\n");
     fossil_io_printf("{bright_black}    --fds               File descriptors\n");
-    fossil_io_printf("{bright_black}    --network           Network sockets\n");
     fossil_io_printf("{bright_black}    --limits            Resource limits\n");
     fossil_io_printf("{bright_black}    --json              Structured output\n");
 
-    fossil_io_printf("{cyan}  introspect       {reset}Low-level kernel/hardware introspection\n");
+    fossil_io_printf("{cyan}  introspect       {reset}Low-level introspection of kernel, hardware, and runtime\n");
     fossil_io_printf("{bright_black}    --kernel            Kernel info\n");
     fossil_io_printf("{bright_black}    --modules           Loaded modules\n");
     fossil_io_printf("{bright_black}    --hardware          Hardware details\n");
@@ -72,24 +68,13 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --firmware          Firmware info\n");
     fossil_io_printf("{bright_black}    --fson              Structured output\n");
 
-    fossil_io_printf("{cyan}  this             {reset}Detailed host system information\n");
+    fossil_io_printf("{cyan}  this             {reset}Display detailed information about the current host system\n");
     fossil_io_printf("{bright_black}    --os                Operating system\n");
     fossil_io_printf("{bright_black}    --arch              Architecture\n");
     fossil_io_printf("{bright_black}    --hostname          System hostname\n");
     fossil_io_printf("{bright_black}    --uptime            System uptime\n");
     fossil_io_printf("{bright_black}    --load              Load averages\n");
     fossil_io_printf("{bright_black}    --all               Complete system profile\n");
-
-    fossil_io_printf("{cyan}  network          {reset}Network information and diagnostics\n");
-    fossil_io_printf("{bright_black}    --interfaces        Network interfaces\n");
-    fossil_io_printf("{bright_black}    --connections       Active connections\n");
-    fossil_io_printf("{bright_black}    --ports             Open ports\n");
-    fossil_io_printf("{bright_black}    --routes            Routing table\n");
-    fossil_io_printf("{bright_black}    --stats             Traffic statistics\n");
-    fossil_io_printf("{bright_black}    --ping <host>       Ping host\n");
-    fossil_io_printf("{bright_black}    --trace <host>      Traceroute\n");
-    fossil_io_printf("{bright_black}    --dns <host>        DNS lookup\n");
-    fossil_io_printf("{bright_black}    --watch             Live network activity\n");
 
     fossil_io_printf("{cyan}  service          {reset}Manage system services\n");
     fossil_io_printf("{bright_black}    start <name>        Start service\n");
@@ -102,7 +87,7 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --list              List services\n");
     fossil_io_printf("{bright_black}    --watch             Monitor state\n");
 
-    fossil_io_printf("{cyan}  system           {reset}System-level control tasks\n");
+    fossil_io_printf("{cyan}  system           {reset}Execute system-level control tasks\n");
     fossil_io_printf("{bright_black}    --reboot            Reboot system\n");
     fossil_io_printf("{bright_black}    --shutdown          Shutdown system\n");
     fossil_io_printf("{bright_black}    --suspend           Suspend system\n");
@@ -110,7 +95,7 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --targets           List system targets\n");
     fossil_io_printf("{bright_black}    --default-target    Set default target\n");
 
-    fossil_io_printf("{cyan}  permit           {reset}Inspect and modify permissions\n");
+    fossil_io_printf("{cyan}  permit           {reset}Inspect and modify system permissions and policies\n");
     fossil_io_printf("{bright_black}    --user <name>       Inspect user permissions\n");
     fossil_io_printf("{bright_black}    --group <name>      Inspect group permissions\n");
     fossil_io_printf("{bright_black}    --grant <mode>      Grant permissions\n");
@@ -125,13 +110,13 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --tail <n>          Last lines\n");
     fossil_io_printf("{bright_black}    --follow            Live logs\n");
 
-    fossil_io_printf("{cyan}  view             {reset}Modern pager for viewing content\n");
+    fossil_io_printf("{cyan}  view             {reset}Modern pager for viewing logs, streams, or files\n");
     fossil_io_printf("{bright_black}    --follow            Live follow\n");
     fossil_io_printf("{bright_black}    --search <pattern>  Search text\n");
     fossil_io_printf("{bright_black}    --lines <n>         Limit lines\n");
     fossil_io_printf("{bright_black}    --color             Syntax highlight\n");
 
-    fossil_io_printf("{cyan}  echo             {reset}Output formatted or encoded text\n");
+    fossil_io_printf("{cyan}  echo             {reset}Output formatted text, encoded text, or spoken responses\n");
     fossil_io_printf("{bright_black}    --cipher <type>     Encode text\n");
     fossil_io_printf("{bright_black}    --speak             Text-to-speech\n");
     fossil_io_printf("{bright_black}    --repeat <n>        Repeat output\n");
@@ -143,7 +128,7 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --set <name=value>  Set variable\n");
     fossil_io_printf("{bright_black}    --unset <name>      Remove variable\n");
 
-    fossil_io_printf("{cyan}  calc             {reset}Built-in calculator\n");
+    fossil_io_printf("{cyan}  calc             {reset}Built-in calculator supporting arithmetic expressions\n");
     fossil_io_printf("{bright_black}    --expr <expr>       Evaluate expression\n");
     fossil_io_printf("{bright_black}    --base <n>          Number base\n");
     fossil_io_printf("{bright_black}    --scientific        Scientific mode\n");
@@ -158,10 +143,7 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}  --version             Display Squid version\n");
     fossil_io_printf("{bright_black}  --name                Display application name\n");
     fossil_io_printf("{bright_black}  -v, --verbose         Enable detailed output\n");
-    fossil_io_printf("{bright_black}  -q, --quiet           Suppress standard output\n");
-    fossil_io_printf("{bright_black}  --dry-run             Simulate without changes\n");
     fossil_io_printf("{bright_black}  --color               Colorize output\n");
-    fossil_io_printf("{bright_black}  --time                Display timestamps\n");
 
     exit(FOSSIL_IO_SUCCESS);
 }
@@ -224,7 +206,7 @@ bool app_entry(int argc, char **argv)
         else if (fossil_io_cstring_compare(argv[i], "process") == 0)
         {
             bool show_all = false;
-            ccstring user = cnull, name_pattern = cnull, sort_key = cnull;
+            ccstring name_pattern = cnull, sort_key = cnull;
             int pid = -1, kill_signal = -1;
             bool show_tree = false, watch = false;
             size_t limit = 0;
@@ -234,9 +216,6 @@ bool app_entry(int argc, char **argv)
                 if (fossil_io_cstring_compare(argv[j], "-a") == 0 || 
                     fossil_io_cstring_compare(argv[j], "--all") == 0)
                     show_all = true;
-                else if (fossil_io_cstring_compare(argv[j], "-u") == 0 || 
-                         fossil_io_cstring_compare(argv[j], "--user") == 0 && j + 1 < argc)
-                    user = argv[++j];
                 else if (fossil_io_cstring_compare(argv[j], "-p") == 0 || 
                          fossil_io_cstring_compare(argv[j], "--pid") == 0 && j + 1 < argc)
                     pid = atoi(argv[++j]);
@@ -254,11 +233,11 @@ bool app_entry(int argc, char **argv)
                     limit = (size_t)atoi(argv[++j]);
                 i = j;
             }
-            fossil_squid_process(show_all, user, pid, name_pattern, sort_key, show_tree, kill_signal, watch, limit);
+            fossil_squid_process(show_all, pid, name_pattern, sort_key, show_tree, kill_signal, watch, limit);
         }
         else if (fossil_io_cstring_compare(argv[i], "monitor") == 0)
         {
-            bool cpu = false, memory = false, disk = false, network = false;
+            bool cpu = false, memory = false, disk = false;
             bool process_mon = false, watch = false;
             size_t top_n = 0, interval = 1;
 
@@ -270,8 +249,6 @@ bool app_entry(int argc, char **argv)
                     memory = true;
                 else if (fossil_io_cstring_compare(argv[j], "--disk") == 0)
                     disk = true;
-                else if (fossil_io_cstring_compare(argv[j], "--network") == 0)
-                    network = true;
                 else if (fossil_io_cstring_compare(argv[j], "--process") == 0)
                     process_mon = true;
                 else if (fossil_io_cstring_compare(argv[j], "--top") == 0 && j + 1 < argc)
@@ -283,13 +260,13 @@ bool app_entry(int argc, char **argv)
                     watch = true;
                 i = j;
             }
-            fossil_squid_monitor(cpu, memory, disk, network, process_mon, top_n, interval, watch);
+            fossil_squid_monitor(cpu, memory, disk, process_mon, top_n, interval, watch);
         }
         else if (fossil_io_cstring_compare(argv[i], "health") == 0 ||
                  fossil_io_cstring_compare(argv[i], "doctor") == 0)
         {
             bool quick = false, full = false, cpu = false, memory = false;
-            bool disk = false, network = false, fix = false, json_output = false;
+            bool disk = false, fix = false, json_output = false;
             ccstring report_file = cnull;
 
             for (int j = i + 1; j < argc && argv[j][0] == '-'; j++)
@@ -304,8 +281,6 @@ bool app_entry(int argc, char **argv)
                     memory = true;
                 else if (fossil_io_cstring_compare(argv[j], "--disk") == 0)
                     disk = true;
-                else if (fossil_io_cstring_compare(argv[j], "--network") == 0)
-                    network = true;
                 else if (fossil_io_cstring_compare(argv[j], "--report") == 0 && j + 1 < argc)
                     report_file = argv[++j];
                 else if (fossil_io_cstring_compare(argv[j], "--fix") == 0)
@@ -314,12 +289,12 @@ bool app_entry(int argc, char **argv)
                     json_output = true;
                 i = j;
             }
-            fossil_squid_health(quick, full, cpu, memory, disk, network, report_file, fix, json_output);
+            fossil_squid_health(quick, full, cpu, memory, disk, report_file, fix, json_output);
         }
         else if (fossil_io_cstring_compare(argv[i], "inspect") == 0)
         {
             int process_pid = -1;
-            bool memory = false, threads = false, fds = false, network = false;
+            bool memory = false, threads = false, fds = false;
             bool limits = false, json_output = false;
 
             for (int j = i + 1; j < argc && argv[j][0] == '-'; j++)
@@ -332,15 +307,13 @@ bool app_entry(int argc, char **argv)
                     threads = true;
                 else if (fossil_io_cstring_compare(argv[j], "--fds") == 0)
                     fds = true;
-                else if (fossil_io_cstring_compare(argv[j], "--network") == 0)
-                    network = true;
                 else if (fossil_io_cstring_compare(argv[j], "--limits") == 0)
                     limits = true;
                 else if (fossil_io_cstring_compare(argv[j], "--json") == 0)
                     json_output = true;
                 i = j;
             }
-            fossil_squid_inspect(process_pid, memory, threads, fds, network, limits, json_output);
+            fossil_squid_inspect(process_pid, memory, threads, fds, limits, json_output);
         }
         else if (fossil_io_cstring_compare(argv[i], "introspect") == 0)
         {
@@ -387,36 +360,6 @@ bool app_entry(int argc, char **argv)
                 i = j;
             }
             fossil_squid_this(os, arch, hostname, uptime, load, all);
-        }
-        else if (fossil_io_cstring_compare(argv[i], "network") == 0)
-        {
-            bool interfaces = false, connections = false, ports = false, routes = false;
-            bool stats = false, watch = false;
-            ccstring ping_host = cnull, trace_host = cnull, dns_host = cnull;
-
-            for (int j = i + 1; j < argc && argv[j][0] == '-'; j++)
-            {
-                if (fossil_io_cstring_compare(argv[j], "--interfaces") == 0)
-                    interfaces = true;
-                else if (fossil_io_cstring_compare(argv[j], "--connections") == 0)
-                    connections = true;
-                else if (fossil_io_cstring_compare(argv[j], "--ports") == 0)
-                    ports = true;
-                else if (fossil_io_cstring_compare(argv[j], "--routes") == 0)
-                    routes = true;
-                else if (fossil_io_cstring_compare(argv[j], "--stats") == 0)
-                    stats = true;
-                else if (fossil_io_cstring_compare(argv[j], "--ping") == 0 && j + 1 < argc)
-                    ping_host = argv[++j];
-                else if (fossil_io_cstring_compare(argv[j], "--trace") == 0 && j + 1 < argc)
-                    trace_host = argv[++j];
-                else if (fossil_io_cstring_compare(argv[j], "--dns") == 0 && j + 1 < argc)
-                    dns_host = argv[++j];
-                else if (fossil_io_cstring_compare(argv[j], "--watch") == 0)
-                    watch = true;
-                i = j;
-            }
-            fossil_squid_network(interfaces, connections, ports, routes, stats, ping_host, trace_host, dns_host, watch);
         }
         else if (fossil_io_cstring_compare(argv[i], "service") == 0)
         {

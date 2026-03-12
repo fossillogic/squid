@@ -34,20 +34,19 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         fossil_io_printf("{blue,bold,underline}Core System Commands:{normal}\n");
         fossil_io_printf("  {cyan,bold}process{normal}     - Display and manage system processes\n");
         fossil_io_printf("  {cyan,bold}monitor{normal}     - Real-time monitoring of system resources\n");
-        fossil_io_printf("  {cyan,bold}health{normal}      - System health diagnostics and checks\n");
-        fossil_io_printf("  {cyan,bold}doctor{normal}      - Perform system health diagnostics (alias)\n");
-        fossil_io_printf("  {cyan,bold}inspect{normal}     - Deep inspection of system resources\n");
-        fossil_io_printf("  {cyan,bold}introspect{normal}  - Low-level kernel and hardware introspection\n");
-        fossil_io_printf("  {cyan,bold}this{normal}        - Display current host system information\n");
-        fossil_io_printf("  {cyan,bold}network{normal}     - Display and analyze network information\n");
+        fossil_io_printf("  {cyan,bold}health{normal}      - Perform system health diagnostics and performance checks\n");
+        fossil_io_printf("  {cyan,bold}doctor{normal}      - Perform system health diagnostics and performance checks\n");
+        fossil_io_printf("  {cyan,bold}inspect{normal}     - Deep inspection of system resources and processes\n");
+        fossil_io_printf("  {cyan,bold}introspect{normal}  - Low-level introspection of kernel, hardware, and runtime\n");
+        fossil_io_printf("  {cyan,bold}this{normal}        - Display detailed information about the current host system\n");
         fossil_io_printf("  {cyan,bold}service{normal}     - Manage system services\n");
-        fossil_io_printf("  {cyan,bold}system{normal}      - System-level control tasks\n");
-        fossil_io_printf("  {cyan,bold}permit{normal}      - Inspect and modify system permissions\n");
+        fossil_io_printf("  {cyan,bold}system{normal}      - Execute system-level control tasks\n");
+        fossil_io_printf("  {cyan,bold}permit{normal}      - Inspect and modify system permissions and policies\n");
         fossil_io_printf("  {cyan,bold}notebook{normal}    - View and query system journal logs\n");
-        fossil_io_printf("  {cyan,bold}view{normal}        - Modern pager for logs and files\n");
-        fossil_io_printf("  {cyan,bold}echo{normal}        - Output formatted or encoded text\n");
+        fossil_io_printf("  {cyan,bold}view{normal}        - Modern pager for viewing logs, streams, or files\n");
+        fossil_io_printf("  {cyan,bold}echo{normal}        - Output formatted text, encoded text, or spoken responses\n");
         fossil_io_printf("  {cyan,bold}env{normal}         - Display and manage environment variables\n");
-        fossil_io_printf("  {cyan,bold}calc{normal}        - Built-in calculator\n");
+        fossil_io_printf("  {cyan,bold}calc{normal}        - Built-in calculator supporting arithmetic expressions\n");
         fossil_io_printf("  {cyan,bold}help{normal}        - Display help for commands\n");
         fossil_io_printf("\n{blue,bold,underline}Global Flags & Special Commands:{normal}\n");
         fossil_io_printf("  {cyan,bold}--help{normal}      - Show command help\n");
@@ -67,9 +66,9 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         if (fossil_io_cstring_equals(command, "process"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}process [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Display and manage system processes\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}-a, --all{normal}           Show all processes\n");
-            fossil_io_printf("  {cyan,bold}-u, --user <name>{normal}   Filter by user\n");
             fossil_io_printf("  {cyan,bold}-p, --pid <id>{normal}      Specific process\n");
             fossil_io_printf("  {cyan,bold}--name <pattern>{normal}    Filter by name\n");
             fossil_io_printf("  {cyan,bold}--sort <key>{normal}        Sort by: cpu/mem/pid/time\n");
@@ -81,11 +80,11 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         else if (fossil_io_cstring_equals(command, "monitor"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}monitor [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Real-time monitoring of system resources\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--cpu{normal}                Monitor CPU usage\n");
             fossil_io_printf("  {cyan,bold}--memory{normal}             Monitor memory usage\n");
             fossil_io_printf("  {cyan,bold}--disk{normal}               Monitor disk usage\n");
-            fossil_io_printf("  {cyan,bold}--network{normal}            Monitor network activity\n");
             fossil_io_printf("  {cyan,bold}--process{normal}            Monitor processes\n");
             fossil_io_printf("  {cyan,bold}--top <n>{normal}            Show top n consumers\n");
             fossil_io_printf("  {cyan,bold}-t, --interval <n>{normal}   Refresh interval (seconds)\n");
@@ -94,32 +93,33 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         else if (fossil_io_cstring_equals(command, "health") || fossil_io_cstring_equals(command, "doctor"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}health|doctor [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Perform system health diagnostics and performance checks\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--quick{normal}              Basic health check\n");
             fossil_io_printf("  {cyan,bold}--full{normal}               Complete diagnostics\n");
             fossil_io_printf("  {cyan,bold}--cpu{normal}                Check CPU health\n");
             fossil_io_printf("  {cyan,bold}--memory{normal}             Check memory health\n");
             fossil_io_printf("  {cyan,bold}--disk{normal}               Check disk health\n");
-            fossil_io_printf("  {cyan,bold}--network{normal}            Check network health\n");
             fossil_io_printf("  {cyan,bold}--report <file>{normal}      Export report to file\n");
             fossil_io_printf("  {cyan,bold}--fix{normal}                Attempt automatic repair\n");
-            fossil_io_printf("  {cyan,bold}--json{normal}               Structured report output\n");
+            fossil_io_printf("  {cyan,bold}--fson{normal}               Structured report output\n");
         }
         else if (fossil_io_cstring_equals(command, "inspect"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}inspect [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Deep inspection of system resources and processes\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--process <pid>{normal}      Inspect specific process\n");
             fossil_io_printf("  {cyan,bold}--memory{normal}             Memory layout information\n");
             fossil_io_printf("  {cyan,bold}--threads{normal}            Thread usage details\n");
             fossil_io_printf("  {cyan,bold}--fds{normal}                File descriptors\n");
-            fossil_io_printf("  {cyan,bold}--network{normal}            Network sockets\n");
             fossil_io_printf("  {cyan,bold}--limits{normal}             Resource limits\n");
-            fossil_io_printf("  {cyan,bold}--json{normal}               Structured output\n");
+            fossil_io_printf("  {cyan,bold}--fson{normal}               Structured output\n");
         }
         else if (fossil_io_cstring_equals(command, "introspect"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}introspect [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Low-level introspection of kernel, hardware, and runtime environment\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--kernel{normal}             Kernel information\n");
             fossil_io_printf("  {cyan,bold}--modules{normal}            Loaded kernel modules\n");
@@ -131,6 +131,7 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         else if (fossil_io_cstring_equals(command, "this"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}this [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Display detailed information about the current host system\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--os{normal}                 Operating system info\n");
             fossil_io_printf("  {cyan,bold}--arch{normal}               System architecture\n");
@@ -139,23 +140,10 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("  {cyan,bold}--load{normal}               Load averages\n");
             fossil_io_printf("  {cyan,bold}--all{normal}                Complete system profile\n");
         }
-        else if (fossil_io_cstring_equals(command, "network"))
-        {
-            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}network [options]{normal}\n");
-            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
-            fossil_io_printf("  {cyan,bold}--interfaces{normal}         Network interfaces\n");
-            fossil_io_printf("  {cyan,bold}--connections{normal}        Active connections\n");
-            fossil_io_printf("  {cyan,bold}--ports{normal}              Open ports\n");
-            fossil_io_printf("  {cyan,bold}--routes{normal}             Routing table\n");
-            fossil_io_printf("  {cyan,bold}--stats{normal}              Traffic statistics\n");
-            fossil_io_printf("  {cyan,bold}--ping <host>{normal}        Ping host\n");
-            fossil_io_printf("  {cyan,bold}--trace <host>{normal}       Traceroute\n");
-            fossil_io_printf("  {cyan,bold}--dns <host>{normal}         DNS lookup\n");
-            fossil_io_printf("  {cyan,bold}--watch{normal}              Live network activity\n");
-        }
         else if (fossil_io_cstring_equals(command, "service"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}service [action] <name>{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Manage system services\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}start <name>{normal}         Start service\n");
             fossil_io_printf("  {cyan,bold}stop <name>{normal}          Stop service\n");
@@ -170,6 +158,7 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         else if (fossil_io_cstring_equals(command, "system"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}system [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Execute system-level control tasks\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--reboot{normal}             Reboot system\n");
             fossil_io_printf("  {cyan,bold}--shutdown{normal}           Shutdown system\n");
@@ -181,6 +170,7 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         else if (fossil_io_cstring_equals(command, "permit"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}permit [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Inspect and modify system permissions and policies\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--user <name>{normal}        Inspect user permissions\n");
             fossil_io_printf("  {cyan,bold}--group <name>{normal}       Inspect group permissions\n");
@@ -192,6 +182,7 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         else if (fossil_io_cstring_equals(command, "notebook"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}notebook [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} View and query system journal logs\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--boot{normal}               Current boot logs\n");
             fossil_io_printf("  {cyan,bold}--service <name>{normal}     Service logs\n");
@@ -202,6 +193,7 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         else if (fossil_io_cstring_equals(command, "view"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}view [options] <file>{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Modern pager for viewing logs, streams, or files\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--follow{normal}             Live follow\n");
             fossil_io_printf("  {cyan,bold}--search <pattern>{normal}   Search text\n");
@@ -211,6 +203,7 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         else if (fossil_io_cstring_equals(command, "echo"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}echo [options] <text>{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Output formatted text, encoded text, or spoken responses\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--cipher <type>{normal}      Encode text\n");
             fossil_io_printf("  {cyan,bold}--speak{normal}              Text-to-speech\n");
@@ -220,6 +213,7 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         else if (fossil_io_cstring_equals(command, "env"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}env [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Display and manage environment variables\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--list{normal}               List all variables\n");
             fossil_io_printf("  {cyan,bold}--get <name>{normal}         Retrieve variable\n");
@@ -229,6 +223,7 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         else if (fossil_io_cstring_equals(command, "calc"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}calc [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Built-in calculator supporting arithmetic expressions\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--expr <expression>{normal}  Evaluate expression\n");
             fossil_io_printf("  {cyan,bold}--base <n>{normal}           Number base\n");
@@ -238,6 +233,7 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         else if (fossil_io_cstring_equals(command, "help"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}help [command]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Display help for commands\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
             fossil_io_printf("  {cyan,bold}--examples{normal}  Usage examples\n");
             fossil_io_printf("  {cyan,bold}--man{normal}       Full manual\n");
@@ -298,10 +294,10 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
                 fossil_io_printf("  {cyan,bold}squid introspect --kernel --modules{normal}\n");
             else if (fossil_io_cstring_equals(command, "this"))
                 fossil_io_printf("  {cyan,bold}squid this --all{normal}\n");
-            else if (fossil_io_cstring_equals(command, "network"))
-                fossil_io_printf("  {cyan,bold}squid network --ping google.com{normal}\n");
             else if (fossil_io_cstring_equals(command, "service"))
                 fossil_io_printf("  {cyan,bold}squid service restart nginx{normal}\n");
+            else if (fossil_io_cstring_equals(command, "permit"))
+                fossil_io_printf("  {cyan,bold}squid permit --user john --audit{normal}\n");
             else if (fossil_io_cstring_equals(command, "notebook"))
                 fossil_io_printf("  {cyan,bold}squid notebook --service nginx --tail 50{normal}\n");
             else if (fossil_io_cstring_equals(command, "view"))
@@ -330,5 +326,3 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("{cyan,italic}------------------------------------------------------------{normal}\n");
         }
     }
-    return 0;
-}
