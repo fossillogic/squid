@@ -216,8 +216,8 @@ bool app_entry(int argc, char **argv)
                 if (fossil_io_cstring_compare(argv[j], "-a") == 0 || 
                     fossil_io_cstring_compare(argv[j], "--all") == 0)
                     show_all = true;
-                else if (fossil_io_cstring_compare(argv[j], "-p") == 0 || 
-                         fossil_io_cstring_compare(argv[j], "--pid") == 0 && j + 1 < argc)
+                else if ((fossil_io_cstring_compare(argv[j], "-p") == 0 || 
+                         fossil_io_cstring_compare(argv[j], "--pid") == 0) && j + 1 < argc)
                     pid = atoi(argv[++j]);
                 else if (fossil_io_cstring_compare(argv[j], "--name") == 0 && j + 1 < argc)
                     name_pattern = argv[++j];
@@ -253,8 +253,8 @@ bool app_entry(int argc, char **argv)
                     process_mon = true;
                 else if (fossil_io_cstring_compare(argv[j], "--top") == 0 && j + 1 < argc)
                     top_n = (size_t)atoi(argv[++j]);
-                else if (fossil_io_cstring_compare(argv[j], "-t") == 0 || 
-                         fossil_io_cstring_compare(argv[j], "--interval") == 0 && j + 1 < argc)
+                else if ((fossil_io_cstring_compare(argv[j], "-t") == 0 || 
+                         fossil_io_cstring_compare(argv[j], "--interval") == 0) && j + 1 < argc)
                     interval = (size_t)atoi(argv[++j]);
                 else if (fossil_io_cstring_compare(argv[j], "--watch") == 0)
                     watch = true;
