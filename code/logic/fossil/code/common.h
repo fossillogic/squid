@@ -34,6 +34,7 @@
 #include <fossil/network/framework.h>
 
 #ifdef _WIN32
+#include <winsock2.h>
 #include <windows.h>
 #include <fileapi.h>
 #include <winbase.h>
