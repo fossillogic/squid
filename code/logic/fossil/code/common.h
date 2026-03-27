@@ -31,6 +31,7 @@
 #include <fossil/type/framework.h>
 #include <fossil/cryptic/framework.h>
 #include <fossil/threads/framework.h>
+#include <fossil/network/framework.h>
 
 #ifdef _WIN32
 #include <windows.h>
