@@ -137,6 +137,15 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("  {cyan,bold}--env <key>{normal}          Print environment variable\n");
             fossil_io_printf("  {cyan,bold}--json{normal}               JSON output\n");
             fossil_io_printf("  {cyan,bold}--color{normal}              Color output\n");
+            fossil_io_printf("  {cyan,bold}--mocking{normal}            Mocking SpongeBob case\n");
+            fossil_io_printf("  {cyan,bold}--rot13{normal}              ROT13 transform\n");
+            fossil_io_printf("  {cyan,bold}--shuffle{normal}            Randomize characters\n");
+            fossil_io_printf("  {cyan,bold}--zalgo{normal}              Glitch text\n");
+            fossil_io_printf("  {cyan,bold}--piglatin{normal}           Pig Latin transform\n");
+            fossil_io_printf("  {cyan,bold}--leet{normal}               Leet speak transform\n");
+            fossil_io_printf("  {cyan,bold}--upper-snake{normal}        UPPER_SNAKE_CASE\n");
+            fossil_io_printf("  {cyan,bold}--silly{normal}              Random case/symbols\n");
+            fossil_io_printf("  {cyan,bold}--cipher <type>{normal}      Encode text using a specified cipher\n");
         }
         else if (fossil_io_cstring_equals(command, "this"))
         {
