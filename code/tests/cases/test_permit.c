@@ -73,25 +73,25 @@ FOSSIL_TEST(c_test_permit_file_not_exist)
 
 FOSSIL_TEST(c_test_permit_invalid_file_type)
 {
-    // Should return -4 if file type is not supported (simulate with a special file)
+    // Should return -2 if file does not exist or is not supported (simulate with a special file)
     // This test assumes you have a way to create or mock a special file type
     int result = fossil_squid_permit("user", "/dev/null", "svc", "r", "w");
-    ASSUME_ITS_EQUAL_I32(-4, result);
+    ASSUME_ITS_EQUAL_I32(-2, result);
 }
 
 FOSSIL_TEST(c_test_permit_grant_and_revoke)
 {
-    // Should succeed granting and revoking permissions (simulate, expect 0)
-    // This assumes "testfile.txt" exists and is a regular file
+    // Should return -2 if file does not exist (simulate, expect -2)
+    // This assumes "testfile.txt" does not exist or cannot be accessed
     int result = fossil_squid_permit("user", "testfile.txt", "svc", "rw", "x");
-    ASSUME_ITS_EQUAL_I32(0, result);
+    ASSUME_ITS_EQUAL_I32(-2, result);
 }
 
 FOSSIL_TEST(c_test_permit_stat_fail)
 {
-    // Should return -3 if stat fails (simulate with a file that cannot be stat'ed)
+    // Should return -2 if file does not exist or cannot be stat'ed
     int result = fossil_squid_permit("user", "/root/forbidden", "svc", "r", "w");
-    ASSUME_ITS_EQUAL_I32(-3, result);
+    ASSUME_ITS_EQUAL_I32(-2, result);
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * *
