@@ -32,7 +32,47 @@ int fossil_squid_process(bool show_all,
                          int kill_pid,
                          int signal)
 {
-    (void)show_all; (void)pid; (void)name_pattern; (void)sort_key;
-    (void)kill_pid; (void)signal;
+    fossil_sys_process_list_t plist;
+    int rc = fossil_sys_process_list(&plist);
+    if (rc != 0) {
+        return rc;
+    }
+
+    // If kill_pid is set, try to terminate or signal the process
+    if (kill_pid > 0) {
+        if (signal > 0) {
+            return fossil_sys_process_send_signal((uint32_t)kill_pid, signal);
+        } else {
+            return fossil_sys_process_terminate((uint32_t)kill_pid, 1);
+        }
+    }
+
+    // If pid is set, show info for that process only
+    if (pid > 0) {
+        fossil_sys_process_info_t info;
+        if (fossil_sys_process_get_info((uint32_t)pid, &info) == 0) {
+            // Print process info (example, replace with your output logic)
+            printf("PID: %u, Name: %s, Memory: %llu KB, CPU: %.2f%%, Threads: %u\n",
+                   info.pid, info.name, (unsigned long long)(info.memory_bytes / 1024),
+                   info.cpu_percent, info.thread_count);
+            return 0;
+        } else {
+            printf("Process with PID %d not found.\n", pid);
+            return -1;
+        }
+    }
+
+    // Otherwise, list all or filtered processes
+    for (size_t i = 0; i < plist.count; ++i) {
+        fossil_sys_process_info_t *p = &plist.list[i];
+        if (!show_all && p->ppid == 1) // skip system/root processes unless show_all
+            continue;
+        if (name_pattern && name_pattern[0] != '\0' && strstr(p->name, name_pattern) == NULL)
+            continue;
+        // Print process info (example, replace with your output logic)
+        printf("PID: %u, Name: %s, Memory: %llu KB, CPU: %.2f%%, Threads: %u\n",
+               p->pid, p->name, (unsigned long long)(p->memory_bytes / 1024),
+               p->cpu_percent, p->thread_count);
+    }
     return 0;
 }

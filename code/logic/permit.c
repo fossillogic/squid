@@ -30,6 +30,55 @@ int fossil_squid_permit(ccstring user,
                         ccstring grant_mode,
                         ccstring revoke_mode)
 {
-    (void)user; (void)file; (void)service; (void)grant_mode; (void)revoke_mode;
-    return 0;
+    // Validate input
+    if (!user || !file || !service || !grant_mode || !revoke_mode)
+        return -1;
+
+    // Check if file exists
+    int32_t exists = fossil_io_filesys_exists(file);
+    if (exists <= 0)
+        return -2;
+
+    // Get file metadata
+    fossil_io_filesys_obj_t obj;
+    if (fossil_io_filesys_stat(file, &obj) != 0)
+        return -3;
+
+    // Only operate on files, dirs, or links
+    if (obj.type != FOSSIL_FILESYS_TYPE_FILE &&
+        obj.type != FOSSIL_FILESYS_TYPE_DIR &&
+        obj.type != FOSSIL_FILESYS_TYPE_LINK)
+        return -4;
+
+    // Parse grant_mode and revoke_mode (simple example: "rwx")
+    fossil_io_filesys_perms_t perms = obj.perms;
+    for (const char *p = grant_mode; *p; ++p)
+    {
+        if (*p == 'r')
+            perms.read = true;
+        if (*p == 'w')
+            perms.write = true;
+        if (*p == 'x')
+            perms.execute = true;
+    }
+    for (const char *p = revoke_mode; *p; ++p)
+    {
+        if (*p == 'r')
+            perms.read = false;
+        if (*p == 'w')
+            perms.write = false;
+        if (*p == 'x')
+            perms.execute = false;
+    }
+
+    // Set permissions based on object type
+    int32_t rc = 0;
+    if (obj.type == FOSSIL_FILESYS_TYPE_FILE)
+        rc = fossil_io_filesys_file_set_perms(file, perms);
+    else if (obj.type == FOSSIL_FILESYS_TYPE_DIR)
+        rc = fossil_io_filesys_dir_set_perms(file, perms);
+    else if (obj.type == FOSSIL_FILESYS_TYPE_LINK)
+        rc = fossil_io_filesys_link_set_perms(file, perms);
+
+    return rc;
 }

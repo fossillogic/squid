@@ -32,6 +32,60 @@ int fossil_squid_service(bool list,
                          ccstring enable,
                          ccstring disable)
 {
-    (void)list; (void)status; (void)start; (void)stop; (void)restart; (void)enable; (void)disable;
-    return 0;
+    int result = 0;
+
+    if (list)
+    {
+        fossil_io_printf("{cyan,bold}Listing all services...{reset}\n");
+        result = fossil_sys_call_execute("systemctl list-units --type=service");
+    }
+    else if (status && status[0])
+    {
+        char cmd[256];
+        fossil_io_printf("{yellow,bold}Checking status of service: {reset}%s\n", status);
+        snprintf(cmd, sizeof(cmd), "systemctl status %s", status);
+        result = fossil_sys_call_execute(cmd);
+    }
+    else if (start && start[0])
+    {
+        char cmd[256];
+        fossil_io_printf("{green,bold}Starting service: {reset}%s\n", start);
+        snprintf(cmd, sizeof(cmd), "systemctl start %s", start);
+        result = fossil_sys_call_execute(cmd);
+    }
+    else if (stop && stop[0])
+    {
+        char cmd[256];
+        fossil_io_printf("{red,bold}Stopping service: {reset}%s\n", stop);
+        snprintf(cmd, sizeof(cmd), "systemctl stop %s", stop);
+        result = fossil_sys_call_execute(cmd);
+    }
+    else if (restart && restart[0])
+    {
+        char cmd[256];
+        fossil_io_printf("{magenta,bold}Restarting service: {reset}%s\n", restart);
+        snprintf(cmd, sizeof(cmd), "systemctl restart %s", restart);
+        result = fossil_sys_call_execute(cmd);
+    }
+    else if (enable && enable[0])
+    {
+        char cmd[256];
+        fossil_io_printf("{blue,bold}Enabling service: {reset}%s\n", enable);
+        snprintf(cmd, sizeof(cmd), "systemctl enable %s", enable);
+        result = fossil_sys_call_execute(cmd);
+    }
+    else if (disable && disable[0])
+    {
+        char cmd[256];
+        fossil_io_printf("{bright_red,bold}Disabling service: {reset}%s\n", disable);
+        snprintf(cmd, sizeof(cmd), "systemctl disable %s", disable);
+        result = fossil_sys_call_execute(cmd);
+    }
+    else
+    {
+        fossil_io_printf("{red,bold}No operation specified. Please provide a valid service command.{reset}\n");
+        result = -1;
+    }
+
+    return result;
 }
