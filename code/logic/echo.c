@@ -24,49 +24,115 @@
  */
 #include "fossil/code/commands.h"
 
-int fossil_squid_echo(ccstring text,
-                      ccstring env_key,
-                      bool json,
-                      bool color)
+int fossil_squid_echo(
+    ccstring text,
+    ccstring env_key,
+    bool json,
+    bool color,
+    bool mocking,
+    bool rot13,
+    bool shuffle,
+    bool zalgo,
+    bool piglatin,
+    bool leet,
+    bool upper_snake,
+    bool silly,
+    ccstring cipher_type
+)
 {
     if (!text || !*text) {
         return 1; // Nothing to echo
     }
 
+    // Apply string transformations as requested
+    cstring transformed = fossil_io_cstring_create(text);
+
+    if (mocking) {
+        cstring tmp = fossil_io_cstring_mocking(transformed);
+        fossil_io_cstring_free(transformed);
+        transformed = tmp;
+    }
+    if (rot13) {
+        cstring tmp = fossil_io_cstring_rot13(transformed);
+        fossil_io_cstring_free(transformed);
+        transformed = tmp;
+    }
+    if (shuffle) {
+        cstring tmp = fossil_io_cstring_shuffle(transformed);
+        fossil_io_cstring_free(transformed);
+        transformed = tmp;
+    }
+    if (zalgo) {
+        cstring tmp = fossil_io_cstring_zalgo(transformed);
+        fossil_io_cstring_free(transformed);
+        transformed = tmp;
+    }
+    if (piglatin) {
+        cstring tmp = fossil_io_cstring_create(NULL);
+        fossil_io_cstring_piglatin(transformed, tmp, 4096);
+        fossil_io_cstring_free(transformed);
+        transformed = tmp;
+    }
+    if (leet) {
+        cstring tmp = fossil_io_cstring_create(NULL);
+        fossil_io_cstring_leetspeak(transformed, tmp, 4096);
+        fossil_io_cstring_free(transformed);
+        transformed = tmp;
+    }
+    if (upper_snake) {
+        cstring tmp = fossil_io_cstring_upper_snake(transformed);
+        fossil_io_cstring_free(transformed);
+        transformed = tmp;
+    }
+    if (silly) {
+        cstring tmp = fossil_io_cstring_create(NULL);
+        fossil_io_cstring_silly(transformed, tmp, 4096);
+        fossil_io_cstring_free(transformed);
+        transformed = tmp;
+    }
+
+    // Handle cipher flag if provided
+    if (cipher_type && *cipher_type) {
+        char *ciphered = fossil_io_cipher_encode(transformed, cipher_type);
+        if (ciphered) {
+            fossil_io_cstring_free(transformed);
+            transformed = fossil_io_cstring_create(ciphered);
+            free(ciphered);
+        }
+    }
+
     // If env_key is provided, print it as a prefix
     if (env_key && *env_key) {
-        // Try to resolve env_key as a canonical Fossil Sys environment key
         const char *env_val = fossil_sys_env_get(env_key);
         if (env_val) {
             if (color) {
-            fossil_io_printf("{cyan,bold}%s:{reset} %s ", env_key, env_val);
+                fossil_io_printf("{cyan,bold}%s:{reset} %s ", env_key, env_val);
             } else {
-            fossil_io_printf("%s: %s ", env_key, env_val);
+                fossil_io_printf("%s: %s ", env_key, env_val);
             }
         } else {
-            // Fallback: just print the key as before
             if (color) {
-            fossil_io_printf("{cyan,bold}%s:{reset} ", env_key);
+                fossil_io_printf("{cyan,bold}%s:{reset} ", env_key);
             } else {
-            fossil_io_printf("%s: ", env_key);
+                fossil_io_printf("%s: ", env_key);
             }
         }
     }
 
     if (json) {
-        // Output as JSON string
         if (color) {
-            fossil_io_printf("{green}{bold}\"%s\"{reset}\n", text);
+            fossil_io_printf("{green}{bold}\"%s\"{reset}\n", transformed);
         } else {
-            fossil_io_printf("\"%s\"\n", text);
+            fossil_io_printf("\"%s\"\n", transformed);
         }
     } else {
         if (color) {
-            fossil_io_printf("{yellow}%s{reset}\n", text);
+            fossil_io_printf("{yellow}%s{reset}\n", transformed);
         } else {
-            fossil_io_puts(text);
+            fossil_io_puts(transformed);
         }
     }
 
+    fossil_io_cstring_free(transformed);
     return 0;
 }
