@@ -4,37 +4,25 @@
 
 ### A System Monitoring Power Utility by **Fossil Logic**
 
-Squid Tool is the ultimate **all-in-one system administration and monitoring utility** for admins, developers, and system engineers. It consolidates essential process management, system diagnostics, and real-time monitoring into a single command-line interface—eliminating tool fragmentation. Unique commands like `health` for comprehensive diagnostics, `audit` for security tracking, `inspect` for deep analysis, and `introspect` for kernel-level insights provide capabilities rarely found in traditional utilities, delivering the precision and control professionals demand.
+Squid Tool is a powerful **all-in-one system administration and monitoring utility** for admins, developers, and engineers. It unifies essential process management, system diagnostics, and system profiling into a single, consistent command-line interface—eliminating the need for multiple fragmented tools.
 
 ---
 
 ## Features
 
-- **Process Management** — `process` command with filtering, sorting, hierarchy view, and signal control
-- **Real-Time Monitoring** — `monitor` for live CPU, memory, disk, and network metrics with customizable intervals
-- **System Health & Diagnostics** — `health`/`doctor` commands for quick and comprehensive system analysis with auto-repair
-- **Deep Resource Inspection** — `inspect` for process details, memory layout, threads, file descriptors, and limits
-- **Kernel & Hardware Introspection** — `introspect` for kernel info, modules, hardware details, and firmware data
-- **System Overview** — `this` command for quick host system profile and statistics
-- **Network Analysis** — `network` for interfaces, connections, ports, routes, ping, traceroute, and DNS lookup
-- **Service Management** — `service` for lifecycle control and monitoring of system services
-- **System Control** — `system` for reboot, shutdown, suspend, and target management
-- **Permission Management** — `permit` to inspect and modify user/group permissions with anomaly detection
-- **Log Viewing** — `notebook` for journalctl-like log querying and `view` for modern paging
-- **Environment & Utilities** — `env` for variable management, `calc` for expressions, `echo` for formatted output and encoding
-- **Cross-Platform Support** — Seamless operation on Linux, macOS, and Windows
+- **Process Management** — Use the `process` command to display, filter, and manage system processes. Supports actions like showing all processes, filtering by PID or name, checking existence, viewing details, managing priorities, sending signals, suspending/resuming, terminating, killing, waiting for exit, and spawning new processes.
+- **Service Management** — The `service` command allows you to list, check status, start, stop, restart, enable, and disable system services.
+- **System Operations** — Use the `system` command for system-level actions such as displaying system info, uptime, shutdown, reboot, updating, and loading configuration files.
+- **Resource Inspection** — The `inspect` command examines files, directories, processes, and services, with support for structured JSON output.
+- **Permission Management** — The `permit` command inspects and modifies permissions for users, files, and services, including granting and revoking permissions.
+- **Environment Variable Management** — The `env` command lists, gets, sets, unsets, and exports environment variables.
+- **Flexible Output** — The `echo` command prints text or system information, with options for environment variables, JSON, and colored output.
+- **Comprehensive System Profiling** — The `this` command provides a detailed system profile, including OS, hardware, CPU, memory, storage, network, virtualization, uptime, limits, and more, with structured output options.
+- **Built-in Help** — The `help` command displays usage information, examples, and manual pages for all commands.
 
+---
 
-## **Why Choose Squid Tool?**
-- **Unified Command Suite**: One tool replaces `ps`, `top`, `systemctl`, `journalctl`, `ifconfig`, `netstat`, `lsof`, and more—eliminating context switching.
-- **Unique Advanced Commands**: `health`/`doctor` for comprehensive diagnostics with auto-repair, `audit` for security tracking, `inspect` for deep process analysis, and `introspect` for kernel-level insights.
-- **Real-Time Monitoring**: Live CPU, memory, disk, and network metrics with customizable intervals via the `monitor` command.
-- **Deep System Visibility**: From process hierarchies and file descriptors to kernel modules and hardware details—complete transparency in one utility.
-- **Built for Professionals**: Designed specifically for system administrators, engineers, and developers who demand precision and control.
-- **Cross-Platform**: Seamless operation on Linux, macOS, and Windows with consistent command syntax.
-- **Modern & Extensible**: Built with Meson for performance, with structured JSON output and advanced formatting options.
-
-Squid Tool is the comprehensive solution for professionals who need power, visibility, and efficiency in system administration.
+Squid Tool delivers unified, professional-grade system administration features with a modern, extensible interface.
 
 ---
 
@@ -91,7 +79,6 @@ Ensure you have the following installed before starting:
 | Command | Description | Flags / Options |
 |---------|-------------|----------------|
 | `process` | Display and manage system processes. | <br> `-a`, `--all` (show all processes)<br> `-p`, `--pid <id>` (select specific process)<br> `--name <pattern>` (filter by process name)<br> `--exists <pid>` (check if process exists)<br> `--info <pid>` (show detailed info)<br> `--env <pid>` (show environment variables)<br> `--exe <pid>` (show executable path)<br> `--ppid <pid>` (show parent process ID)<br> `--priority <pid>` (show process priority)<br> `--set-priority <pid> <value>` (change process priority)<br> `--suspend <pid>` (pause process)<br> `--resume <pid>` (resume process)<br> `--terminate <pid>` (terminate process gracefully)<br> `--kill <pid>` (force kill process)<br> `--signal <pid> <sig>` (send signal)<br> `--wait <pid> [--timeout <ms>]` (wait for process exit)<br> `--spawn <exe> [args...]` (start new process)<br> |
-| `health` | Check system health and diagnostics. | `--cpu` (CPU load)<br>`--mem` (memory usage)<br>`--disk` (disk health)<br>`--network`<br>`--report` (generate summary report) |
 | `service` | Manage system services. | `--list` (show services)<br>`--status <name>`<br>`--start <name>`<br>`--stop <name>`<br>`--restart <name>`<br>`--enable <name>`<br>`--disable <name>` |
 | `system` | System-level operations (like `systemctl`). | `--info` (system info)<br>`--uptime`<br>`--shutdown`<br>`--reboot`<br>`--update`<br>`--config <file>` |
 | `inspect` | Examine objects, files, or runtime state. | `--file <path>`<br>`--dir <path>`<br>`--process <pid>`<br>`--service <name>`<br>`--json` (structured output) |
@@ -123,7 +110,6 @@ Ensure you have the following installed before starting:
 |---|---|
 | `squid process -a --sort mem --top 10` | List all processes and show the top 10 by memory usage. Uses `-a`/`--all`, `--sort mem`, and `--top 10`. |
 | `squid process --name nginx --sort cpu --top 5` | Show top 5 `nginx` processes by CPU usage. Uses `--name nginx`, `--sort cpu`, and `--top 5`. |
-| `squid health --cpu --mem --disk --report health.txt` | Run CPU, memory, and disk diagnostics and save the report to `health.txt`. Uses `--cpu`, `--mem`, `--disk`, and `--report`. |
 | `squid inspect --process 1234 --json` | Inspect process 1234 and output structured JSON. Uses `--process 1234` and `--json`. |
 | `squid service --restart nginx` | Restart the `nginx` service. Uses `--restart nginx`. |
 | `squid env --list` | List all environment variables. Uses `--list`. |
@@ -141,7 +127,6 @@ Squid Tool consolidates many common **system administration utilities** into a *
 | **Squid Command**      | **Traditional Commands**                   | **Purpose**                                              |
 |------------------------|--------------------------------------------|----------------------------------------------------------|
 | `squid process`        | `ps`, `top`, `pgrep`, `kill`               | Display and manage processes with filtering and signals.  |
-| `squid health`         | Custom diagnostic scripts                   | System health diagnostics and performance analysis.       |
 | `squid inspect`        | `lsof`, `/proc`, `pmap`                    | Deep inspection of processes and resources.               |
 | `squid this`           | `hostnamectl`, `uptime`, `uname`           | Quick overview of the current system.                     |
 | `squid service`        | `systemctl`, `service`                     | Service lifecycle management.                             |
