@@ -62,6 +62,29 @@ int fossil_squid_process(bool show_all,
         }
     }
 
+    // Sort the process list if sort_key is provided
+    if (sort_key && sort_key[0] != '\0') {
+        int cmp(const void *a, const void *b) {
+            const fossil_sys_process_info_t *pa = (const fossil_sys_process_info_t *)a;
+            const fossil_sys_process_info_t *pb = (const fossil_sys_process_info_t *)b;
+            if (strcmp(sort_key, "cpu") == 0) {
+                if (pb->cpu_percent > pa->cpu_percent) return 1;
+                if (pb->cpu_percent < pa->cpu_percent) return -1;
+                return 0;
+            } else if (strcmp(sort_key, "mem") == 0) {
+                if (pb->memory_bytes > pa->memory_bytes) return 1;
+                if (pb->memory_bytes < pa->memory_bytes) return -1;
+                return 0;
+            } else if (strcmp(sort_key, "pid") == 0) {
+                return (int)pa->pid - (int)pb->pid;
+            } else if (strcmp(sort_key, "name") == 0) {
+                return strcmp(pa->name, pb->name);
+            }
+            return 0;
+        }
+        qsort(plist.list, plist.count, sizeof(fossil_sys_process_info_t), cmp);
+    }
+
     // Otherwise, list all or filtered processes
     for (size_t i = 0; i < plist.count; ++i) {
         fossil_sys_process_info_t *p = &plist.list[i];
