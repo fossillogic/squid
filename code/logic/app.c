@@ -208,7 +208,7 @@ bool app_entry(int argc, char **argv)
             int priority_pid = -1, set_priority_pid = -1, set_priority_value = 0;
             int suspend_pid = -1, resume_pid = -1, terminate_pid = -1, kill_pid = -1;
             int signal_pid = -1, signal_value = 0, wait_pid = -1, wait_timeout_ms = 0;
-            ccstring name_pattern = cnull, sort_key = cnull, spawn_exe = cnull;
+            ccstring name_pattern = cnull, spawn_exe = cnull;
             ccstring spawn_args_buf[64] = {0};
             ccstring const *spawn_args = cnull;
 
@@ -263,7 +263,6 @@ bool app_entry(int argc, char **argv)
                     spawn_args_buf[k] = cnull;
                     spawn_args = (k > 0) ? spawn_args_buf : cnull;
                 }
-                // sort_key is parsed but not used in fossil_squid_process
                 i = j;
             }
             fossil_squid_process(
