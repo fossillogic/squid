@@ -14,7 +14,8 @@ app_lib = static_library('app-code',
         'inspect.c',
         'env.c',
         'permit.c',
-        'network.c'
+        'network.c',
+        'this.c'
     ),
     install: true,
     dependencies: [code_deps],
