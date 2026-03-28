@@ -10,8 +10,6 @@ app_lib = static_library('app-code',
         'service.c',
         'echo.c',
         'env.c',
-        'inspect.c',
-        'env.c',
         'permit.c',
         'this.c'
     ),

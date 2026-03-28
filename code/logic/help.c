@@ -37,7 +37,6 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         fossil_io_printf("  {cyan,bold}process{normal}     - Display and manage system processes.\n");
         fossil_io_printf("  {cyan,bold}service{normal}     - Manage system services.\n");
         fossil_io_printf("  {cyan,bold}system{normal}      - System-level operations (like systemctl).\n");
-        fossil_io_printf("  {cyan,bold}inspect{normal}     - Examine objects, files, or runtime state.\n");
         fossil_io_printf("  {cyan,bold}permit{normal}      - Adjust permissions for users, files, or services.\n");
         fossil_io_printf("  {cyan,bold}env{normal}         - Inspect or set environment variables.\n");
         fossil_io_printf("  {cyan,bold}echo{normal}        - Print text or system information.\n");
@@ -106,17 +105,6 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("  {cyan,bold}--reboot{normal}             Reboot system\n");
             fossil_io_printf("  {cyan,bold}--update{normal}             Update system\n");
             fossil_io_printf("  {cyan,bold}--config <file>{normal}      Use config file\n");
-        }
-        else if (fossil_io_cstring_equals(command, "inspect"))
-        {
-            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}inspect [options]{normal}\n");
-            fossil_io_printf("{blue,bold,underline}Description:{normal} Examine objects, files, or runtime state.\n");
-            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
-            fossil_io_printf("  {cyan,bold}--file <path>{normal}        Inspect file\n");
-            fossil_io_printf("  {cyan,bold}--dir <path>{normal}         Inspect directory\n");
-            fossil_io_printf("  {cyan,bold}--process <pid>{normal}      Inspect process\n");
-            fossil_io_printf("  {cyan,bold}--service <name>{normal}     Inspect service\n");
-            fossil_io_printf("  {cyan,bold}--json{normal}               Structured output\n");
         }
         else if (fossil_io_cstring_equals(command, "permit"))
         {
@@ -199,8 +187,6 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
                 fossil_io_printf("  {cyan,bold}squid service --restart nginx{normal}\n");
             else if (fossil_io_cstring_equals(command, "system"))
                 fossil_io_printf("  {cyan,bold}squid system --info --uptime{normal}\n");
-            else if (fossil_io_cstring_equals(command, "inspect"))
-                fossil_io_printf("  {cyan,bold}squid inspect --file /etc/passwd --json{normal}\n");
             else if (fossil_io_cstring_equals(command, "permit"))
                 fossil_io_printf("  {cyan,bold}squid permit --user alice --grant rw{normal}\n");
             else if (fossil_io_cstring_equals(command, "env"))

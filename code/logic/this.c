@@ -47,7 +47,7 @@
  * @param json Output in JSON format
  * @return 0 on success, non-zero on error
  */
-int fossil_squid_profile(bool system,
+int fossil_squid_this(bool system,
                          bool arch,
                          bool memory,
                          bool endianness,

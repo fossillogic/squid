@@ -91,21 +91,6 @@ int fossil_squid_process(
 );
 
 /**
- * Deep inspection of system resources and processes.
- * @param file Inspect specific file
- * @param dir Inspect specific directory
- * @param process Inspect process by PID
- * @param service Inspect service by name
- * @param json Output results in JSON format
- * @return 0 on success, non-zero on error
- */
-int fossil_squid_inspect(ccstring file,
-                         ccstring dir,
-                         int process,
-                         ccstring service,
-                         bool json);
-
-/**
  * Display information about the current host system.
  * @param info Show system info
  * @param uptime Show system uptime
@@ -207,7 +192,7 @@ int fossil_squid_echo(ccstring text,
  * @param json Output in JSON format
  * @return 0 on success, non-zero on error
  */
-int fossil_squid_profile(bool system,
+int fossil_squid_this(bool system,
                          bool arch,
                          bool memory,
                          bool endianness,
