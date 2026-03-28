@@ -25,11 +25,10 @@
 #include "fossil/code/commands.h"
 
 int fossil_squid_echo(ccstring text,
-                      ccstring cipher_type,
-                      bool speak,
-                      size_t repeat,
-                      ccstring format_mode)
+                      ccstring env_key,
+                      bool json,
+                      bool color)
 {
-    (void)text; (void)cipher_type; (void)speak; (void)repeat; (void)format_mode;
+    (void)text; (void)env_key; (void)json; (void)color;
     return 0;
 }

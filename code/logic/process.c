@@ -29,12 +29,10 @@ int fossil_squid_process(bool show_all,
                          int pid,
                          ccstring name_pattern,
                          ccstring sort_key,
-                         bool show_tree,
-                         int kill_signal,
-                         bool watch,
-                         size_t limit)
+                         int kill_pid,
+                         int signal)
 {
     (void)show_all; (void)pid; (void)name_pattern; (void)sort_key;
-    (void)show_tree; (void)kill_signal; (void)watch; (void)limit;
+    (void)kill_pid; (void)signal;
     return 0;
 }

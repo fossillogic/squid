@@ -27,8 +27,9 @@
 int fossil_squid_env(bool list,
                      ccstring get,
                      ccstring set,
-                     ccstring unset)
+                     ccstring unset,
+                     ccstring export_file)
 {
-    (void)list; (void)get; (void)set; (void)unset;
+    (void)list; (void)get; (void)set; (void)unset; (void)export_file;
     return 0;
 }

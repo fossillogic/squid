@@ -27,12 +27,12 @@
 int fossil_squid_monitor(bool cpu,
                          bool memory,
                          bool disk,
-                         bool process,
-                         size_t top_n,
+                         bool net,
                          size_t interval,
-                         bool watch)
+                         size_t top_n,
+                         bool graph)
 {
-    (void)cpu; (void)memory; (void)disk; (void)process;
-    (void)top_n; (void)interval; (void)watch;
+    (void)cpu; (void)memory; (void)disk; (void)net;
+    (void)top_n; (void)interval; (void)graph;
     return 0;
 }

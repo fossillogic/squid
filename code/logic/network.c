@@ -24,11 +24,12 @@
  */
 #include "fossil/code/commands.h"
 
-int fossil_squid_calc(ccstring expression,
-                      int base,
-                      bool scientific,
-                      size_t precision)
+int fossil_squid_network(bool interfaces,
+                         bool connections,
+                         bool routes,
+                         bool stats,
+                         bool monitor)
 {
-    (void)expression; (void)base; (void)scientific; (void)precision;
+    (void)interfaces; (void)connections; (void)routes; (void)stats; (void)monitor;
     return 0;
 }

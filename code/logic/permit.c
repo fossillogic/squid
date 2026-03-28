@@ -25,13 +25,11 @@
 #include "fossil/code/commands.h"
 
 int fossil_squid_permit(ccstring user,
-                        ccstring group,
+                        ccstring file,
+                        ccstring service,
                         ccstring grant_mode,
-                        ccstring revoke_mode,
-                        bool recursive,
-                        bool audit)
+                        ccstring revoke_mode)
 {
-    (void)user; (void)group; (void)grant_mode; (void)revoke_mode;
-    (void)recursive; (void)audit;
+    (void)user; (void)file; (void)service; (void)grant_mode; (void)revoke_mode;
     return 0;
 }

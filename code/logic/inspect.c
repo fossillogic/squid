@@ -24,14 +24,12 @@
  */
 #include "fossil/code/commands.h"
 
-int fossil_squid_inspect(int process,
-                         bool memory,
-                         bool threads,
-                         bool fds,
-                         bool limits,
-                         bool fson_output)
+int fossil_squid_inspect(ccstring file,
+                         ccstring dir,
+                         int process,
+                         ccstring service,
+                         bool json)
 {
-    (void)process; (void)memory; (void)threads;
-    (void)fds; (void)limits; (void)fson_output;
+    (void)file; (void)dir; (void)process; (void)service; (void)json;
     return 0;
 }

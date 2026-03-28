@@ -24,16 +24,12 @@
  */
 #include "fossil/code/commands.h"
 
-int fossil_squid_health(bool quick,
-                        bool full,
-                        bool cpu,
+int fossil_squid_health(bool cpu,
                         bool memory,
                         bool disk,
-                        ccstring report_file,
-                        bool fix,
-                        bool fson_output)
+                        bool network,
+                        bool report)
 {
-    (void)quick; (void)full; (void)cpu; (void)memory;
-    (void)disk; (void)report_file; (void)fix; (void)fson_output;
+    (void)cpu; (void)memory; (void)disk; (void)network; (void)report;
     return 0;
 }

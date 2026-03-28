@@ -47,207 +47,131 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual);
  * @param pid Specific process ID
  * @param name_pattern Filter by process name pattern
  * @param sort_key Sort key (cpu, mem, pid, time)
- * @param show_tree Display process hierarchy
- * @param kill_signal Send signal to process
- * @param watch Enable live refresh
- * @param limit Limit number of results
+ * @param kill_pid PID of process to terminate
+ * @param signal Signal number to send
  * @return 0 on success
  */
 int fossil_squid_process(bool show_all,
                          int pid,
                          ccstring name_pattern,
                          ccstring sort_key,
-                         bool show_tree,
-                         int kill_signal,
-                         bool watch,
-                         size_t limit);
+                         int kill_pid,
+                         int signal);
 
 /**
  * Real-time monitoring of system resources.
  * @param cpu Monitor CPU usage
  * @param memory Monitor memory usage
  * @param disk Monitor disk usage
- * @param process Monitor specific processes
- * @param top_n Show top N processes by resource usage
+ * @param net Monitor network usage
  * @param interval Refresh interval in seconds
- * @param watch Enable continuous monitoring
+ * @param top_n Show top N processes by resource usage
+ * @param graph Enable graphical/ASCII output
  * @return 0 on success, non-zero on error
  */
 int fossil_squid_monitor(bool cpu,
                          bool memory,
                          bool disk,
-                         bool process,
-                         size_t top_n,
+                         bool net,
                          size_t interval,
-                         bool watch);
+                         size_t top_n,
+                         bool graph);
+
+/**
+ * Display network configuration and traffic.
+ * @param interfaces Show network interfaces
+ * @param connections Show active connections
+ * @param routes Show routing table
+ * @param stats Show network statistics
+ * @param monitor Enable real-time traffic monitoring
+ * @return 0 on success, non-zero on error
+ */
+int fossil_squid_network(bool interfaces,
+                         bool connections,
+                         bool routes,
+                         bool stats,
+                         bool monitor);
 
 /**
  * Perform system health diagnostics.
- * @param quick Perform a quick health check
- * @param full Perform a full health check
  * @param cpu Include CPU diagnostics
  * @param memory Include memory diagnostics
  * @param disk Include disk diagnostics
- * @param report_file Output report to file
- * @param fix Attempt to fix detected issues
- * @param fson_output Output results in FSON format
+ * @param network Include network diagnostics
+ * @param report Generate summary report
  * @return 0 on success, non-zero on error
  */
-int fossil_squid_health(bool quick,
-                        bool full,
-                        bool cpu,
+int fossil_squid_health(bool cpu,
                         bool memory,
                         bool disk,
-                        ccstring report_file,
-                        bool fix,
-                        bool fson_output);
+                        bool network,
+                        bool report);
 
 /**
  * Deep inspection of system resources and processes.
- * @param process Inspect specific process by PID
- * @param memory Inspect memory layout
- * @param threads Show thread usage
- * @param fds Show file descriptors
- * @param limits Show resource limits
- * @param fson_output Output results in FSON format
+ * @param file Inspect specific file
+ * @param dir Inspect specific directory
+ * @param process Inspect process by PID
+ * @param service Inspect service by name
+ * @param json Output results in JSON format
  * @return 0 on success, non-zero on error
  */
-int fossil_squid_inspect(int process,
-                         bool memory,
-                         bool threads,
-                         bool fds,
-                         bool limits,
-                         bool fson_output);
-
-/**
- * Low-level system introspection.
- * @param kernel Include kernel information
- * @param modules Include loaded modules
- * @param hardware Include hardware details
- * @param boot Include boot information
- * @param firmware Include firmware details
- * @param fson_output Output results in FSON format
- * @return 0 on success, non-zero on error
- */
-int fossil_squid_introspect(bool kernel,
-                            bool modules,
-                            bool hardware,
-                            bool boot,
-                            bool firmware,
-                            bool fson_output);
+int fossil_squid_inspect(ccstring file,
+                         ccstring dir,
+                         int process,
+                         ccstring service,
+                         bool json);
 
 /**
  * Display information about the current host system.
- * @param os Include operating system information
- * @param arch Include architecture information
- * @param hostname Include hostname information
- * @param uptime Include system uptime
- * @param load Include system load
- * @param all Include all available information
+ * @param info Show system info
+ * @param uptime Show system uptime
+ * @param shutdown Shut down the system
+ * @param reboot Reboot the system
+ * @param update Perform system update
+ * @param config_file Path to config file
  * @return 0 on success, non-zero on error
  */
-int fossil_squid_this(bool os,
-                      bool arch,
-                      bool hostname,
-                      bool uptime,
-                      bool load,
-                      bool all);
+int fossil_squid_system(bool info,
+                        bool uptime,
+                        bool shutdown,
+                        bool reboot,
+                        bool update,
+                        ccstring config_file);
 
 /**
  * Manage system services.
- * @param action Action to perform (start, stop, restart, reload, status)
- * @param service_name Name of the service
- * @param enable Enable the service at boot
- * @param disable Disable the service at boot
  * @param list List all services
- * @param watch Enable continuous monitoring
+ * @param status Service name to show status
+ * @param start Service name to start
+ * @param stop Service name to stop
+ * @param restart Service name to restart
+ * @param enable Service name to enable at boot
+ * @param disable Service name to disable at boot
  * @return 0 on success, non-zero on error
  */
-int fossil_squid_service(ccstring action,
-                         ccstring service_name,
-                         bool enable,
-                         bool disable,
-                         bool list,
-                         bool watch);
-
-/**
- * System-level control commands.
- * @param reboot Reboot the system
- * @param shutdown Shut down the system
- * @param suspend Suspend the system
- * @param hibernate Hibernate the system
- * @param targets List available power targets
- * @param default_target Set default power target
- * @return 0 on success, non-zero on error
- */
-int fossil_squid_system(bool reboot,
-                        bool shutdown,
-                        bool suspend,
-                        bool hibernate,
-                        bool targets,
-                        ccstring default_target);
+int fossil_squid_service(bool list,
+                         ccstring status,
+                         ccstring start,
+                         ccstring stop,
+                         ccstring restart,
+                         ccstring enable,
+                         ccstring disable);
 
 /**
  * Inspect and modify permissions.
  * @param user User to inspect or modify permissions for
- * @param group Group to inspect or modify permissions for
+ * @param file File path to inspect or modify
+ * @param service Service name to inspect or modify
  * @param grant_mode Mode to grant permissions
  * @param revoke_mode Mode to revoke permissions
- * @param recursive Apply changes recursively
- * @param audit Enable auditing of permission changes
  * @return 0 on success, non-zero on error
  */
 int fossil_squid_permit(ccstring user,
-                        ccstring group,
+                        ccstring file,
+                        ccstring service,
                         ccstring grant_mode,
-                        ccstring revoke_mode,
-                        bool recursive,
-                        bool audit);
-
-/**
- * Query system journal logs.
- * @param boot Include logs from the current boot
- * @param service Filter logs by service name
- * @param since_time Show logs since the specified time
- * @param tail_lines Show the last N lines
- * @param follow Continuously follow new log entries
- * @return 0 on success, non-zero on error
- */
-int fossil_squid_notebook(bool boot,
-                          ccstring service,
-                          ccstring since_time,
-                          size_t tail_lines,
-                          bool follow);
-
-/**
- * View logs, streams, or files using a pager.
- * @param file Path to the file to view
- * @param follow Continuously follow the file for new content
- * @param search_pattern Search for a specific pattern in the file
- * @param lines Number of lines to display (0 for all)
- * @param color Enable colorized output
- * @return 0 on success, non-zero on error
- */
-int fossil_squid_view(ccstring file,
-                      bool follow,
-                      ccstring search_pattern,
-                      size_t lines,
-                      bool color);
-
-/**
- * Output formatted text.
- * @param text Text to output
- * @param cipher_type Type of cipher to use for encoding
- * @param speak Enable text-to-speech
- * @param repeat Number of times to repeat the output
- * @param format_mode Format mode for the output
- * @return 0 on success, non-zero on error
- */
-int fossil_squid_echo(ccstring text,
-                      ccstring cipher_type,
-                      bool speak,
-                      size_t repeat,
-                      ccstring format_mode);
+                        ccstring revoke_mode);
 
 /**
  * Manage environment variables.
@@ -255,25 +179,27 @@ int fossil_squid_echo(ccstring text,
  * @param get Get the value of a specific environment variable
  * @param set Set the value of a specific environment variable
  * @param unset Unset a specific environment variable
+ * @param export_file Export environment to file
  * @return 0 on success, non-zero on error
  */
 int fossil_squid_env(bool list,
                      ccstring get,
                      ccstring set,
-                     ccstring unset);
+                     ccstring unset,
+                     ccstring export_file);
 
 /**
- * Built-in calculator.
- * @param expression Mathematical expression to evaluate
- * @param base Numerical base for output (e.g., 10 for decimal, 16 for hexadecimal)
- * @param scientific Use scientific notation for output
- * @param precision Number of decimal places for output
+ * Output formatted text or system information.
+ * @param text Text to output
+ * @param env_key Environment variable key to print
+ * @param json Output in JSON format
+ * @param color Enable colorized output
  * @return 0 on success, non-zero on error
  */
-int fossil_squid_calc(ccstring expression,
-                      int base,
-                      bool scientific,
-                      size_t precision);
+int fossil_squid_echo(ccstring text,
+                      ccstring env_key,
+                      bool json,
+                      bool color);
 
 #ifdef __cplusplus
 }
