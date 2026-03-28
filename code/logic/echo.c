@@ -29,6 +29,44 @@ int fossil_squid_echo(ccstring text,
                       bool json,
                       bool color)
 {
-    (void)text; (void)env_key; (void)json; (void)color;
+    if (!text || !*text) {
+        return 1; // Nothing to echo
+    }
+
+    // If env_key is provided, print it as a prefix
+    if (env_key && *env_key) {
+        // Try to resolve env_key as a canonical Fossil Sys environment key
+        const char *env_val = fossil_sys_env_get(env_key);
+        if (env_val) {
+            if (color) {
+            fossil_io_printf("{cyan,bold}%s:{reset} %s ", env_key, env_val);
+            } else {
+            fossil_io_printf("%s: %s ", env_key, env_val);
+            }
+        } else {
+            // Fallback: just print the key as before
+            if (color) {
+            fossil_io_printf("{cyan,bold}%s:{reset} ", env_key);
+            } else {
+            fossil_io_printf("%s: ", env_key);
+            }
+        }
+    }
+
+    if (json) {
+        // Output as JSON string
+        if (color) {
+            fossil_io_printf("{green}{bold}\"%s\"{reset}\n", text);
+        } else {
+            fossil_io_printf("\"%s\"\n", text);
+        }
+    } else {
+        if (color) {
+            fossil_io_printf("{yellow}%s{reset}\n", text);
+        } else {
+            fossil_io_puts(text);
+        }
+    }
+
     return 0;
 }
