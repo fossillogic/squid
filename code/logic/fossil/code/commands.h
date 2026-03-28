@@ -158,16 +158,36 @@ int fossil_squid_env(bool list,
 
 /**
  * Output formatted text or system information.
- * @param text Text to output
- * @param env_key Environment variable key to print
- * @param json Output in JSON format
- * @param color Enable colorized output
+ * @param text Text to output (--text <msg>)
+ * @param env_key Environment variable key to print (--env <key>)
+ * @param json Output in JSON format (--json)
+ * @param color Enable colorized output (--color)
+ * @param mocking Apply mocking SpongeBob case (--mocking)
+ * @param rot13 Apply ROT13 transform (--rot13)
+ * @param shuffle Randomize characters (--shuffle)
+ * @param zalgo Apply glitch text effect (--zalgo)
+ * @param piglatin Apply Pig Latin transform (--piglatin)
+ * @param leet Apply Leet speak transform (--leet)
+ * @param upper_snake Apply UPPER_SNAKE_CASE transform (--upper-snake)
+ * @param silly Apply random case/symbols (--silly)
+ * @param cipher_type Encode text using specified cipher (--cipher <type>)
  * @return 0 on success, non-zero on error
  */
-int fossil_squid_echo(ccstring text,
-                      ccstring env_key,
-                      bool json,
-                      bool color);
+int fossil_squid_echo(
+    ccstring text,
+    ccstring env_key,
+    bool json,
+    bool color,
+    bool mocking,
+    bool rot13,
+    bool shuffle,
+    bool zalgo,
+    bool piglatin,
+    bool leet,
+    bool upper_snake,
+    bool silly,
+    ccstring cipher_type
+);
 
 /**
  * Display a comprehensive system profile with lookup features for each major host property.
