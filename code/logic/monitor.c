@@ -64,13 +64,13 @@ int fossil_squid_monitor(bool cpu,
         fossil_sys_hostinfo_memory_t meminfo;
         if ((ret = fossil_sys_hostinfo_get_memory(&meminfo)) == 0) {
             printf("Memory:\n");
-            printf("  Total: %llu MiB\n", meminfo.total_memory / 1024 / 1024);
-            printf("  Free: %llu MiB\n", meminfo.free_memory / 1024 / 1024);
-            printf("  Used: %llu MiB\n", meminfo.used_memory / 1024 / 1024);
-            printf("  Available: %llu MiB\n", meminfo.available_memory / 1024 / 1024);
-            printf("  Swap Total: %llu MiB\n", meminfo.total_swap / 1024 / 1024);
-            printf("  Swap Free: %llu MiB\n", meminfo.free_swap / 1024 / 1024);
-            printf("  Swap Used: %llu MiB\n", meminfo.used_swap / 1024 / 1024);
+            printf("  Total: %lu MiB\n", meminfo.total_memory / 1024 / 1024);
+            printf("  Free: %lu MiB\n", meminfo.free_memory / 1024 / 1024);
+            printf("  Used: %lu MiB\n", meminfo.used_memory / 1024 / 1024);
+            printf("  Available: %lu MiB\n", meminfo.available_memory / 1024 / 1024);
+            printf("  Swap Total: %lu MiB\n", meminfo.total_swap / 1024 / 1024);
+            printf("  Swap Free: %lu MiB\n", meminfo.free_swap / 1024 / 1024);
+            printf("  Swap Used: %lu MiB\n", meminfo.used_swap / 1024 / 1024);
         }
     }
 
@@ -95,9 +95,9 @@ int fossil_squid_monitor(bool cpu,
             printf("Storage:\n");
             printf("  Device: %s\n", storageinfo.device_name);
             printf("  Mount: %s\n", storageinfo.mount_point);
-            printf("  Total: %llu GiB\n", storageinfo.total_space / 1024 / 1024 / 1024);
-            printf("  Free: %llu GiB\n", storageinfo.free_space / 1024 / 1024 / 1024);
-            printf("  Used: %llu GiB\n", storageinfo.used_space / 1024 / 1024 / 1024);
+            printf("  Total: %lu GiB\n", storageinfo.total_space / 1024 / 1024 / 1024);
+            printf("  Free: %lu GiB\n", storageinfo.free_space / 1024 / 1024 / 1024);
+            printf("  Used: %lu GiB\n", storageinfo.used_space / 1024 / 1024 / 1024);
             printf("  Filesystem: %s\n", storageinfo.filesystem_type);
         }
     }
@@ -119,8 +119,8 @@ int fossil_squid_monitor(bool cpu,
     fossil_sys_hostinfo_uptime_t uptimeinfo;
     if ((ret = fossil_sys_hostinfo_get_uptime(&uptimeinfo)) == 0) {
         printf("Uptime:\n");
-        printf("  Uptime: %llu seconds\n", uptimeinfo.uptime_seconds);
-        printf("  Boot Time (epoch): %llu\n", uptimeinfo.boot_time_epoch);
+        printf("  Uptime: %lu seconds\n", uptimeinfo.uptime_seconds);
+        printf("  Boot Time (epoch): %lu\n", uptimeinfo.boot_time_epoch);
     }
 
     // Virtualization info
@@ -167,9 +167,9 @@ int fossil_squid_monitor(bool cpu,
     fossil_sys_hostinfo_limits_t liminfo;
     if ((ret = fossil_sys_hostinfo_get_limits(&liminfo)) == 0) {
         printf("Limits:\n");
-        printf("  Max Open Files: %llu\n", liminfo.max_open_files);
-        printf("  Max Processes: %llu\n", liminfo.max_processes);
-        printf("  Page Size: %llu bytes\n", liminfo.page_size);
+        printf("  Max Open Files: %lu\n", liminfo.max_open_files);
+        printf("  Max Processes: %lu\n", liminfo.max_processes);
+        printf("  Page Size: %lu bytes\n", liminfo.page_size);
     }
 
     // Time/locale info
@@ -207,8 +207,8 @@ int fossil_squid_monitor(bool cpu,
         printf("  Name: %s\n", gpuinfo.name);
         printf("  Vendor: %s\n", gpuinfo.vendor);
         printf("  Driver: %s\n", gpuinfo.driver_version);
-        printf("  Memory Total: %llu MiB\n", gpuinfo.memory_total / 1024 / 1024);
-        printf("  Memory Free: %llu MiB\n", gpuinfo.memory_free / 1024 / 1024);
+        printf("  Memory Total: %lu MiB\n", gpuinfo.memory_total / 1024 / 1024);
+        printf("  Memory Free: %lu MiB\n", gpuinfo.memory_free / 1024 / 1024);
     }
 
     // Power info
