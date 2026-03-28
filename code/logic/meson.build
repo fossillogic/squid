@@ -1,7 +1,18 @@
 dir = include_directories('.')
 
 app_lib = static_library('app-code',
-    files('app.c', 'magic.c'),
+    files(
+        'app.c',
+        'magic.c',
+        'help.c',
+        'process.c',
+        'system.c',
+        'service.c',
+        'echo.c',
+        'env.c',
+        'permit.c',
+        'this.c'
+    ),
     install: true,
     dependencies: [code_deps],
     include_directories: dir)
