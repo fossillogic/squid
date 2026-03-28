@@ -98,6 +98,27 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --json              JSON output\n");
     fossil_io_printf("{bright_black}    --color             Color output\n");
 
+    fossil_io_printf("{cyan}  this             {reset}Display a comprehensive system profile\n");
+    fossil_io_printf("{bright_black}    --system            OS, kernel, hostname, user, domain, platform\n");
+    fossil_io_printf("{bright_black}    --arch              Architecture, CPU, cores, threads, frequency\n");
+    fossil_io_printf("{bright_black}    --memory            Total, free, used, available, swap\n");
+    fossil_io_printf("{bright_black}    --endianness        Little/big endian\n");
+    fossil_io_printf("{bright_black}    --power             AC/battery, charging, battery %%/time left\n");
+    fossil_io_printf("{bright_black}    --cpu               Model, vendor, cores, threads, frequency, features\n");
+    fossil_io_printf("{bright_black}    --gpu               Name, vendor, driver, memory\n");
+    fossil_io_printf("{bright_black}    --storage           Device, mount, total/free/used, filesystem\n");
+    fossil_io_printf("{bright_black}    --env               Shell, home, lang, path, term, user\n");
+    fossil_io_printf("{bright_black}    --virtualization    VM/container detection, hypervisor, container type\n");
+    fossil_io_printf("{bright_black}    --uptime            Uptime, boot time\n");
+    fossil_io_printf("{bright_black}    --network           Hostname, IP, MAC, interface, status\n");
+    fossil_io_printf("{bright_black}    --process           PID, PPID, exe, cwd, name, privileges\n");
+    fossil_io_printf("{bright_black}    --limits            Max open files, max processes, page size\n");
+    fossil_io_printf("{bright_black}    --time              Timezone, UTC offset, locale\n");
+    fossil_io_printf("{bright_black}    --hardware          Manufacturer, product, serial, BIOS\n");
+    fossil_io_printf("{bright_black}    --display           Count, resolution, refresh rate\n");
+    fossil_io_printf("{bright_black}    --all               Show everything\n");
+    fossil_io_printf("{bright_black}    --json              Structured output\n");
+
     fossil_io_printf("{cyan}  help             {reset}Display help for commands\n");
     fossil_io_printf("{bright_black}    --examples          Usage examples\n");
     fossil_io_printf("{bright_black}    --man               Full manual\n");
@@ -376,6 +397,58 @@ bool app_entry(int argc, char **argv)
                 i = j;
             }
             fossil_squid_echo(text, env_key, json, color);
+        }
+        else if (fossil_io_cstring_compare(argv[i], "this") == 0)
+        {
+            bool system = false, arch = false, memory = false, endianness = false, power = false;
+            bool cpu = false, gpu = false, storage = false, env = false, virtualization = false;
+            bool uptime = false, network = false, process = false, limits = false, time = false;
+            bool hardware = false, display = false, all = false, json = false;
+            for (int j = i + 1; j < argc && argv[j][0] == '-'; j++)
+            {
+                if (fossil_io_cstring_compare(argv[j], "--system") == 0)
+                    system = true;
+                else if (fossil_io_cstring_compare(argv[j], "--arch") == 0)
+                    arch = true;
+                else if (fossil_io_cstring_compare(argv[j], "--memory") == 0)
+                    memory = true;
+                else if (fossil_io_cstring_compare(argv[j], "--endianness") == 0)
+                    endianness = true;
+                else if (fossil_io_cstring_compare(argv[j], "--power") == 0)
+                    power = true;
+                else if (fossil_io_cstring_compare(argv[j], "--cpu") == 0)
+                    cpu = true;
+                else if (fossil_io_cstring_compare(argv[j], "--gpu") == 0)
+                    gpu = true;
+                else if (fossil_io_cstring_compare(argv[j], "--storage") == 0)
+                    storage = true;
+                else if (fossil_io_cstring_compare(argv[j], "--env") == 0)
+                    env = true;
+                else if (fossil_io_cstring_compare(argv[j], "--virtualization") == 0)
+                    virtualization = true;
+                else if (fossil_io_cstring_compare(argv[j], "--uptime") == 0)
+                    uptime = true;
+                else if (fossil_io_cstring_compare(argv[j], "--network") == 0)
+                    network = true;
+                else if (fossil_io_cstring_compare(argv[j], "--process") == 0)
+                    process = true;
+                else if (fossil_io_cstring_compare(argv[j], "--limits") == 0)
+                    limits = true;
+                else if (fossil_io_cstring_compare(argv[j], "--time") == 0)
+                    time = true;
+                else if (fossil_io_cstring_compare(argv[j], "--hardware") == 0)
+                    hardware = true;
+                else if (fossil_io_cstring_compare(argv[j], "--display") == 0)
+                    display = true;
+                else if (fossil_io_cstring_compare(argv[j], "--all") == 0)
+                    all = true;
+                else if (fossil_io_cstring_compare(argv[j], "--json") == 0)
+                    json = true;
+                i = j;
+            }
+            fossil_squid_profile(system, arch, memory, endianness, power, cpu, gpu, storage, env,
+                                 virtualization, uptime, network, process, limits, time, hardware,
+                                 display, all, json);
         }
         else if (fossil_io_cstring_compare(argv[i], "help") == 0)
         {

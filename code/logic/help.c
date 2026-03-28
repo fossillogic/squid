@@ -44,6 +44,7 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         fossil_io_printf("  {cyan,bold}permit{normal}      - Adjust permissions for users, files, or services.\n");
         fossil_io_printf("  {cyan,bold}env{normal}         - Inspect or set environment variables.\n");
         fossil_io_printf("  {cyan,bold}echo{normal}        - Print text or system information.\n");
+        fossil_io_printf("  {cyan,bold}this{normal}        - Display a comprehensive system profile.\n");
         fossil_io_printf("  {cyan,bold}help{normal}        - Display help for commands.\n");
 
         fossil_io_printf("\n{blue,bold,underline}Global Flags & Special Commands:{normal}\n");
@@ -176,6 +177,31 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("  {cyan,bold}--json{normal}               JSON output\n");
             fossil_io_printf("  {cyan,bold}--color{normal}              Color output\n");
         }
+        else if (fossil_io_cstring_equals(command, "this"))
+        {
+            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}this [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Display a comprehensive system profile, with lookup features for each major host property.\n");
+            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
+            fossil_io_printf("  {cyan,bold}--system{normal}             OS, kernel, hostname, user, domain, platform\n");
+            fossil_io_printf("  {cyan,bold}--arch{normal}               Architecture, CPU, cores, threads, frequency\n");
+            fossil_io_printf("  {cyan,bold}--memory{normal}             Total, free, used, available, swap\n");
+            fossil_io_printf("  {cyan,bold}--endianness{normal}         Little/big endian\n");
+            fossil_io_printf("  {cyan,bold}--power{normal}              AC/battery, charging, battery %%/time left\n");
+            fossil_io_printf("  {cyan,bold}--cpu{normal}                Model, vendor, cores, threads, frequency, features\n");
+            fossil_io_printf("  {cyan,bold}--gpu{normal}                Name, vendor, driver, memory\n");
+            fossil_io_printf("  {cyan,bold}--storage{normal}            Device, mount, total/free/used, filesystem\n");
+            fossil_io_printf("  {cyan,bold}--env{normal}                Shell, home, lang, path, term, user\n");
+            fossil_io_printf("  {cyan,bold}--virtualization{normal}     VM/container detection, hypervisor, container type\n");
+            fossil_io_printf("  {cyan,bold}--uptime{normal}             Uptime, boot time\n");
+            fossil_io_printf("  {cyan,bold}--network{normal}            Hostname, IP, MAC, interface, status\n");
+            fossil_io_printf("  {cyan,bold}--process{normal}            PID, PPID, exe, cwd, name, privileges\n");
+            fossil_io_printf("  {cyan,bold}--limits{normal}             Max open files, max processes, page size\n");
+            fossil_io_printf("  {cyan,bold}--time{normal}               Timezone, UTC offset, locale\n");
+            fossil_io_printf("  {cyan,bold}--hardware{normal}           Manufacturer, product, serial, BIOS\n");
+            fossil_io_printf("  {cyan,bold}--display{normal}            Count, resolution, refresh rate\n");
+            fossil_io_printf("  {cyan,bold}--all{normal}                Show everything\n");
+            fossil_io_printf("  {cyan,bold}--json{normal}               Structured output\n");
+        }
         else if (fossil_io_cstring_equals(command, "help"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}help [command]{normal}\n");
@@ -214,6 +240,8 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
                 fossil_io_printf("  {cyan,bold}squid env --set PATH=/usr/bin --export env.txt{normal}\n");
             else if (fossil_io_cstring_equals(command, "echo"))
                 fossil_io_printf("  {cyan,bold}squid echo --env HOME --color{normal}\n");
+            else if (fossil_io_cstring_equals(command, "this"))
+                fossil_io_printf("  {cyan,bold}squid this --system --cpu --memory --json{normal}\n");
             else if (fossil_io_cstring_equals(command, "help"))
                 fossil_io_printf("  {cyan,bold}squid help --command process{normal}\n");
         }

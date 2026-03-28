@@ -201,6 +201,49 @@ int fossil_squid_echo(ccstring text,
                       bool json,
                       bool color);
 
+/**
+ * Display a comprehensive system profile with lookup features for each major host property.
+ * @param system Show OS, kernel, hostname, user, domain, platform
+ * @param arch Show architecture, CPU, cores, threads, frequency
+ * @param memory Show memory details (total, free, used, available, swap)
+ * @param endianness Show endianness (little/big)
+ * @param power Show power status (AC/battery, charging, battery %, time left)
+ * @param cpu Show CPU details (model, vendor, cores, threads, frequency, features)
+ * @param gpu Show GPU details (name, vendor, driver, memory)
+ * @param storage Show storage details (device, mount, total/free/used, filesystem)
+ * @param env Show environment variables (shell, home, lang, path, term, user)
+ * @param virtualization Show virtualization/container info
+ * @param uptime Show uptime and boot time
+ * @param network Show network info (hostname, IP, MAC, interface, status)
+ * @param process Show process info (PID, PPID, exe, cwd, name, privileges)
+ * @param limits Show system limits (max open files, max processes, page size)
+ * @param time Show time info (timezone, UTC offset, locale)
+ * @param hardware Show hardware info (manufacturer, product, serial, BIOS)
+ * @param display Show display info (count, resolution, refresh rate)
+ * @param all Show all information
+ * @param json Output in JSON format
+ * @return 0 on success, non-zero on error
+ */
+int fossil_squid_profile(bool system,
+                         bool arch,
+                         bool memory,
+                         bool endianness,
+                         bool power,
+                         bool cpu,
+                         bool gpu,
+                         bool storage,
+                         bool env,
+                         bool virtualization,
+                         bool uptime,
+                         bool network,
+                         bool process,
+                         bool limits,
+                         bool time,
+                         bool hardware,
+                         bool display,
+                         bool all,
+                         bool json);
+
 #ifdef __cplusplus
 }
 #endif
