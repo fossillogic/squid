@@ -43,13 +43,6 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --timeout <ms>      Timeout for wait (ms)\n");
     fossil_io_printf("{bright_black}    --spawn <exe> [args...]  Start new process\n");
 
-    fossil_io_printf("{cyan}  network          {reset}Display network configuration and traffic\n");
-    fossil_io_printf("{bright_black}    --interfaces        Show interfaces\n");
-    fossil_io_printf("{bright_black}    --connections       Show connections\n");
-    fossil_io_printf("{bright_black}    --routes            Show routes\n");
-    fossil_io_printf("{bright_black}    --stats             Show statistics\n");
-    fossil_io_printf("{bright_black}    --monitor           Real-time traffic\n");
-
     fossil_io_printf("{cyan}  health           {reset}Check system health and diagnostics\n");
     fossil_io_printf("{bright_black}    --cpu               CPU load\n");
     fossil_io_printf("{bright_black}    --mem               Memory usage\n");
@@ -279,25 +272,6 @@ bool app_entry(int argc, char **argv)
                 spawn_exe,
                 spawn_args
             );
-        }
-        else if (fossil_io_cstring_compare(argv[i], "network") == 0)
-        {
-            bool interfaces = false, connections = false, routes = false, stats = false, monitor = false;
-            for (int j = i + 1; j < argc && argv[j][0] == '-'; j++)
-            {
-                if (fossil_io_cstring_compare(argv[j], "--interfaces") == 0)
-                    interfaces = true;
-                else if (fossil_io_cstring_compare(argv[j], "--connections") == 0)
-                    connections = true;
-                else if (fossil_io_cstring_compare(argv[j], "--routes") == 0)
-                    routes = true;
-                else if (fossil_io_cstring_compare(argv[j], "--stats") == 0)
-                    stats = true;
-                else if (fossil_io_cstring_compare(argv[j], "--monitor") == 0)
-                    monitor = true;
-                i = j;
-            }
-            fossil_squid_network(interfaces, connections, routes, stats, monitor);
         }
         else if (fossil_io_cstring_compare(argv[i], "health") == 0)
         {

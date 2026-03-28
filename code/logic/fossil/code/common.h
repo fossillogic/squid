@@ -25,7 +25,6 @@
 #ifndef FOSSIL_APP_COMMON_H
 #define FOSSIL_APP_COMMON_H
 
-#include <fossil/network/framework.h> // include above other frameworks
 #include <fossil/sys/framework.h>
 #include <fossil/io/framework.h>
 #include <fossil/math/framework.h>

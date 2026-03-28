@@ -35,7 +35,6 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         fossil_io_printf("{blue,bold,underline}Core System Commands:{normal}\n");
 
         fossil_io_printf("  {cyan,bold}process{normal}     - Display and manage system processes.\n");
-        fossil_io_printf("  {cyan,bold}network{normal}     - Display network configuration and traffic.\n");
         fossil_io_printf("  {cyan,bold}health{normal}      - Check system health and diagnostics.\n");
         fossil_io_printf("  {cyan,bold}service{normal}     - Manage system services.\n");
         fossil_io_printf("  {cyan,bold}system{normal}      - System-level operations (like systemctl).\n");
@@ -83,17 +82,6 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("  {cyan,bold}--signal <pid> <sig>{normal}        Send signal\n");
             fossil_io_printf("  {cyan,bold}--wait <pid> [--timeout <ms>]{normal} Wait for process exit\n");
             fossil_io_printf("  {cyan,bold}--spawn <exe> [args...]{normal}     Start new process\n");
-        }
-        else if (fossil_io_cstring_equals(command, "network"))
-        {
-            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}network [options]{normal}\n");
-            fossil_io_printf("{blue,bold,underline}Description:{normal} Display network configuration and traffic.\n");
-            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
-            fossil_io_printf("  {cyan,bold}--interfaces{normal}         Show network interfaces\n");
-            fossil_io_printf("  {cyan,bold}--connections{normal}        Show active connections\n");
-            fossil_io_printf("  {cyan,bold}--routes{normal}             Show routing table\n");
-            fossil_io_printf("  {cyan,bold}--stats{normal}              Show network statistics\n");
-            fossil_io_printf("  {cyan,bold}--monitor{normal}            Real-time traffic monitoring\n");
         }
         else if (fossil_io_cstring_equals(command, "health"))
         {
@@ -219,8 +207,6 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("\n{blue,bold,underline}Example usage:{normal}\n");
             if (fossil_io_cstring_equals(command, "process"))
                 fossil_io_printf("  {cyan,bold}squid process -a --sort mem --kill 1234{normal}\n");
-            else if (fossil_io_cstring_equals(command, "network"))
-                fossil_io_printf("  {cyan,bold}squid network --interfaces --monitor{normal}\n");
             else if (fossil_io_cstring_equals(command, "health"))
                 fossil_io_printf("  {cyan,bold}squid health --cpu --mem --report{normal}\n");
             else if (fossil_io_cstring_equals(command, "service"))

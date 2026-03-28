@@ -91,7 +91,6 @@ Ensure you have the following installed before starting:
 | Command | Description | Flags / Options |
 |---------|-------------|----------------|
 | `process` | Display and manage system processes. | <br> `-a`, `--all` (show all processes)<br> `-p`, `--pid <id>` (select specific process)<br> `--name <pattern>` (filter by process name)<br> `--exists <pid>` (check if process exists)<br> `--info <pid>` (show detailed info)<br> `--env <pid>` (show environment variables)<br> `--exe <pid>` (show executable path)<br> `--ppid <pid>` (show parent process ID)<br> `--priority <pid>` (show process priority)<br> `--set-priority <pid> <value>` (change process priority)<br> `--suspend <pid>` (pause process)<br> `--resume <pid>` (resume process)<br> `--terminate <pid>` (terminate process gracefully)<br> `--kill <pid>` (force kill process)<br> `--signal <pid> <sig>` (send signal)<br> `--wait <pid> [--timeout <ms>]` (wait for process exit)<br> `--spawn <exe> [args...]` (start new process)<br> |
-| `network` | Display network configuration and traffic. | `--interfaces`<br>`--connections`<br>`--routes`<br>`--stats`<br>`--monitor` (real-time traffic) |
 | `health` | Check system health and diagnostics. | `--cpu` (CPU load)<br>`--mem` (memory usage)<br>`--disk` (disk health)<br>`--network`<br>`--report` (generate summary report) |
 | `service` | Manage system services. | `--list` (show services)<br>`--status <name>`<br>`--start <name>`<br>`--stop <name>`<br>`--restart <name>`<br>`--enable <name>`<br>`--disable <name>` |
 | `system` | System-level operations (like `systemctl`). | `--info` (system info)<br>`--uptime`<br>`--shutdown`<br>`--reboot`<br>`--update`<br>`--config <file>` |
@@ -126,7 +125,6 @@ Ensure you have the following installed before starting:
 | `squid process --name nginx --sort cpu --top 5` | Show top 5 `nginx` processes by CPU usage. Uses `--name nginx`, `--sort cpu`, and `--top 5`. |
 | `squid health --cpu --mem --disk --report health.txt` | Run CPU, memory, and disk diagnostics and save the report to `health.txt`. Uses `--cpu`, `--mem`, `--disk`, and `--report`. |
 | `squid inspect --process 1234 --json` | Inspect process 1234 and output structured JSON. Uses `--process 1234` and `--json`. |
-| `squid network --interfaces --stats` | Show network interfaces and statistics. Uses `--interfaces` and `--stats`. |
 | `squid service --restart nginx` | Restart the `nginx` service. Uses `--restart nginx`. |
 | `squid env --list` | List all environment variables. Uses `--list`. |
 | `squid env --set DEBUG=1` | Set the environment variable `DEBUG` to `1`. Uses `--set DEBUG=1`. |

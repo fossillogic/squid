@@ -4,8 +4,7 @@ code_deps = [
     dependency('fossil-math'),
     dependency('fossil-type'),
     dependency('fossil-cryptic'),
-    dependency('fossil-threads'),
-    dependency('fossil-network'),
+    dependency('fossil-threads')
 ]
 
 subdir('logic')
