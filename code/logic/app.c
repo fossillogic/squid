@@ -43,13 +43,6 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --timeout <ms>      Timeout for wait (ms)\n");
     fossil_io_printf("{bright_black}    --spawn <exe> [args...]  Start new process\n");
 
-    fossil_io_printf("{cyan}  health           {reset}Check system health and diagnostics\n");
-    fossil_io_printf("{bright_black}    --cpu               CPU load\n");
-    fossil_io_printf("{bright_black}    --mem               Memory usage\n");
-    fossil_io_printf("{bright_black}    --disk              Disk health\n");
-    fossil_io_printf("{bright_black}    --network           Network health\n");
-    fossil_io_printf("{bright_black}    --report            Generate summary report\n");
-
     fossil_io_printf("{cyan}  service          {reset}Manage system services\n");
     fossil_io_printf("{bright_black}    --list              Show services\n");
     fossil_io_printf("{bright_black}    --status <name>     Service status\n");
@@ -272,25 +265,6 @@ bool app_entry(int argc, char **argv)
                 spawn_exe,
                 spawn_args
             );
-        }
-        else if (fossil_io_cstring_compare(argv[i], "health") == 0)
-        {
-            bool cpu = false, memory = false, disk = false, network = false, report = false;
-            for (int j = i + 1; j < argc && argv[j][0] == '-'; j++)
-            {
-                if (fossil_io_cstring_compare(argv[j], "--cpu") == 0)
-                    cpu = true;
-                else if (fossil_io_cstring_compare(argv[j], "--mem") == 0)
-                    memory = true;
-                else if (fossil_io_cstring_compare(argv[j], "--disk") == 0)
-                    disk = true;
-                else if (fossil_io_cstring_compare(argv[j], "--network") == 0)
-                    network = true;
-                else if (fossil_io_cstring_compare(argv[j], "--report") == 0)
-                    report = true;
-                i = j;
-            }
-            fossil_squid_health(cpu, memory, disk, network, report);
         }
         else if (fossil_io_cstring_compare(argv[i], "inspect") == 0)
         {

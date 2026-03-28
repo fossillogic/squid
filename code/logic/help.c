@@ -35,7 +35,6 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         fossil_io_printf("{blue,bold,underline}Core System Commands:{normal}\n");
 
         fossil_io_printf("  {cyan,bold}process{normal}     - Display and manage system processes.\n");
-        fossil_io_printf("  {cyan,bold}health{normal}      - Check system health and diagnostics.\n");
         fossil_io_printf("  {cyan,bold}service{normal}     - Manage system services.\n");
         fossil_io_printf("  {cyan,bold}system{normal}      - System-level operations (like systemctl).\n");
         fossil_io_printf("  {cyan,bold}inspect{normal}     - Examine objects, files, or runtime state.\n");
@@ -82,17 +81,6 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("  {cyan,bold}--signal <pid> <sig>{normal}        Send signal\n");
             fossil_io_printf("  {cyan,bold}--wait <pid> [--timeout <ms>]{normal} Wait for process exit\n");
             fossil_io_printf("  {cyan,bold}--spawn <exe> [args...]{normal}     Start new process\n");
-        }
-        else if (fossil_io_cstring_equals(command, "health"))
-        {
-            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}health [options]{normal}\n");
-            fossil_io_printf("{blue,bold,underline}Description:{normal} Check system health and diagnostics.\n");
-            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
-            fossil_io_printf("  {cyan,bold}--cpu{normal}                CPU load\n");
-            fossil_io_printf("  {cyan,bold}--mem{normal}                Memory usage\n");
-            fossil_io_printf("  {cyan,bold}--disk{normal}               Disk health\n");
-            fossil_io_printf("  {cyan,bold}--network{normal}            Network health\n");
-            fossil_io_printf("  {cyan,bold}--report{normal}             Generate summary report\n");
         }
         else if (fossil_io_cstring_equals(command, "service"))
         {
@@ -207,8 +195,6 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("\n{blue,bold,underline}Example usage:{normal}\n");
             if (fossil_io_cstring_equals(command, "process"))
                 fossil_io_printf("  {cyan,bold}squid process -a --sort mem --kill 1234{normal}\n");
-            else if (fossil_io_cstring_equals(command, "health"))
-                fossil_io_printf("  {cyan,bold}squid health --cpu --mem --report{normal}\n");
             else if (fossil_io_cstring_equals(command, "service"))
                 fossil_io_printf("  {cyan,bold}squid service --restart nginx{normal}\n");
             else if (fossil_io_cstring_equals(command, "system"))

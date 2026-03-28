@@ -91,36 +91,6 @@ int fossil_squid_process(
 );
 
 /**
- * Display network configuration and traffic.
- * @param interfaces Show network interfaces
- * @param connections Show active connections
- * @param routes Show routing table
- * @param stats Show network statistics
- * @param monitor Enable real-time traffic monitoring
- * @return 0 on success, non-zero on error
- */
-int fossil_squid_network(bool interfaces,
-                         bool connections,
-                         bool routes,
-                         bool stats,
-                         bool monitor);
-
-/**
- * Perform system health diagnostics.
- * @param cpu Include CPU diagnostics
- * @param memory Include memory diagnostics
- * @param disk Include disk diagnostics
- * @param network Include network diagnostics
- * @param report Generate summary report
- * @return 0 on success, non-zero on error
- */
-int fossil_squid_health(bool cpu,
-                        bool memory,
-                        bool disk,
-                        bool network,
-                        bool report);
-
-/**
  * Deep inspection of system resources and processes.
  * @param file Inspect specific file
  * @param dir Inspect specific directory
