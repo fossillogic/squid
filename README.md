@@ -91,7 +91,6 @@ Ensure you have the following installed before starting:
 | Command | Description | Flags / Options |
 |---------|-------------|----------------|
 | `process` | Display and manage system processes. | <br> `-a`, `--all` (show all processes)<br> `-p`, `--pid <id>` (select specific process)<br> `--name <pattern>` (filter by process name)<br> `--exists <pid>` (check if process exists)<br> `--info <pid>` (show detailed info)<br> `--env <pid>` (show environment variables)<br> `--exe <pid>` (show executable path)<br> `--ppid <pid>` (show parent process ID)<br> `--priority <pid>` (show process priority)<br> `--set-priority <pid> <value>` (change process priority)<br> `--suspend <pid>` (pause process)<br> `--resume <pid>` (resume process)<br> `--terminate <pid>` (terminate process gracefully)<br> `--kill <pid>` (force kill process)<br> `--signal <pid> <sig>` (send signal)<br> `--wait <pid> [--timeout <ms>]` (wait for process exit)<br> `--spawn <exe> [args...]` (start new process)<br> |
-| `monitor` | Observe system resource usage over time. | `-c`, `--cpu`<br>`-m`, `--mem`<br>`-d`, `--disk`<br>`-n`, `--net`<br>`-t`, `--interval <s>`<br>`--top <n>` (show top N usage)<br>`--graph` (ASCII/graphical output) |
 | `network` | Display network configuration and traffic. | `--interfaces`<br>`--connections`<br>`--routes`<br>`--stats`<br>`--monitor` (real-time traffic) |
 | `health` | Check system health and diagnostics. | `--cpu` (CPU load)<br>`--mem` (memory usage)<br>`--disk` (disk health)<br>`--network`<br>`--report` (generate summary report) |
 | `service` | Manage system services. | `--list` (show services)<br>`--status <name>`<br>`--start <name>`<br>`--stop <name>`<br>`--restart <name>`<br>`--enable <name>`<br>`--disable <name>` |
@@ -125,7 +124,6 @@ Ensure you have the following installed before starting:
 |---|---|
 | `squid process -a --sort mem --top 10` | List all processes and show the top 10 by memory usage. Uses `-a`/`--all`, `--sort mem`, and `--top 10`. |
 | `squid process --name nginx --sort cpu --top 5` | Show top 5 `nginx` processes by CPU usage. Uses `--name nginx`, `--sort cpu`, and `--top 5`. |
-| `squid monitor -c -m -t 5` | Monitor CPU and memory usage, refreshing every 5 seconds. Uses `-c`, `-m`, and `-t 5`. |
 | `squid health --cpu --mem --disk --report health.txt` | Run CPU, memory, and disk diagnostics and save the report to `health.txt`. Uses `--cpu`, `--mem`, `--disk`, and `--report`. |
 | `squid inspect --process 1234 --json` | Inspect process 1234 and output structured JSON. Uses `--process 1234` and `--json`. |
 | `squid network --interfaces --stats` | Show network interfaces and statistics. Uses `--interfaces` and `--stats`. |
@@ -145,7 +143,6 @@ Squid Tool consolidates many common **system administration utilities** into a *
 | **Squid Command**      | **Traditional Commands**                   | **Purpose**                                              |
 |------------------------|--------------------------------------------|----------------------------------------------------------|
 | `squid process`        | `ps`, `top`, `pgrep`, `kill`               | Display and manage processes with filtering and signals.  |
-| `squid monitor`        | `top`, `htop`, `iotop`                     | Real-time system monitoring.                             |
 | `squid health`         | Custom diagnostic scripts                   | System health diagnostics and performance analysis.       |
 | `squid inspect`        | `lsof`, `/proc`, `pmap`                    | Deep inspection of processes and resources.               |
 | `squid this`           | `hostnamectl`, `uptime`, `uname`           | Quick overview of the current system.                     |

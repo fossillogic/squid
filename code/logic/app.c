@@ -43,15 +43,6 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --timeout <ms>      Timeout for wait (ms)\n");
     fossil_io_printf("{bright_black}    --spawn <exe> [args...]  Start new process\n");
 
-    fossil_io_printf("{cyan}  monitor          {reset}Observe system resource usage over time\n");
-    fossil_io_printf("{bright_black}    -c, --cpu           CPU metrics\n");
-    fossil_io_printf("{bright_black}    -m, --mem           Memory usage\n");
-    fossil_io_printf("{bright_black}    -d, --disk          Disk usage\n");
-    fossil_io_printf("{bright_black}    -n, --net           Network usage\n");
-    fossil_io_printf("{bright_black}    -t, --interval <s>  Refresh interval\n");
-    fossil_io_printf("{bright_black}    --top <n>           Show top N usage\n");
-    fossil_io_printf("{bright_black}    --graph             ASCII/graphical output\n");
-
     fossil_io_printf("{cyan}  network          {reset}Display network configuration and traffic\n");
     fossil_io_printf("{bright_black}    --interfaces        Show interfaces\n");
     fossil_io_printf("{bright_black}    --connections       Show connections\n");
@@ -288,30 +279,6 @@ bool app_entry(int argc, char **argv)
                 spawn_exe,
                 spawn_args
             );
-        }
-        else if (fossil_io_cstring_compare(argv[i], "monitor") == 0)
-        {
-            bool cpu = false, memory = false, disk = false, net = false, graph = false;
-            size_t interval = 1, top_n = 0;
-            for (int j = i + 1; j < argc && argv[j][0] == '-'; j++)
-            {
-                if (fossil_io_cstring_compare(argv[j], "-c") == 0 || fossil_io_cstring_compare(argv[j], "--cpu") == 0)
-                    cpu = true;
-                else if (fossil_io_cstring_compare(argv[j], "-m") == 0 || fossil_io_cstring_compare(argv[j], "--mem") == 0)
-                    memory = true;
-                else if (fossil_io_cstring_compare(argv[j], "-d") == 0 || fossil_io_cstring_compare(argv[j], "--disk") == 0)
-                    disk = true;
-                else if (fossil_io_cstring_compare(argv[j], "-n") == 0 || fossil_io_cstring_compare(argv[j], "--net") == 0)
-                    net = true;
-                else if ((fossil_io_cstring_compare(argv[j], "-t") == 0 || fossil_io_cstring_compare(argv[j], "--interval") == 0) && j + 1 < argc)
-                    interval = (size_t)atoi(argv[++j]);
-                else if (fossil_io_cstring_compare(argv[j], "--top") == 0 && j + 1 < argc)
-                    top_n = (size_t)atoi(argv[++j]);
-                else if (fossil_io_cstring_compare(argv[j], "--graph") == 0)
-                    graph = true;
-                i = j;
-            }
-            fossil_squid_monitor(cpu, memory, disk, net, interval, top_n, graph);
         }
         else if (fossil_io_cstring_compare(argv[i], "network") == 0)
         {

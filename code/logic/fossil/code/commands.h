@@ -91,25 +91,6 @@ int fossil_squid_process(
 );
 
 /**
- * Real-time monitoring of system resources.
- * @param cpu Monitor CPU usage
- * @param memory Monitor memory usage
- * @param disk Monitor disk usage
- * @param net Monitor network usage
- * @param interval Refresh interval in seconds
- * @param top_n Show top N processes by resource usage
- * @param graph Enable graphical/ASCII output
- * @return 0 on success, non-zero on error
- */
-int fossil_squid_monitor(bool cpu,
-                         bool memory,
-                         bool disk,
-                         bool net,
-                         size_t interval,
-                         size_t top_n,
-                         bool graph);
-
-/**
  * Display network configuration and traffic.
  * @param interfaces Show network interfaces
  * @param connections Show active connections
