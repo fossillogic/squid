@@ -67,12 +67,23 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}process [options]{normal}\n");
             fossil_io_printf("{blue,bold,underline}Description:{normal} Display and manage system processes.\n");
             fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
-            fossil_io_printf("  {cyan,bold}-a, --all{normal}           Show all processes\n");
-            fossil_io_printf("  {cyan,bold}-p, --pid <id>{normal}      Specific process\n");
-            fossil_io_printf("  {cyan,bold}--name <pattern>{normal}    Filter by name\n");
-            fossil_io_printf("  {cyan,bold}--sort <key>{normal}        Sort by: cpu/mem/pid/time\n");
-            fossil_io_printf("  {cyan,bold}--kill <pid>{normal}        Terminate process\n");
-            fossil_io_printf("  {cyan,bold}--signal <sig>{normal}      Send signal\n");
+            fossil_io_printf("  {cyan,bold}-a, --all{normal}                   Show all processes\n");
+            fossil_io_printf("  {cyan,bold}-p, --pid <id>{normal}              Select specific process\n");
+            fossil_io_printf("  {cyan,bold}--name <pattern>{normal}            Filter by process name\n");
+            fossil_io_printf("  {cyan,bold}--exists <pid>{normal}              Check if process exists\n");
+            fossil_io_printf("  {cyan,bold}--info <pid>{normal}                Show detailed info\n");
+            fossil_io_printf("  {cyan,bold}--env <pid>{normal}                 Show environment variables\n");
+            fossil_io_printf("  {cyan,bold}--exe <pid>{normal}                 Show executable path\n");
+            fossil_io_printf("  {cyan,bold}--ppid <pid>{normal}                Show parent process ID\n");
+            fossil_io_printf("  {cyan,bold}--priority <pid>{normal}            Show process priority\n");
+            fossil_io_printf("  {cyan,bold}--set-priority <pid> <value>{normal} Change process priority\n");
+            fossil_io_printf("  {cyan,bold}--suspend <pid>{normal}             Pause process\n");
+            fossil_io_printf("  {cyan,bold}--resume <pid>{normal}              Resume process\n");
+            fossil_io_printf("  {cyan,bold}--terminate <pid>{normal}           Terminate process gracefully\n");
+            fossil_io_printf("  {cyan,bold}--kill <pid>{normal}                Force kill process\n");
+            fossil_io_printf("  {cyan,bold}--signal <pid> <sig>{normal}        Send signal\n");
+            fossil_io_printf("  {cyan,bold}--wait <pid> [--timeout <ms>]{normal} Wait for process exit\n");
+            fossil_io_printf("  {cyan,bold}--spawn <exe> [args...]{normal}     Start new process\n");
         }
         else if (fossil_io_cstring_equals(command, "monitor"))
         {

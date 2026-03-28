@@ -27,9 +27,21 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    -a, --all           Show all processes\n");
     fossil_io_printf("{bright_black}    -p, --pid <id>      Specific process\n");
     fossil_io_printf("{bright_black}    --name <pattern>    Filter by name\n");
-    fossil_io_printf("{bright_black}    --sort <key>        cpu/mem/pid/time\n");
-    fossil_io_printf("{bright_black}    --kill <pid>        Terminate process\n");
-    fossil_io_printf("{bright_black}    --signal <sig>      Send signal\n");
+    fossil_io_printf("{bright_black}    --exists <pid>      Check if process exists\n");
+    fossil_io_printf("{bright_black}    --info <pid>        Show detailed info\n");
+    fossil_io_printf("{bright_black}    --env <pid>         Show environment variables\n");
+    fossil_io_printf("{bright_black}    --exe <pid>         Show executable path\n");
+    fossil_io_printf("{bright_black}    --ppid <pid>        Show parent process ID\n");
+    fossil_io_printf("{bright_black}    --priority <pid>    Show process priority\n");
+    fossil_io_printf("{bright_black}    --set-priority <pid> <value>  Change process priority\n");
+    fossil_io_printf("{bright_black}    --suspend <pid>     Pause process\n");
+    fossil_io_printf("{bright_black}    --resume <pid>      Resume process\n");
+    fossil_io_printf("{bright_black}    --terminate <pid>   Terminate process gracefully\n");
+    fossil_io_printf("{bright_black}    --kill <pid>        Force kill process\n");
+    fossil_io_printf("{bright_black}    --signal <pid> <sig> Send signal to process\n");
+    fossil_io_printf("{bright_black}    --wait <pid>        Wait for process exit\n");
+    fossil_io_printf("{bright_black}    --timeout <ms>      Timeout for wait (ms)\n");
+    fossil_io_printf("{bright_black}    --spawn <exe> [args...]  Start new process\n");
 
     fossil_io_printf("{cyan}  monitor          {reset}Observe system resource usage over time\n");
     fossil_io_printf("{bright_black}    -c, --cpu           CPU metrics\n");
@@ -192,8 +204,14 @@ bool app_entry(int argc, char **argv)
         else if (fossil_io_cstring_compare(argv[i], "process") == 0)
         {
             bool show_all = false;
-            int pid = -1, kill_pid = -1, signal = -1;
-            ccstring name_pattern = cnull, sort_key = cnull;
+            int pid = -1, exists_pid = -1, info_pid = -1, env_pid = -1, exe_pid = -1, ppid_pid = -1;
+            int priority_pid = -1, set_priority_pid = -1, set_priority_value = 0;
+            int suspend_pid = -1, resume_pid = -1, terminate_pid = -1, kill_pid = -1;
+            int signal_pid = -1, signal_value = 0, wait_pid = -1, wait_timeout_ms = 0;
+            ccstring name_pattern = cnull, sort_key = cnull, spawn_exe = cnull;
+            ccstring spawn_args_buf[64] = {0};
+            ccstring const *spawn_args = cnull;
+
             for (int j = i + 1; j < argc && argv[j][0] == '-'; j++)
             {
                 if (fossil_io_cstring_compare(argv[j], "-a") == 0 || fossil_io_cstring_compare(argv[j], "--all") == 0)
@@ -202,15 +220,75 @@ bool app_entry(int argc, char **argv)
                     pid = atoi(argv[++j]);
                 else if (fossil_io_cstring_compare(argv[j], "--name") == 0 && j + 1 < argc)
                     name_pattern = argv[++j];
-                else if (fossil_io_cstring_compare(argv[j], "--sort") == 0 && j + 1 < argc)
-                    sort_key = argv[++j];
+                else if (fossil_io_cstring_compare(argv[j], "--exists") == 0 && j + 1 < argc)
+                    exists_pid = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--info") == 0 && j + 1 < argc)
+                    info_pid = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--env") == 0 && j + 1 < argc)
+                    env_pid = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--exe") == 0 && j + 1 < argc)
+                    exe_pid = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--ppid") == 0 && j + 1 < argc)
+                    ppid_pid = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--priority") == 0 && j + 1 < argc)
+                    priority_pid = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--set-priority") == 0 && j + 2 < argc)
+                {
+                    set_priority_pid = atoi(argv[++j]);
+                    set_priority_value = atoi(argv[++j]);
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--suspend") == 0 && j + 1 < argc)
+                    suspend_pid = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--resume") == 0 && j + 1 < argc)
+                    resume_pid = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--terminate") == 0 && j + 1 < argc)
+                    terminate_pid = atoi(argv[++j]);
                 else if (fossil_io_cstring_compare(argv[j], "--kill") == 0 && j + 1 < argc)
                     kill_pid = atoi(argv[++j]);
-                else if (fossil_io_cstring_compare(argv[j], "--signal") == 0 && j + 1 < argc)
-                    signal = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--signal") == 0 && j + 2 < argc)
+                {
+                    signal_pid = atoi(argv[++j]);
+                    signal_value = atoi(argv[++j]);
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--wait") == 0 && j + 1 < argc)
+                    wait_pid = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--timeout") == 0 && j + 1 < argc)
+                    wait_timeout_ms = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--spawn") == 0 && j + 1 < argc)
+                {
+                    spawn_exe = argv[++j];
+                    int k = 0;
+                    while (j + 1 < argc && argv[j + 1][0] != '-' && k < 63)
+                        spawn_args_buf[k++] = argv[++j];
+                    spawn_args_buf[k] = cnull;
+                    spawn_args = (k > 0) ? spawn_args_buf : cnull;
+                }
+                // sort_key is parsed but not used in fossil_squid_process
                 i = j;
             }
-            fossil_squid_process(show_all, pid, name_pattern, sort_key, kill_pid, signal);
+            fossil_squid_process(
+                show_all,
+                pid,
+                name_pattern,
+                exists_pid,
+                info_pid,
+                env_pid,
+                exe_pid,
+                ppid_pid,
+                priority_pid,
+                set_priority_pid,
+                set_priority_value,
+                suspend_pid,
+                resume_pid,
+                terminate_pid,
+                kill_pid,
+                signal_pid,
+                signal_value,
+                wait_pid,
+                wait_timeout_ms,
+                spawn_exe,
+                spawn_args
+            );
         }
         else if (fossil_io_cstring_compare(argv[i], "monitor") == 0)
         {

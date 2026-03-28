@@ -43,20 +43,52 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual);
 
 /**
  * Display and manage system processes.
- * @param show_all Show all processes
- * @param pid Specific process ID
- * @param name_pattern Filter by process name pattern
- * @param sort_key Sort key (cpu, mem, pid, time)
- * @param kill_pid PID of process to terminate
- * @param signal Signal number to send
- * @return 0 on success
+ * @param show_all Show all processes (-a, --all)
+ * @param pid Select specific process (-p, --pid <id>)
+ * @param name_pattern Filter by process name (--name <pattern>)
+ * @param exists_pid Check if process exists (--exists <pid>)
+ * @param info_pid Show detailed info (--info <pid>)
+ * @param env_pid Show environment variables (--env <pid>)
+ * @param exe_pid Show executable path (--exe <pid>)
+ * @param ppid_pid Show parent process ID (--ppid <pid>)
+ * @param priority_pid Show process priority (--priority <pid>)
+ * @param set_priority_pid Change process priority (--set-priority <pid> <value>)
+ * @param set_priority_value Priority value for set-priority
+ * @param suspend_pid Pause process (--suspend <pid>)
+ * @param resume_pid Resume process (--resume <pid>)
+ * @param terminate_pid Terminate process gracefully (--terminate <pid>)
+ * @param kill_pid Force kill process (--kill <pid>)
+ * @param signal_pid Send signal to process (--signal <pid> <sig>)
+ * @param signal_value Signal number for --signal
+ * @param wait_pid Wait for process exit (--wait <pid>)
+ * @param wait_timeout_ms Timeout in milliseconds for wait (optional, --timeout <ms>)
+ * @param spawn_exe Start new process (--spawn <exe>)
+ * @param spawn_args Arguments for spawned process (NULL-terminated array)
+ * @return 0 on success, non-zero on error
  */
-int fossil_squid_process(bool show_all,
-                         int pid,
-                         ccstring name_pattern,
-                         ccstring sort_key,
-                         int kill_pid,
-                         int signal);
+int fossil_squid_process(
+    bool show_all,
+    int pid,
+    ccstring name_pattern,
+    int exists_pid,
+    int info_pid,
+    int env_pid,
+    int exe_pid,
+    int ppid_pid,
+    int priority_pid,
+    int set_priority_pid,
+    int set_priority_value,
+    int suspend_pid,
+    int resume_pid,
+    int terminate_pid,
+    int kill_pid,
+    int signal_pid,
+    int signal_value,
+    int wait_pid,
+    int wait_timeout_ms,
+    ccstring spawn_exe,
+    ccstring const *spawn_args
+);
 
 /**
  * Real-time monitoring of system resources.

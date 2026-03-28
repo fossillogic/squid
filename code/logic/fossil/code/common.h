@@ -25,13 +25,13 @@
 #ifndef FOSSIL_APP_COMMON_H
 #define FOSSIL_APP_COMMON_H
 
+#include <fossil/network/framework.h> // include above other frameworks
 #include <fossil/sys/framework.h>
 #include <fossil/io/framework.h>
 #include <fossil/math/framework.h>
 #include <fossil/type/framework.h>
 #include <fossil/cryptic/framework.h>
 #include <fossil/threads/framework.h>
-#include <fossil/network/framework.h>
 
 #ifdef _WIN32
 #include <winsock2.h>
