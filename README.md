@@ -83,8 +83,8 @@ Ensure you have the following installed before starting:
 | `system` | System-level operations (like `systemctl`). | `--info` (system info)<br>`--uptime`<br>`--shutdown`<br>`--reboot`<br>`--update`<br>`--config <file>` |
 | `permit` | Adjust permissions for users, files, or services. | `--user <name>`<br>`--file <path>`<br>`--service <name>`<br>`--grant <perm>`<br>`--revoke <perm>` |
 | `env` | Inspect or set environment variables. | `--list`<br>`--get <key>`<br>`--set <key>=<value>`<br>`--unset <key>`<br>`--export <file>` |
-| `monitor` | Observe live system activity and resource usage. | `--cpu` (CPU usage)<br>`--mem` (memory usage)<br>`--disk` (disk usage)<br>`--net` (network activity)<br>`--interval <ms>` (refresh rate)<br>`--top` (top processes)<br>`--json` |
-| `echo` | Print and transform text or system information. | `--text <msg>`<br>`--env <key>`<br>`--json`<br>`--color <style>` |
+| `inspect` | Inspect files, directories, processes, and services. | `--file <path>`<br>`--dir <path>`<br>`--process <pid>`<br>`--service <name>`<br>`--json`<br>`--money-to-string <amount>` (format number as money)<br>`--string-to-money <str>` (parse money string)<br>`--money-currency <symbol>` (specify currency symbol)<br>`--number-from-words <str>` (parse English number words)<br>`--number-to-words <num>` (convert number to English words) |
+| `echo` | Print text or system information. | `--text <msg>`<br>`--env <key>`<br>`--json`<br>`--color`<br>`--mocking` (mocking SpongeBob case)<br>`--rot13` (ROT13 transform)<br>`--shuffle` (randomize characters)<br>`--piglatin` (Pig Latin transform)<br>`--leet` (Leet speak transform)<br>`--upper-snake` (UPPER_SNAKE_CASE)<br>`--silly` (random case/symbols)<br>`--cipher <type>` (encode text using a named cipher: `caesar`, `vigenere`, `base64`, `base32`, `binary`, `morse`, `baconian`, `railfence`, `haxor`, `leet`, `rot13`, `atbash`) |
 | `this` | Display a comprehensive system profile, with lookup features for each major host property. | `--system` (OS, kernel, hostname, user, domain, platform)<br>`--arch` (architecture, CPU, cores, threads, frequency)<br>`--memory` (total, free, used, available, swap)<br>`--endianness` (little/big endian)<br>`--power` (AC/battery, charging, battery %/time left)<br>`--cpu` (model, vendor, cores, threads, frequency, features)<br>`--gpu` (name, vendor, driver, memory)<br>`--storage` (device, mount, total/free/used, filesystem)<br>`--env` (shell, home, lang, path, term, user)<br>`--virtualization` (VM/container detection, hypervisor, container type)<br>`--uptime` (uptime, boot time)<br>`--network` (hostname, IP, MAC, interface, status)<br>`--process` (PID, PPID, exe, cwd, name, privileges)<br>`--limits` (max open files, max processes, page size)<br>`--time` (timezone, UTC offset, locale)<br>`--hardware` (manufacturer, product, serial, BIOS)<br>`--display` (count, resolution, refresh rate)<br>`--all` (show everything)<br>`--json` (structured output) |
 | `help` | Display help for commands. | `--examples`<br>`--man`<br>`--command <cmd>` |
 
@@ -108,15 +108,15 @@ Ensure you have the following installed before starting:
 
 | **Example** | **Description** |
 |---|---|
-| `squid process -a --sort mem --top 10` | List all processes and show the top 10 by memory usage. Uses `-a`/`--all`, `--sort mem`, and `--top 10`. |
-| `squid process --name nginx --sort cpu --top 5` | Show top 5 `nginx` processes by CPU usage. Uses `--name nginx`, `--sort cpu`, and `--top 5`. |
-| `squid inspect --process 1234 --json` | Inspect process 1234 and output structured JSON. Uses `--process 1234` and `--json`. |
-| `squid service --restart nginx` | Restart the `nginx` service. Uses `--restart nginx`. |
-| `squid env --list` | List all environment variables. Uses `--list`. |
-| `squid env --set DEBUG=1` | Set the environment variable `DEBUG` to `1`. Uses `--set DEBUG=1`. |
-| `squid echo --text "hello world" --color` | Print "hello world" with colored output. Uses `--text` and `--color`. |
-| `squid this --cpu --memory --network` | Show CPU, memory, and network details for the current system. Uses `--cpu`, `--memory`, and `--network`. |
-| `squid help --examples` | Show help with usage examples. Uses `--examples`. |
+| `squid process -a` | List all system processes. Uses `-a`/`--all`. |
+| `squid service --list` | List all system services. Uses `--list`. |
+| `squid system --info` | Show system information. Uses `--info`. |
+| `squid permit --user alice --grant sudo` | Grant `sudo` permission to user `alice`. Uses `--user` and `--grant`. |
+| `squid env --get PATH` | Display the value of the `PATH` environment variable. Uses `--get PATH`. |
+| `squid inspect --file /etc/passwd` | Inspect the `/etc/passwd` file. Uses `--file`. |
+| `squid echo --text "Hello, Squid!" --upper-snake` | Print "Hello, Squid!" in UPPER_SNAKE_CASE. Uses `--text` and `--upper-snake`. |
+| `squid this --all --json` | Show a full system profile in JSON format. Uses `--all` and `--json`. |
+| `squid help --command process` | Show help for the `process` command. Uses `--command process`. |
 
 ---
 
@@ -124,19 +124,19 @@ Ensure you have the following installed before starting:
 
 Squid Tool consolidates many common **system administration utilities** into a **single consistent interface**.
 
-| **Squid Command**      | **Traditional Commands**                   | **Purpose**                                              |
-|------------------------|--------------------------------------------|----------------------------------------------------------|
-| `squid process`        | `ps`, `top`, `pgrep`, `kill`               | Display and manage processes with filtering and signals.  |
-| `squid inspect`        | `lsof`, `/proc`, `pmap`                    | Deep inspection of processes and resources.               |
-| `squid this`           | `hostnamectl`, `uptime`, `uname`           | Quick overview of the current system.                     |
-| `squid service`        | `systemctl`, `service`                     | Service lifecycle management.                             |
-| `squid system`         | `systemctl`, `shutdown`, `reboot`          | System log querying and filtering.                        |
-| `squid permit`         | `chmod`, `chown`, `setfacl`                | Permission and policy management.                         |
-| `squid view`           | `less`, `tail -f`                          | Modern pager for logs and streams.                        |
-| `squid env`            | `env`, `printenv`, `export`                | Environment variable management.                          |
-| `squid calc`           | `bc`, `expr`                               | Command-line calculator.                                  |
-| `squid echo`           | `echo`, encoding tools                     | Advanced text output and encoding.                        |
-| `squid this`           | `hostnamectl`, `lscpu`, `free`, `lsblk`, `lshw`, `dmidecode`, `uptime`, `ifconfig`, `whoami`, `timedatectl` | Display a comprehensive system profile and lookup host properties. |
+| **Squid Command**      | **Traditional Commands**                                   | **Purpose**                                              |
+|------------------------|------------------------------------------------------------|----------------------------------------------------------|
+| `squid process`        | `ps`, `top`, `pgrep`, `kill`, `renice`, `nice`            | Display, filter, and manage system processes, including signals and priorities. |
+| `squid service`        | `systemctl`, `service`, `chkconfig`                        | Manage system services: list, start, stop, enable, disable, restart. |
+| `squid system`         | `uname`, `uptime`, `shutdown`, `reboot`, `cat /etc/os-release` | System-level operations: info, uptime, shutdown, reboot, update. |
+| `squid permit`         | `chmod`, `chown`, `usermod`, `setfacl`                     | Inspect and modify permissions for users, files, and services. |
+| `squid env`            | `env`, `printenv`, `export`, `unset`                       | List, get, set, unset, and export environment variables. |
+| `squid inspect`        | `lsof`, `ls`, `stat`, `file`, `/proc`, `pmap`              | Inspect files, directories, processes, and services with structured output. |
+| `squid echo`           | `echo`, `printf`, `env`, `jq`, `tr`, `awk`                 | Print text or system info, transform output, and format data. |
+| `squid this`           | `hostnamectl`, `lscpu`, `lsblk`, `free`, `ifconfig`, `dmidecode` | Display a comprehensive system profile (OS, hardware, CPU, memory, storage, network, etc.). |
+| `squid help`           | `man`, `--help`, `info`                                    | Show help, usage, and examples for all commands.         |
+
+This table highlights how Squid Tool unifies and extends the capabilities of many traditional Linux/Unix utilities.
 
 ---
 

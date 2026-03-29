@@ -46,177 +46,107 @@ void show_commands(char *app_name)
 
     fossil_io_printf("{blue}Commands:{reset}\n");
 
-    fossil_io_printf("{cyan}  show             {reset}Display files and directories\n");
-    fossil_io_printf("{bright_black}    -a, --all           Show hidden files\n");
-    fossil_io_printf("{bright_black}    -l, --long          Detailed info\n");
-    fossil_io_printf("{bright_black}    -h, --human         Human-readable sizes\n");
-    fossil_io_printf("{bright_black}    -r, --recursive     Include subdirs\n");
-    fossil_io_printf("{bright_black}    -d, --depth <n>     Limit recursion\n");
-    fossil_io_printf("{bright_black}    --as <mode>         Format: list/tree/graph\n");
-    fossil_io_printf("{bright_black}    --time              Show timestamps\n");
-    fossil_io_printf("{bright_black}    --sort <key>        Sort by: desc/asc\n");
-    fossil_io_printf("{bright_black}    --match <pattern>   Filter by name pattern\n");
-    fossil_io_printf("{bright_black}    --size <n>          Filter by size (e.g. >1MB)\n");
-    fossil_io_printf("{bright_black}    --type <type>       Filter by type: file/dir/link\n");
+    fossil_io_printf("{cyan}  process          {reset}Display and manage system processes\n");
+    fossil_io_printf("{bright_black}    -a, --all             Show all processes\n");
+    fossil_io_printf("{bright_black}    -p, --pid <id>        Select specific process\n");
+    fossil_io_printf("{bright_black}    --name <pattern>      Filter by process name\n");
+    fossil_io_printf("{bright_black}    --exists <pid>        Check if process exists\n");
+    fossil_io_printf("{bright_black}    --info <pid>          Show detailed info\n");
+    fossil_io_printf("{bright_black}    --env <pid>           Show environment variables\n");
+    fossil_io_printf("{bright_black}    --exe <pid>           Show executable path\n");
+    fossil_io_printf("{bright_black}    --ppid <pid>          Show parent process ID\n");
+    fossil_io_printf("{bright_black}    --priority <pid>      Show process priority\n");
+    fossil_io_printf("{bright_black}    --set-priority <pid> <value>  Change process priority\n");
+    fossil_io_printf("{bright_black}    --suspend <pid>       Pause process\n");
+    fossil_io_printf("{bright_black}    --resume <pid>        Resume process\n");
+    fossil_io_printf("{bright_black}    --terminate <pid>     Terminate process gracefully\n");
+    fossil_io_printf("{bright_black}    --kill <pid>          Force kill process\n");
+    fossil_io_printf("{bright_black}    --signal <pid> <sig>  Send signal\n");
+    fossil_io_printf("{bright_black}    --wait <pid> [--timeout <ms>]  Wait for process exit\n");
+    fossil_io_printf("{bright_black}    --spawn <exe> [args...]  Start new process\n");
 
-    fossil_io_printf("{cyan}  merge             {reset}Combine multiple files or directories\n");
-    fossil_io_printf("{bright_black}    -f, --force         Overwrite if needed\n");
-    fossil_io_printf("{bright_black}    -i, --interactive   Confirm before merge\n");
-    fossil_io_printf("{bright_black}    -b, --backup        Backup before merge\n");
-    fossil_io_printf("{bright_black}    --strategy <mode>   Merge strategy: overwrite/keep-both/skip\n");
-    fossil_io_printf("{bright_black}    --progress          Show progress\n");
-    fossil_io_printf("{bright_black}    --dry-run           Preview merge\n");
-    fossil_io_printf("{bright_black}    --exclude <pat>     Exclude files\n");
-    fossil_io_printf("{bright_black}    --include <pat>     Include files\n");
+    fossil_io_printf("{cyan}  service          {reset}Manage system services\n");
+    fossil_io_printf("{bright_black}    --list                Show services\n");
+    fossil_io_printf("{bright_black}    --status <name>       Show service status\n");
+    fossil_io_printf("{bright_black}    --start <name>        Start service\n");
+    fossil_io_printf("{bright_black}    --stop <name>         Stop service\n");
+    fossil_io_printf("{bright_black}    --restart <name>      Restart service\n");
+    fossil_io_printf("{bright_black}    --enable <name>       Enable service\n");
+    fossil_io_printf("{bright_black}    --disable <name>      Disable service\n");
 
-    fossil_io_printf("{cyan}  swap             {reset}Exchange locations of two files/directories\n");
-    fossil_io_printf("{bright_black}    -f, --force         Overwrite if needed\n");
-    fossil_io_printf("{bright_black}    -i, --interactive   Confirm swap\n");
-    fossil_io_printf("{bright_black}    -b, --backup        Create backups before swap\n");
-    fossil_io_printf("{bright_black}    --atomic            Guarantee atomic swap\n");
-    fossil_io_printf("{bright_black}    --progress          Show progress\n");
-    fossil_io_printf("{bright_black}    --dry-run           Preview swap\n");
-    fossil_io_printf("{bright_black}    --temp <path>       Temporary staging location\n");
-    fossil_io_printf("{bright_black}    --no-cross-device   Fail if paths on different filesystems\n");
+    fossil_io_printf("{cyan}  system           {reset}System-level operations\n");
+    fossil_io_printf("{bright_black}    --info                System info\n");
+    fossil_io_printf("{bright_black}    --uptime              Show uptime\n");
+    fossil_io_printf("{bright_black}    --shutdown            Shutdown system\n");
+    fossil_io_printf("{bright_black}    --reboot              Reboot system\n");
+    fossil_io_printf("{bright_black}    --update              Update system\n");
+    fossil_io_printf("{bright_black}    --config <file>       Specify config file\n");
 
-    fossil_io_printf("{cyan}  move             {reset}Move or rename files/directories\n");
-    fossil_io_printf("{bright_black}    -f, --force         Overwrite\n");
-    fossil_io_printf("{bright_black}    -i, --interactive   Confirm overwrite\n");
-    fossil_io_printf("{bright_black}    -b, --backup        Backup before move\n");
-    fossil_io_printf("{bright_black}    --atomic            Atomic move\n");
-    fossil_io_printf("{bright_black}    --progress          Show progress\n");
-    fossil_io_printf("{bright_black}    --dry-run           Simulate\n");
-    fossil_io_printf("{bright_black}    --exclude <pat>     Exclude files\n");
-    fossil_io_printf("{bright_black}    --include <pat>     Include files\n");
+    fossil_io_printf("{cyan}  permit           {reset}Adjust permissions for users, files, or services\n");
+    fossil_io_printf("{bright_black}    --user <name>         Specify user\n");
+    fossil_io_printf("{bright_black}    --file <path>         Specify file\n");
+    fossil_io_printf("{bright_black}    --service <name>      Specify service\n");
+    fossil_io_printf("{bright_black}    --grant <perm>        Grant permission\n");
+    fossil_io_printf("{bright_black}    --revoke <perm>       Revoke permission\n");
 
-    fossil_io_printf("{cyan}  copy             {reset}Copy files or directories\n");
-    fossil_io_printf("{bright_black}    -r, --recursive     Copy subdirs\n");
-    fossil_io_printf("{bright_black}    -u, --update        Only newer\n");
-    fossil_io_printf("{bright_black}    -p, --preserve      Keep permissions/timestamps\n");
-    fossil_io_printf("{bright_black}    --checksum          Verify after copy\n");
-    fossil_io_printf("{bright_black}    --sparse            Preserve sparse files\n");
-    fossil_io_printf("{bright_black}    --link              Hardlink instead\n");
-    fossil_io_printf("{bright_black}    --reflink           Copy-on-write\n");
-    fossil_io_printf("{bright_black}    --progress          Show progress\n");
-    fossil_io_printf("{bright_black}    --dry-run           Simulate\n");
-    fossil_io_printf("{bright_black}    --exclude <pat>     Exclude files\n");
-    fossil_io_printf("{bright_black}    --include <pat>     Include files\n");
+    fossil_io_printf("{cyan}  env              {reset}Inspect or set environment variables\n");
+    fossil_io_printf("{bright_black}    --list                List environment variables\n");
+    fossil_io_printf("{bright_black}    --get <key>           Get value\n");
+    fossil_io_printf("{bright_black}    --set <key>=<value>   Set value\n");
+    fossil_io_printf("{bright_black}    --unset <key>         Unset variable\n");
+    fossil_io_printf("{bright_black}    --export <file>       Export to file\n");
 
-    fossil_io_printf("{cyan}  remove, delete   {reset}Delete files or directories\n");
-    fossil_io_printf("{bright_black}    -r, --recursive     Delete contents\n");
-    fossil_io_printf("{bright_black}    -f, --force         No confirmation\n");
-    fossil_io_printf("{bright_black}    -i, --interactive   Confirm per file\n");
-    fossil_io_printf("{bright_black}    --trash             Move to trash\n");
-    fossil_io_printf("{bright_black}    --wipe              Securely overwrite\n");
-    fossil_io_printf("{bright_black}    --shred <n>         Multi-pass secure delete\n");
-    fossil_io_printf("{bright_black}    --older-than <t>    Delete files older than time\n");
-    fossil_io_printf("{bright_black}    --larger-than <s>   Delete files larger than size\n");
-    fossil_io_printf("{bright_black}    --empty-only        Delete empty dirs only\n");
-    fossil_io_printf("{bright_black}    --log-file <path>   Write deletion log\n");
+    fossil_io_printf("{cyan}  inspect          {reset}Inspect files, directories, processes, and services\n");
+    fossil_io_printf("{bright_black}    --file <path>         Inspect file\n");
+    fossil_io_printf("{bright_black}    --dir <path>          Inspect directory\n");
+    fossil_io_printf("{bright_black}    --process <pid>       Inspect process\n");
+    fossil_io_printf("{bright_black}    --service <name>      Inspect service\n");
+    fossil_io_printf("{bright_black}    --json                Output as JSON\n");
+    fossil_io_printf("{bright_black}    --money-to-string <amount>  Format number as money\n");
+    fossil_io_printf("{bright_black}    --string-to-money <str>     Parse money string\n");
+    fossil_io_printf("{bright_black}    --money-currency <symbol>   Specify currency symbol\n");
+    fossil_io_printf("{bright_black}    --number-from-words <str>   Parse English number words\n");
+    fossil_io_printf("{bright_black}    --number-to-words <num>     Convert number to English words\n");
 
-    fossil_io_printf("{cyan}  rename           {reset}Rename files or directories\n");
-    fossil_io_printf("{bright_black}    -f, --force         Overwrite target\n");
-    fossil_io_printf("{bright_black}    -i, --interactive   Confirm overwrite\n");
+    fossil_io_printf("{cyan}  echo             {reset}Print text or system information\n");
+    fossil_io_printf("{bright_black}    --text <msg>          Print message\n");
+    fossil_io_printf("{bright_black}    --env <key>           Print environment variable\n");
+    fossil_io_printf("{bright_black}    --json                Output as JSON\n");
+    fossil_io_printf("{bright_black}    --color               Colorize output\n");
+    fossil_io_printf("{bright_black}    --mocking             Mocking SpongeBob case\n");
+    fossil_io_printf("{bright_black}    --rot13               ROT13 transform\n");
+    fossil_io_printf("{bright_black}    --shuffle             Randomize characters\n");
+    fossil_io_printf("{bright_black}    --piglatin            Pig Latin transform\n");
+    fossil_io_printf("{bright_black}    --leet                Leet speak transform\n");
+    fossil_io_printf("{bright_black}    --upper-snake         UPPER_SNAKE_CASE\n");
+    fossil_io_printf("{bright_black}    --silly               Random case/symbols\n");
+    fossil_io_printf("{bright_black}    --cipher <type>       Encode text using cipher\n");
 
-    fossil_io_printf("{cyan}  create           {reset}Create new directories or files\n");
-    fossil_io_printf("{bright_black}    -p, --parents       Create parent dirs\n");
-    fossil_io_printf("{bright_black}    -t, --type <type>   File or dir\n");
-
-    fossil_io_printf("{cyan}  search           {reset}Find files by name or content\n");
-    fossil_io_printf("{bright_black}    -r, --recursive     Include subdirs\n");
-    fossil_io_printf("{bright_black}    -n, --name <pat>    Filename match\n");
-    fossil_io_printf("{bright_black}    -c, --content <pat> Search contents\n");
-    fossil_io_printf("{bright_black}    -i, --ignore-case   Case-insensitive\n");
-    fossil_io_printf("{bright_black}    -p, --path <path>   Search within specific path\n");
-
-    fossil_io_printf("{cyan}  archive          {reset}Create, extract, or list archives\n");
-    fossil_io_printf("{bright_black}    -c, --create        Create new archive\n");
-    fossil_io_printf("{bright_black}    -x, --extract       Extract archive\n");
-    fossil_io_printf("{bright_black}    -l, --list          List archive contents\n");
-    fossil_io_printf("{bright_black}    -f <format>         Format: zip/tar/gz\n");
-    fossil_io_printf("{bright_black}    -p, --password <pw> Encrypt with password\n");
-    fossil_io_printf("{bright_black}    --stdout            Output to stdout\n");
-    fossil_io_printf("{bright_black}    --compress <n>      Compression level (0-9)\n");
-    fossil_io_printf("{bright_black}    --exclude <pat>     Exclude files\n");
-
-    fossil_io_printf("{cyan}  compare          {reset}Compare two files/directories\n");
-    fossil_io_printf("{bright_black}    -t, --text          Line diff\n");
-    fossil_io_printf("{bright_black}    -b, --binary        Binary diff\n");
-    fossil_io_printf("{bright_black}    --context <n>       Context lines\n");
-    fossil_io_printf("{bright_black}    --ignore-case       Ignore case\n");
+    fossil_io_printf("{cyan}  this             {reset}Display a comprehensive system profile\n");
+    fossil_io_printf("{bright_black}    --system              OS, kernel, hostname, user, domain, platform\n");
+    fossil_io_printf("{bright_black}    --arch                Architecture, CPU, cores, threads, frequency\n");
+    fossil_io_printf("{bright_black}    --memory              Memory info\n");
+    fossil_io_printf("{bright_black}    --endianness          Endianness\n");
+    fossil_io_printf("{bright_black}    --power               Power/battery info\n");
+    fossil_io_printf("{bright_black}    --cpu                 CPU details\n");
+    fossil_io_printf("{bright_black}    --gpu                 GPU details\n");
+    fossil_io_printf("{bright_black}    --storage             Storage info\n");
+    fossil_io_printf("{bright_black}    --env                 Environment info\n");
+    fossil_io_printf("{bright_black}    --virtualization      Virtualization info\n");
+    fossil_io_printf("{bright_black}    --uptime              Uptime/boot time\n");
+    fossil_io_printf("{bright_black}    --network             Network info\n");
+    fossil_io_printf("{bright_black}    --process             Process info\n");
+    fossil_io_printf("{bright_black}    --limits              System limits\n");
+    fossil_io_printf("{bright_black}    --time                Timezone/locale\n");
+    fossil_io_printf("{bright_black}    --hardware            Hardware info\n");
+    fossil_io_printf("{bright_black}    --display             Display info\n");
+    fossil_io_printf("{bright_black}    --all                 Show everything\n");
+    fossil_io_printf("{bright_black}    --json                Structured output\n");
 
     fossil_io_printf("{cyan}  help             {reset}Display help for commands\n");
-    fossil_io_printf("{bright_black}    --examples          Usage examples\n");
-    fossil_io_printf("{bright_black}    --man               Full manual\n");
-
-    fossil_io_printf("{cyan}  sync             {reset}Synchronize files/directories\n");
-    fossil_io_printf("{bright_black}    -r, --recursive     Include subdirs\n");
-    fossil_io_printf("{bright_black}    -u, --update        Only newer\n");
-    fossil_io_printf("{bright_black}    --delete            Remove extraneous files\n");
-
-    fossil_io_printf("{cyan}  watch            {reset}Monitor files or directories\n");
-    fossil_io_printf("{bright_black}    -r, --recursive     Include subdirs\n");
-    fossil_io_printf("{bright_black}    -e, --events <list> Event filter\n");
-    fossil_io_printf("{bright_black}    -t, --interval <n>  Poll interval\n");
-
-    fossil_io_printf("{cyan}  rewrite          {reset}Modify file contents or metadata\n");
-    fossil_io_printf("{bright_black}    -a, --append        Append\n");
-    fossil_io_printf("{bright_black}    --in-place          Edit in place\n");
-    fossil_io_printf("{bright_black}    --access-time       Update atime\n");
-    fossil_io_printf("{bright_black}    --mod-time          Update mtime\n");
-    fossil_io_printf("{bright_black}    --size <n>          Set file size\n");
-
-    fossil_io_printf("{cyan}  introspect       {reset}Examine file contents/type/meta\n");
-    fossil_io_printf("{bright_black}    --head <n>          First n lines\n");
-    fossil_io_printf("{bright_black}    --tail <n>          Last n lines\n");
-    fossil_io_printf("{bright_black}    --count             Count lines/words/bytes\n");
-    fossil_io_printf("{bright_black}    --line              Total lines only\n");
-    fossil_io_printf("{bright_black}    --size              File size in bytes and human-readable\n");
-    fossil_io_printf("{bright_black}    --time              Timestamps: modified, created, accessed\n");
-    fossil_io_printf("{bright_black}    --type              Detect and display file type\n");
-    fossil_io_printf("{bright_black}    --find <pattern>    Search for string or pattern\n");
-    fossil_io_printf("{bright_black}    --fson              FSON structured format output\n");
-    fossil_io_printf("{bright_black}    --json              JSON structured format output\n");
-
-    fossil_io_printf("{cyan}  grammar          {reset}Analyze/correct grammar/style\n");
-    fossil_io_printf("{bright_black}    --check             Analyze\n");
-    fossil_io_printf("{bright_black}    --fix, --correct    Correct\n");
-    fossil_io_printf("{bright_black}    --sanitize          Sanitize text\n");
-    fossil_io_printf("{bright_black}    --suggest           Suggest improvements\n");
-    fossil_io_printf("{bright_black}    --tone              Detect tone\n");
-    fossil_io_printf("{bright_black}    --summarize         Summarize\n");
-    fossil_io_printf("{bright_black}    --score             Show scores\n");
-    fossil_io_printf("{bright_black}    --detect <type>     Detect traits\n");
-    fossil_io_printf("{bright_black}    --reflow-width <n>  Reflow text\n");
-    fossil_io_printf("{bright_black}    --capitalize <mode> Capitalize\n");
-    fossil_io_printf("{bright_black}    --format            Pretty-print\n");
-    fossil_io_printf("{bright_black}    --declutter         Repair whitespace\n");
-    fossil_io_printf("{bright_black}    --punctuate         Normalize punctuation\n");
-
-    fossil_io_printf("{cyan}  cryptic          {reset}Encode or decode text using various ciphers\n");
-    fossil_io_printf("{bright_black}    -e, --encode        Encode text\n");
-    fossil_io_printf("{bright_black}    -d, --decode        Decode text\n");
-    fossil_io_printf("{bright_black}    -c, --cipher <type> Cipher type: caesar, vigenere, base64, base32,\n");
-    fossil_io_printf("{bright_black}                        binary, morse, baconian, railfence, haxor,\n");
-    fossil_io_printf("{bright_black}                        leet, rot13, atbash\n");
-
-    fossil_io_printf("{cyan}  split             {reset}Split files into smaller segments\n");
-    fossil_io_printf("{bright_black}    -l, --lines <n>     Split by line count\n");
-    fossil_io_printf("{bright_black}    -b, --bytes <n>     Split by byte size\n");
-    fossil_io_printf("{bright_black}    -n, --number <n>    Number of segments\n");
-    fossil_io_printf("{bright_black}    -p, --prefix <name> Output prefix\n");
-    fossil_io_printf("{bright_black}    -s, --suffix <n>    Suffix digits\n");
-    fossil_io_printf("{bright_black}    --numeric-suffix    Use numeric suffix\n");
-    fossil_io_printf("{bright_black}    -d, --delimiter <c> Custom delimiter\n");
-    fossil_io_printf("{bright_black}    --dry-run           Preview split\n");
-
-    fossil_io_printf("\n{blue}Global Flags:{reset}\n");
-    fossil_io_printf("{bright_black}  --help                Show command help\n");
-    fossil_io_printf("{bright_black}  --version             Display Shark Tool version\n");
-    fossil_io_printf("{bright_black}  --name                Display application name\n");
-    fossil_io_printf("{bright_black}  --verbose             Enable detailed output\n");
-    fossil_io_printf("{bright_black}  --color [enable|disable|auto]  Colorize output\n");
-    fossil_io_printf("{bright_black}  --clear               Clear the terminal screen\n");
+    fossil_io_printf("{bright_black}    --examples            Usage examples\n");
+    fossil_io_printf("{bright_black}    --man                 Full manual\n");
+    fossil_io_printf("{bright_black}    --command <cmd>       Help for specific command\n");
 
     exit(FOSSIL_IO_SUCCESS);
 }
@@ -507,21 +437,41 @@ bool app_entry(int argc, char **argv)
         }
         else if (fossil_io_cstring_compare(argv[i], "echo") == 0)
         {
-            ccstring text = cnull, env_key = cnull;
-            bool json = false, color = false;
+            ccstring text = cnull, env_key = cnull, cipher_type = cnull;
+            bool json = false, color = false, mocking = false, rot13 = false, shuffle = false;
+            bool piglatin = false, leet = false, upper_snake = false, silly = false;
             for (int j = i + 1; j < argc; j++)
             {
                 if (fossil_io_cstring_compare(argv[j], "--json") == 0)
                     json = true;
                 else if (fossil_io_cstring_compare(argv[j], "--color") == 0)
                     color = true;
+                else if (fossil_io_cstring_compare(argv[j], "--mocking") == 0)
+                    mocking = true;
+                else if (fossil_io_cstring_compare(argv[j], "--rot13") == 0)
+                    rot13 = true;
+                else if (fossil_io_cstring_compare(argv[j], "--shuffle") == 0)
+                    shuffle = true;
+                else if (fossil_io_cstring_compare(argv[j], "--piglatin") == 0)
+                    piglatin = true;
+                else if (fossil_io_cstring_compare(argv[j], "--leet") == 0)
+                    leet = true;
+                else if (fossil_io_cstring_compare(argv[j], "--upper-snake") == 0)
+                    upper_snake = true;
+                else if (fossil_io_cstring_compare(argv[j], "--silly") == 0)
+                    silly = true;
                 else if (fossil_io_cstring_compare(argv[j], "--env") == 0 && j + 1 < argc)
                     env_key = argv[++j];
+                else if (fossil_io_cstring_compare(argv[j], "--cipher") == 0 && j + 1 < argc)
+                    cipher_type = argv[++j];
                 else if (!cnotnull(text))
                     text = argv[j];
                 i = j;
             }
-            fossil_squid_echo(text, env_key, json, color);
+            fossil_squid_echo(
+                text, env_key, json, color, mocking, rot13, shuffle,
+                piglatin, leet, upper_snake, silly, cipher_type
+            );
         }
         else if (fossil_io_cstring_compare(argv[i], "this") == 0)
         {
