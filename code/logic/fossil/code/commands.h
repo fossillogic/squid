@@ -165,7 +165,6 @@ int fossil_squid_env(bool list,
  * @param mocking Apply mocking SpongeBob case (--mocking)
  * @param rot13 Apply ROT13 transform (--rot13)
  * @param shuffle Randomize characters (--shuffle)
- * @param zalgo Apply glitch text effect (--zalgo)
  * @param piglatin Apply Pig Latin transform (--piglatin)
  * @param leet Apply Leet speak transform (--leet)
  * @param upper_snake Apply UPPER_SNAKE_CASE transform (--upper-snake)
@@ -181,7 +180,6 @@ int fossil_squid_echo(
     bool mocking,
     bool rot13,
     bool shuffle,
-    bool zalgo,
     bool piglatin,
     bool leet,
     bool upper_snake,

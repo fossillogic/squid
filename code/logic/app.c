@@ -116,7 +116,6 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --mocking             Mocking SpongeBob case\n");
     fossil_io_printf("{bright_black}    --rot13               ROT13 transform\n");
     fossil_io_printf("{bright_black}    --shuffle             Randomize characters\n");
-    fossil_io_printf("{bright_black}    --zalgo                Glitch text\n");
     fossil_io_printf("{bright_black}    --piglatin            Pig Latin transform\n");
     fossil_io_printf("{bright_black}    --leet                Leet speak transform\n");
     fossil_io_printf("{bright_black}    --upper-snake         UPPER_SNAKE_CASE\n");
@@ -440,7 +439,7 @@ bool app_entry(int argc, char **argv)
         {
             ccstring text = cnull, env_key = cnull, cipher_type = cnull;
             bool json = false, color = false, mocking = false, rot13 = false, shuffle = false;
-            bool zalgo = false, piglatin = false, leet = false, upper_snake = false, silly = false;
+            bool piglatin = false, leet = false, upper_snake = false, silly = false;
             for (int j = i + 1; j < argc; j++)
             {
                 if (fossil_io_cstring_compare(argv[j], "--json") == 0)
@@ -453,8 +452,6 @@ bool app_entry(int argc, char **argv)
                     rot13 = true;
                 else if (fossil_io_cstring_compare(argv[j], "--shuffle") == 0)
                     shuffle = true;
-                else if (fossil_io_cstring_compare(argv[j], "--zalgo") == 0)
-                    zalgo = true;
                 else if (fossil_io_cstring_compare(argv[j], "--piglatin") == 0)
                     piglatin = true;
                 else if (fossil_io_cstring_compare(argv[j], "--leet") == 0)
@@ -472,7 +469,7 @@ bool app_entry(int argc, char **argv)
                 i = j;
             }
             fossil_squid_echo(
-                text, env_key, json, color, mocking, rot13, shuffle, zalgo,
+                text, env_key, json, color, mocking, rot13, shuffle,
                 piglatin, leet, upper_snake, silly, cipher_type
             );
         }

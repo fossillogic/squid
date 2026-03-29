@@ -32,7 +32,6 @@ int fossil_squid_echo(
     bool mocking,
     bool rot13,
     bool shuffle,
-    bool zalgo,
     bool piglatin,
     bool leet,
     bool upper_snake,
@@ -59,11 +58,6 @@ int fossil_squid_echo(
     }
     if (shuffle) {
         cstring tmp = fossil_io_cstring_shuffle(transformed);
-        fossil_io_cstring_free(transformed);
-        transformed = tmp;
-    }
-    if (zalgo) {
-        cstring tmp = fossil_io_cstring_zalgo(transformed);
         fossil_io_cstring_free(transformed);
         transformed = tmp;
     }

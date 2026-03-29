@@ -103,13 +103,6 @@ FOSSIL_TEST(c_test_echo_shuffle)
     ASSUME_ITS_EQUAL_I32(0, result);
 }
 
-FOSSIL_TEST(c_test_echo_zalgo)
-{
-    // Should echo with zalgo (glitch) effect
-    int result = fossil_squid_echo("ZalgoTest", NULL, false, false, false, false, false, true, false, false, false, false, NULL);
-    ASSUME_ITS_EQUAL_I32(0, result);
-}
-
 FOSSIL_TEST(c_test_echo_piglatin)
 {
     // Should echo with Pig Latin transformation
@@ -159,7 +152,6 @@ FOSSIL_TEST_GROUP(c_echo_tests)
     FOSSIL_TEST_ADD(c_echo_suite, c_test_echo_mocking);
     FOSSIL_TEST_ADD(c_echo_suite, c_test_echo_rot13);
     FOSSIL_TEST_ADD(c_echo_suite, c_test_echo_shuffle);
-    FOSSIL_TEST_ADD(c_echo_suite, c_test_echo_zalgo);
     FOSSIL_TEST_ADD(c_echo_suite, c_test_echo_piglatin);
     FOSSIL_TEST_ADD(c_echo_suite, c_test_echo_leet);
     FOSSIL_TEST_ADD(c_echo_suite, c_test_echo_upper_snake);
