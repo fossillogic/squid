@@ -30,7 +30,7 @@
 #include "magic.h"
 
 #define FOSSIL_APP_NAME "Squid Tool"
-#define FOSSIL_APP_VERSION "0.1.0"
+#define FOSSIL_APP_VERSION "0.1.1"
 
 #ifdef __cplusplus
 extern "C"
