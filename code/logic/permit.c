@@ -31,24 +31,32 @@ int fossil_squid_permit(ccstring user,
                         ccstring revoke_mode)
 {
     // Validate input
-    if (!user || !file || !service || !grant_mode || !revoke_mode)
-        return -1;
+    if (!user || !file || !service || !grant_mode || !revoke_mode) {
+        fossil_io_error("[%s] %s", "user.input", fossil_io_what("user.input"));
+        return fossil_io_code("user.input");
+    }
 
     // Check if file exists
     int32_t exists = fossil_io_filesys_exists(file);
-    if (exists <= 0)
-        return -2;
+    if (exists <= 0) {
+        fossil_io_error("[%s] %s", "fs.not_found", fossil_io_what("fs.not_found"));
+        return fossil_io_code("fs.not_found");
+    }
 
     // Get file metadata
     fossil_io_filesys_obj_t obj;
-    if (fossil_io_filesys_stat(file, &obj) != 0)
-        return -3;
+    if (fossil_io_filesys_stat(file, &obj) != 0) {
+        fossil_io_error("[%s] %s", "fs.corrupt", fossil_io_what("fs.corrupt"));
+        return fossil_io_code("fs.corrupt");
+    }
 
     // Only operate on files, dirs, or links
     if (obj.type != FOSSIL_FILESYS_TYPE_FILE &&
         obj.type != FOSSIL_FILESYS_TYPE_DIR &&
-        obj.type != FOSSIL_FILESYS_TYPE_LINK)
-        return -4;
+        obj.type != FOSSIL_FILESYS_TYPE_LINK) {
+        fossil_io_error("[%s] %s", "type.invalid", fossil_io_what("type.invalid"));
+        return fossil_io_code("type.invalid");
+    }
 
     // Parse grant_mode and revoke_mode (simple example: "rwx")
     fossil_io_filesys_perms_t perms = obj.perms;
@@ -80,5 +88,10 @@ int fossil_squid_permit(ccstring user,
     else if (obj.type == FOSSIL_FILESYS_TYPE_LINK)
         rc = fossil_io_filesys_link_set_perms(file, perms);
 
-    return rc;
+    if (rc != 0) {
+        fossil_io_error("[%s] %s", "fs.permission", fossil_io_what("fs.permission"));
+        return fossil_io_code("fs.permission");
+    }
+
+    return fossil_io_code("system.ok");
 }

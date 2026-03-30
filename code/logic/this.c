@@ -24,29 +24,6 @@
  */
 #include "fossil/code/commands.h"
 
-/**
- * Display a comprehensive system profile with lookup features for each major host property.
- * @param system Show OS, kernel, hostname, user, domain, platform
- * @param arch Show architecture, CPU, cores, threads, frequency
- * @param memory Show memory details (total, free, used, available, swap)
- * @param endianness Show endianness (little/big)
- * @param power Show power status (AC/battery, charging, battery %, time left)
- * @param cpu Show CPU details (model, vendor, cores, threads, frequency, features)
- * @param gpu Show GPU details (name, vendor, driver, memory)
- * @param storage Show storage details (device, mount, total/free/used, filesystem)
- * @param env Show environment variables (shell, home, lang, path, term, user)
- * @param virtualization Show virtualization/container info
- * @param uptime Show uptime and boot time
- * @param network Show network info (hostname, IP, MAC, interface, status)
- * @param process Show process info (PID, PPID, exe, cwd, name, privileges)
- * @param limits Show system limits (max open files, max processes, page size)
- * @param time Show time info (timezone, UTC offset, locale)
- * @param hardware Show hardware info (manufacturer, product, serial, BIOS)
- * @param display Show display info (count, resolution, refresh rate)
- * @param all Show all information
- * @param json Output in JSON format
- * @return 0 on success, non-zero on error
- */
 int fossil_squid_this(bool system,
                          bool arch,
                          bool memory,
@@ -83,6 +60,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "system.internal", fossil_io_what("system.internal"));
         }
     }
 
@@ -100,6 +78,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "system.internal", fossil_io_what("system.internal"));
         }
     }
 
@@ -121,6 +100,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "memory.alloc", fossil_io_what("memory.alloc"));
         }
     }
 
@@ -134,6 +114,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "encoding.endianness", fossil_io_what("encoding.endianness"));
         }
     }
 
@@ -154,6 +135,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "resource.exhausted", fossil_io_what("resource.exhausted"));
         }
     }
 
@@ -169,6 +151,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "cpu.overflow", fossil_io_what("cpu.overflow"));
         }
     }
 
@@ -186,6 +169,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "resource.exhausted", fossil_io_what("resource.exhausted"));
         }
     }
 
@@ -205,6 +189,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "fs.not_found", fossil_io_what("fs.not_found"));
         }
     }
 
@@ -220,6 +205,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "config.env", fossil_io_what("config.env"));
         }
     }
 
@@ -237,6 +223,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "system.unsupported", fossil_io_what("system.unsupported"));
         }
     }
 
@@ -252,6 +239,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "time.clock", fossil_io_what("time.clock"));
         }
     }
 
@@ -268,6 +256,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "network.unreachable", fossil_io_what("network.unreachable"));
         }
     }
 
@@ -285,6 +274,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "process.spawn", fossil_io_what("process.spawn"));
         }
     }
 
@@ -300,6 +290,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "resource.limit", fossil_io_what("resource.limit"));
         }
     }
 
@@ -315,6 +306,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "time.clock", fossil_io_what("time.clock"));
         }
     }
 
@@ -330,6 +322,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "hardware.unsupported", fossil_io_what("hardware.unsupported"));
         }
     }
 
@@ -345,6 +338,7 @@ int fossil_squid_this(bool system,
             }
         } else {
             rc = 1;
+            fossil_io_error("[%s] %s", "ui.render", fossil_io_what("ui.render"));
         }
     }
 
