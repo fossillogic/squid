@@ -24,6 +24,26 @@
  */
 #include "fossil/code/commands.h"
 
+// Socket registry (simple static array for demonstration)
+#define MAX_SOCKETS 64
+static fossil_net_socket_t sockets[MAX_SOCKETS] = {0};
+static int sockets_used[MAX_SOCKETS] = {0};
+
+static int find_free_slot(void)
+{
+    for (int i = 0; i < MAX_SOCKETS; ++i)
+        if (!sockets_used[i])
+            return i;
+    return -1;
+}
+
+static fossil_net_socket_t *find_by_id(int id)
+{
+    if (id >= 0 && id < MAX_SOCKETS && sockets_used[id])
+        return &sockets[id];
+    return NULL;
+}
+
 int fossil_squid_network(
     bool init,
     bool shutdown,
@@ -82,26 +102,6 @@ int fossil_squid_network(
         }
         return fossil_io_code("system.ok");
     }
-
-    // Socket registry (simple static array for demonstration)
-#define MAX_SOCKETS 64
-    static fossil_net_socket_t sockets[MAX_SOCKETS] = {0};
-    static int sockets_used[MAX_SOCKETS] = {0};
-
-    // Helper: find free or by id
-    auto find_free_slot = []() -> int
-    {
-        for (int i = 0; i < MAX_SOCKETS; ++i)
-            if (!sockets_used[i])
-                return i;
-        return -1;
-    };
-    auto find_by_id = [](int id) -> fossil_net_socket_t *
-    {
-        if (id >= 0 && id < MAX_SOCKETS && sockets_used[id])
-            return &sockets[id];
-        return NULL;
-    };
 
     // Socket creation
     if (create_type && create_family)
@@ -414,9 +414,9 @@ int fossil_squid_network(
     {
         // error_string_code is assumed to be a symbolic code index or string
         // For demonstration, treat as symbolic code string
-        const char *errstr = fossil_io_what((const char *)error_string_code);
-        fossil_io_error("[%s] %s", (const char *)error_string_code, errstr);
-        return fossil_io_code((const char *)error_string_code);
+        const char *errstr = fossil_io_what((const char *)(intptr_t)error_string_code);
+        fossil_io_error("[%s] %s", (const char *)(intptr_t)error_string_code, errstr);
+        return fossil_io_code((const char *)(intptr_t)error_string_code);
     }
 
     // Sleep
