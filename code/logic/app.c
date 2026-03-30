@@ -508,7 +508,6 @@ bool app_entry(int argc, char **argv)
             bool set_blocking_on = false;
             int poll_id_buf[32] = {0};
             int poll_id_count = 0;
-            bool parsing_poll_ids = false;
 
             for (int j = i + 1; j < argc; j++)
             {
@@ -577,7 +576,6 @@ bool app_entry(int argc, char **argv)
                     mac_to_string_id = atoi(argv[++j]);
                 else if (fossil_io_cstring_compare(argv[j], "--poll") == 0 && j + 2 < argc)
                 {
-                    parsing_poll_ids = true;
                     int k = j + 1;
                     poll_id_count = 0;
                     // Collect all numeric args until a non-numeric or next option
