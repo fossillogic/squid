@@ -230,6 +230,79 @@ int fossil_squid_this(bool system,
                          bool all,
                          bool json);
 
+/**
+ * Manage network sockets, addresses, and connections.
+ * @param init Initialize networking subsystem (--init)
+ * @param shutdown Shutdown networking subsystem (--shutdown)
+ * @param create_type Socket type for creation (TCP/UDP/RAW) (--create <type> <family>)
+ * @param create_family Address family for creation (IPv4/IPv6) (--create <type> <family>)
+ * @param close_id Socket ID to close (--close <id>)
+ * @param set_blocking_id Socket ID to set blocking mode (--set-blocking <id> <on/off>)
+ * @param set_blocking_on Set blocking mode on (true) or off (false)
+ * @param bind_id Socket ID to bind (--bind <id> <ip> <port>)
+ * @param bind_ip IP address to bind (--bind <id> <ip> <port>)
+ * @param bind_port Port to bind (--bind <id> <ip> <port>)
+ * @param listen_id Socket ID to listen (--listen <id> <backlog>)
+ * @param listen_backlog Backlog for listen (--listen <id> <backlog>)
+ * @param accept_server_id Server socket ID to accept on (--accept <server-id> <client-id>)
+ * @param accept_client_id Client socket ID to assign to accepted connection (--accept <server-id> <client-id>)
+ * @param connect_id Socket ID to connect (--connect <id> <ip> <port>)
+ * @param connect_ip IP address to connect (--connect <id> <ip> <port>)
+ * @param connect_port Port to connect (--connect <id> <ip> <port>)
+ * @param send_id Socket ID to send data (--send <id> <data>)
+ * @param send_data Data to send (--send <id> <data>)
+ * @param receive_id Socket ID to receive data (--receive <id> <size>)
+ * @param receive_size Number of bytes to receive (--receive <id> <size>)
+ * @param address_parse_ip IP address to parse (--address-parse <ip> <port>)
+ * @param address_parse_port Port to parse (--address-parse <ip> <port>)
+ * @param address_to_string_id Address ID to format as string (--address-to-string <id>)
+ * @param resolve_hostname Hostname to resolve (--resolve <hostname>)
+ * @param hostname Get local hostname (--hostname)
+ * @param mac_get Get primary MAC address (--mac-get)
+ * @param mac_to_string_id MAC address ID to format as string (--mac-to-string <id>)
+ * @param poll_id_list List of socket IDs to poll (NULL-terminated array) (--poll <id-list> <timeout-ms>)
+ * @param poll_timeout_ms Timeout in milliseconds for poll (--poll <id-list> <timeout-ms>)
+ * @param error_last Get last socket error code (--error-last)
+ * @param error_string_code Error code to describe (--error-string <code>)
+ * @param sleep_ms Sleep for milliseconds (--sleep <ms>)
+ * @return 0 on success, non-zero on error
+ */
+int fossil_squid_network(
+    bool init,
+    bool shutdown,
+    ccstring create_type,
+    ccstring create_family,
+    int close_id,
+    int set_blocking_id,
+    bool set_blocking_on,
+    int bind_id,
+    ccstring bind_ip,
+    int bind_port,
+    int listen_id,
+    int listen_backlog,
+    int accept_server_id,
+    int accept_client_id,
+    int connect_id,
+    ccstring connect_ip,
+    int connect_port,
+    int send_id,
+    ccstring send_data,
+    int receive_id,
+    int receive_size,
+    ccstring address_parse_ip,
+    int address_parse_port,
+    int address_to_string_id,
+    ccstring resolve_hostname,
+    bool hostname,
+    bool mac_get,
+    int mac_to_string_id,
+    int const *poll_id_list,
+    int poll_timeout_ms,
+    bool error_last,
+    int error_string_code,
+    int sleep_ms
+);
+
 #ifdef __cplusplus
 }
 #endif

@@ -122,6 +122,29 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --silly               Random case/symbols\n");
     fossil_io_printf("{bright_black}    --cipher <type>       Encode text using cipher\n");
 
+    fossil_io_printf("{cyan}  network          {reset}Manage network sockets, addresses, and connections\n");
+    fossil_io_printf("{bright_black}    --init                Initialize networking subsystem\n");
+    fossil_io_printf("{bright_black}    --shutdown            Shutdown networking subsystem\n");
+    fossil_io_printf("{bright_black}    --create <type> <family>  Create socket: TCP/UDP/RAW, IPv4/IPv6\n");
+    fossil_io_printf("{bright_black}    --close <id>           Close socket by ID\n");
+    fossil_io_printf("{bright_black}    --set-blocking <id> <on/off>  Set blocking mode\n");
+    fossil_io_printf("{bright_black}    --bind <id> <ip> <port>  Bind socket to address/port\n");
+    fossil_io_printf("{bright_black}    --listen <id> <backlog>  Listen for incoming connections\n");
+    fossil_io_printf("{bright_black}    --accept <server-id> <client-id>  Accept connection\n");
+    fossil_io_printf("{bright_black}    --connect <id> <ip> <port>  Connect to remote address\n");
+    fossil_io_printf("{bright_black}    --send <id> <data>     Send data\n");
+    fossil_io_printf("{bright_black}    --receive <id> <size>  Receive data\n");
+    fossil_io_printf("{bright_black}    --address-parse <ip> <port>  Parse address\n");
+    fossil_io_printf("{bright_black}    --address-to-string <id>  Format address as string\n");
+    fossil_io_printf("{bright_black}    --resolve <hostname>   Resolve hostname to IP\n");
+    fossil_io_printf("{bright_black}    --hostname             Get local hostname\n");
+    fossil_io_printf("{bright_black}    --mac-get              Get primary MAC address\n");
+    fossil_io_printf("{bright_black}    --mac-to-string <id>   Format MAC as string\n");
+    fossil_io_printf("{bright_black}    --poll <id-list> <timeout-ms>  Poll sockets for readiness\n");
+    fossil_io_printf("{bright_black}    --error-last           Get last socket error code\n");
+    fossil_io_printf("{bright_black}    --error-string <code>  Describe error code\n");
+    fossil_io_printf("{bright_black}    --sleep <ms>           Sleep for milliseconds\n");
+
     fossil_io_printf("{cyan}  this             {reset}Display a comprehensive system profile\n");
     fossil_io_printf("{bright_black}    --system              OS, kernel, hostname, user, domain, platform\n");
     fossil_io_printf("{bright_black}    --arch                Architecture, CPU, cores, threads, frequency\n");
@@ -166,7 +189,7 @@ void show_name(void)
 bool app_entry(int argc, char **argv)
 {
     static ccstring supported_commands[] = {
-        "help", "process", "system", "service", "permit", "env", "echo", "this",
+        "help", "process", "system", "service", "network", "permit", "env", "echo", "this",
         "--help", "--version", "--name", "--verbose", "--color", "--clear"
     };
     const int num_supported = sizeof(supported_commands) / sizeof(supported_commands[0]);
@@ -471,6 +494,119 @@ bool app_entry(int argc, char **argv)
             fossil_squid_echo(
                 text, env_key, json, color, mocking, rot13, shuffle,
                 piglatin, leet, upper_snake, silly, cipher_type
+            );
+        }
+        else if (fossil_io_cstring_compare(argv[i], "network") == 0)
+        {
+            bool init = false, shutdown = false, hostname = false, mac_get = false, error_last = false;
+            ccstring create_type = cnull, create_family = cnull, bind_ip = cnull, connect_ip = cnull;
+            ccstring send_data = cnull, address_parse_ip = cnull, resolve_hostname = cnull;
+            int close_id = -1, set_blocking_id = -1, bind_id = -1, bind_port = -1, listen_id = -1;
+            int listen_backlog = -1, accept_server_id = -1, accept_client_id = -1, connect_id = -1;
+            int connect_port = -1, send_id = -1, receive_id = -1, receive_size = -1, address_parse_port = -1;
+            int address_to_string_id = -1, mac_to_string_id = -1, poll_timeout_ms = -1, error_string_code = -1, sleep_ms = -1;
+            bool set_blocking_on = false;
+            int poll_id_buf[32] = {0};
+            int poll_id_count = 0;
+            bool parsing_poll_ids = false;
+
+            for (int j = i + 1; j < argc; j++)
+            {
+                if (fossil_io_cstring_compare(argv[j], "--init") == 0)
+                    init = true;
+                else if (fossil_io_cstring_compare(argv[j], "--shutdown") == 0)
+                    shutdown = true;
+                else if (fossil_io_cstring_compare(argv[j], "--create") == 0 && j + 2 < argc)
+                {
+                    create_type = argv[++j];
+                    create_family = argv[++j];
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--close") == 0 && j + 1 < argc)
+                    close_id = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--set-blocking") == 0 && j + 2 < argc)
+                {
+                    set_blocking_id = atoi(argv[++j]);
+                    set_blocking_on = (fossil_io_cstring_compare(argv[++j], "on") == 0);
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--bind") == 0 && j + 3 < argc)
+                {
+                    bind_id = atoi(argv[++j]);
+                    bind_ip = argv[++j];
+                    bind_port = atoi(argv[++j]);
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--listen") == 0 && j + 2 < argc)
+                {
+                    listen_id = atoi(argv[++j]);
+                    listen_backlog = atoi(argv[++j]);
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--accept") == 0 && j + 2 < argc)
+                {
+                    accept_server_id = atoi(argv[++j]);
+                    accept_client_id = atoi(argv[++j]);
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--connect") == 0 && j + 3 < argc)
+                {
+                    connect_id = atoi(argv[++j]);
+                    connect_ip = argv[++j];
+                    connect_port = atoi(argv[++j]);
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--send") == 0 && j + 2 < argc)
+                {
+                    send_id = atoi(argv[++j]);
+                    send_data = argv[++j];
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--receive") == 0 && j + 2 < argc)
+                {
+                    receive_id = atoi(argv[++j]);
+                    receive_size = atoi(argv[++j]);
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--address-parse") == 0 && j + 2 < argc)
+                {
+                    address_parse_ip = argv[++j];
+                    address_parse_port = atoi(argv[++j]);
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--address-to-string") == 0 && j + 1 < argc)
+                    address_to_string_id = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--resolve") == 0 && j + 1 < argc)
+                    resolve_hostname = argv[++j];
+                else if (fossil_io_cstring_compare(argv[j], "--hostname") == 0)
+                    hostname = true;
+                else if (fossil_io_cstring_compare(argv[j], "--mac-get") == 0)
+                    mac_get = true;
+                else if (fossil_io_cstring_compare(argv[j], "--mac-to-string") == 0 && j + 1 < argc)
+                    mac_to_string_id = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--poll") == 0 && j + 2 < argc)
+                {
+                    parsing_poll_ids = true;
+                    int k = j + 1;
+                    poll_id_count = 0;
+                    // Collect all numeric args until a non-numeric or next option
+                    while (k < argc && argv[k][0] != '-' && poll_id_count < 31)
+                    {
+                        poll_id_buf[poll_id_count++] = atoi(argv[k]);
+                        ++k;
+                    }
+                    poll_id_buf[poll_id_count] = 0;
+                    if (k < argc)
+                        poll_timeout_ms = atoi(argv[k]);
+                    j = k;
+                }
+                else if (fossil_io_cstring_compare(argv[j], "--error-last") == 0)
+                    error_last = true;
+                else if (fossil_io_cstring_compare(argv[j], "--error-string") == 0 && j + 1 < argc)
+                    error_string_code = atoi(argv[++j]);
+                else if (fossil_io_cstring_compare(argv[j], "--sleep") == 0 && j + 1 < argc)
+                    sleep_ms = atoi(argv[++j]);
+                i = j;
+            }
+            fossil_squid_network(
+                init, shutdown, create_type, create_family, close_id, set_blocking_id, set_blocking_on,
+                bind_id, bind_ip, bind_port, listen_id, listen_backlog, accept_server_id, accept_client_id,
+                connect_id, connect_ip, connect_port, send_id, send_data, receive_id, receive_size,
+                address_parse_ip, address_parse_port, address_to_string_id, resolve_hostname, hostname,
+                mac_get, mac_to_string_id,
+                poll_id_count > 0 ? (int const *)poll_id_buf : cnull,
+                poll_timeout_ms, error_last, error_string_code, sleep_ms
             );
         }
         else if (fossil_io_cstring_compare(argv[i], "this") == 0)
