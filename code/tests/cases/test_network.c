@@ -48,8 +48,8 @@ FOSSIL_TEARDOWN(c_network_suite)
 FOSSIL_TEST(c_test_network_init_shutdown)
 {
     // Should initialize and shutdown networking subsystem successfully
-    int result_init = fossil_squid_network(true, false, NULL, NULL, -1, -1, false, -1, NULL, -1, -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1, NULL, -1, NULL, false, false, -1, NULL, -1, false, 0, -1);
-    int result_shutdown = fossil_squid_network(false, true, NULL, NULL, -1, -1, false, -1, NULL, -1, -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1, NULL, -1, NULL, false, false, -1, NULL, -1, false, 0, -1);
+    int result_init = fossil_squid_network(true, false, NULL, NULL, -1, -1, false, -1, NULL, -1, -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1, NULL, -1, NULL, false, false, -1, NULL, -1, false, 0, -1, NULL);
+    int result_shutdown = fossil_squid_network(false, true, NULL, NULL, -1, -1, false, -1, NULL, -1, -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1, NULL, -1, NULL, false, false, -1, NULL, -1, false, 0, -1, NULL);
     ASSUME_ITS_EQUAL_I32(0, result_init);
     ASSUME_ITS_EQUAL_I32(0, result_shutdown);
 }
