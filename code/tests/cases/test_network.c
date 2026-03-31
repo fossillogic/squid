@@ -92,7 +92,7 @@ FOSSIL_TEST(c_test_network_create_close_socket)
         -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
         NULL, -1, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
     );
-    ASSUME_TRUE(sock_id >= 0);
+    ASSUME_ITS_TRUE(sock_id >= 0);
     int result_close = fossil_squid_network(
         false, false,
         NULL, NULL,
@@ -114,7 +114,7 @@ FOSSIL_TEST(c_test_network_set_blocking)
         -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
         NULL, -1, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
     );
-    ASSUME_TRUE(sock_id >= 0);
+    ASSUME_ITS_TRUE(sock_id >= 0);
     int result_block = fossil_squid_network(
         false, false,
         NULL, NULL,
