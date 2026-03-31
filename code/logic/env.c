@@ -147,7 +147,8 @@ int fossil_squid_env(bool list,
                 char line[512];
                 int len = fossil_io_snprintf(line, sizeof(line), "%s=%s\n", keys[i], val);
                 if (len > 0) {
-                    if (fossil_io_fputs(&file, line) < 0) {
+                    size_t written = fossil_io_filesys_file_write(&file, line, 1, (size_t)len);
+                    if (written != (size_t)len) {
                         fossil_io_error("[%s] %s: %s", "io.write", fossil_io_what("io.write"), export_file);
                         fossil_io_filesys_file_close(&file);
                         return 1;
