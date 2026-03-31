@@ -135,7 +135,6 @@ void show_commands(char *app_name)
     fossil_io_printf("{bright_black}    --send <id> <data>     Send data\n");
     fossil_io_printf("{bright_black}    --receive <id> <size>  Receive data\n");
     fossil_io_printf("{bright_black}    --address-parse <ip> <port>  Parse address\n");
-    fossil_io_printf("{bright_black}    --address-to-string <id>  Format address as string\n");
     fossil_io_printf("{bright_black}    --resolve <hostname>   Resolve hostname to IP\n");
     fossil_io_printf("{bright_black}    --hostname             Get local hostname\n");
     fossil_io_printf("{bright_black}    --mac-get              Get primary MAC address\n");
@@ -504,7 +503,7 @@ bool app_entry(int argc, char **argv)
             int close_id = -1, set_blocking_id = -1, bind_id = -1, bind_port = -1, listen_id = -1;
             int listen_backlog = -1, accept_server_id = -1, accept_client_id = -1, connect_id = -1;
             int connect_port = -1, send_id = -1, receive_id = -1, receive_size = -1, address_parse_port = -1;
-            int address_to_string_id = -1, mac_to_string_id = -1, poll_timeout_ms = -1, error_string_code = -1, sleep_ms = -1;
+            int mac_to_string_id = -1, poll_timeout_ms = -1, error_string_code = -1, sleep_ms = -1;
             bool set_blocking_on = false;
             int poll_id_buf[32] = {0};
             int poll_id_count = 0;
@@ -564,8 +563,6 @@ bool app_entry(int argc, char **argv)
                     address_parse_ip = argv[++j];
                     address_parse_port = atoi(argv[++j]);
                 }
-                else if (fossil_io_cstring_compare(argv[j], "--address-to-string") == 0 && j + 1 < argc)
-                    address_to_string_id = atoi(argv[++j]);
                 else if (fossil_io_cstring_compare(argv[j], "--resolve") == 0 && j + 1 < argc)
                     resolve_hostname = argv[++j];
                 else if (fossil_io_cstring_compare(argv[j], "--hostname") == 0)
@@ -601,7 +598,7 @@ bool app_entry(int argc, char **argv)
                 init, shutdown, create_type, create_family, close_id, set_blocking_id, set_blocking_on,
                 bind_id, bind_ip, bind_port, listen_id, listen_backlog, accept_server_id, accept_client_id,
                 connect_id, connect_ip, connect_port, send_id, send_data, receive_id, receive_size,
-                address_parse_ip, address_parse_port, address_to_string_id, resolve_hostname, hostname,
+                address_parse_ip, address_parse_port, resolve_hostname, hostname,
                 mac_get, mac_to_string_id,
                 poll_id_count > 0 ? (int const *)poll_id_buf : cnull,
                 poll_timeout_ms, error_last, error_string_code, sleep_ms

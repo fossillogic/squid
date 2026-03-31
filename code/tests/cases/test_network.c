@@ -62,7 +62,6 @@ FOSSIL_TEST(c_test_network_init_shutdown)
         -1, NULL,     // send_id, send_data
         -1, -1,       // receive_id, receive_size
         NULL, -1,     // address_parse_ip, address_parse_port
-        -1,           // address_to_string_id
         NULL,         // resolve_hostname
         false,        // hostname
         false,        // mac_get
@@ -76,7 +75,9 @@ FOSSIL_TEST(c_test_network_init_shutdown)
     int result_shutdown = fossil_squid_network(
         false, // init
         true,  // shutdown
-        NULL, NULL, -1, -1, false, -1, NULL, -1, -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1, NULL, -1, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        NULL, NULL, -1, -1, false, -1, NULL, -1,
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result_init);
     ASSUME_ITS_EQUAL_I32(0, result_shutdown);
@@ -89,8 +90,8 @@ FOSSIL_TEST(c_test_network_create_close_socket)
         false, false,
         "tcp", "ipv4", // create_type, create_family
         -1, -1, false, -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
-        NULL, -1, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
     );
     ASSUME_ITS_TRUE(sock_id >= 0);
     int result_close = fossil_squid_network(
@@ -98,8 +99,8 @@ FOSSIL_TEST(c_test_network_create_close_socket)
         NULL, NULL,
         sock_id, // close_id
         -1, false, -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
-        NULL, -1, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result_close);
 }
@@ -111,8 +112,8 @@ FOSSIL_TEST(c_test_network_set_blocking)
         false, false,
         "tcp", "ipv4", // create_type, create_family
         -1, -1, false, -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
-        NULL, -1, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
     );
     ASSUME_ITS_TRUE(sock_id >= 0);
     int result_block = fossil_squid_network(
@@ -120,8 +121,8 @@ FOSSIL_TEST(c_test_network_set_blocking)
         NULL, NULL,
         -1, sock_id, true, // set_blocking_id, set_blocking_on
         -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
-        NULL, -1, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result_block);
     fossil_squid_network(
@@ -129,8 +130,8 @@ FOSSIL_TEST(c_test_network_set_blocking)
         NULL, NULL,
         sock_id, // close_id
         -1, false, -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
-        NULL, -1, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
     ); // cleanup
 }
 
@@ -140,9 +141,9 @@ FOSSIL_TEST(c_test_network_address_parse)
     int result = fossil_squid_network(
         false, false,
         NULL, NULL, -1, -1, false, -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
         "127.0.0.1", 8080, // address_parse_ip, address_parse_port
-        -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        NULL, false, false, -1, NULL, -1, false, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result);
 }
@@ -153,8 +154,8 @@ FOSSIL_TEST(c_test_network_resolve_hostname)
     int result = fossil_squid_network(
         false, false,
         NULL, NULL, -1, -1, false, -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
-        NULL, -1, -1, "localhost", // resolve_hostname
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, "localhost", // resolve_hostname
         false, false, -1, NULL, -1, false, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result);
@@ -166,8 +167,8 @@ FOSSIL_TEST(c_test_network_hostname)
     int result = fossil_squid_network(
         false, false,
         NULL, NULL, -1, -1, false, -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
-        NULL, -1, -1, NULL,
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, NULL,
         true, // hostname
         false, -1, NULL, -1, false, -1, -1
     );
@@ -180,8 +181,8 @@ FOSSIL_TEST(c_test_network_mac_get)
     int result = fossil_squid_network(
         false, false,
         NULL, NULL, -1, -1, false, -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
-        NULL, -1, -1, NULL,
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, NULL,
         false, // hostname
         true,  // mac_get
         -1, NULL, -1, false, -1, -1
@@ -195,8 +196,8 @@ FOSSIL_TEST(c_test_network_sleep)
     int result = fossil_squid_network(
         false, false,
         NULL, NULL, -1, -1, false, -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
-        NULL, -1, -1, NULL, false, false, -1, NULL, -1, false, -1, 10 // sleep_ms
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, 10 // sleep_ms
     );
     ASSUME_ITS_EQUAL_I32(0, result);
 }
@@ -207,8 +208,8 @@ FOSSIL_TEST(c_test_network_error_last)
     int result = fossil_squid_network(
         false, false,
         NULL, NULL, -1, -1, false, -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
-        NULL, -1, -1, NULL, false, false, -1, NULL, -1, true, -1, -1 // error_last
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, NULL, false, false, -1, NULL, -1, true, -1, -1 // error_last
     );
     ASSUME_ITS_EQUAL_I32(0, result);
 }
@@ -219,8 +220,8 @@ FOSSIL_TEST(c_test_network_error_string)
     int result = fossil_squid_network(
         false, false,
         NULL, NULL, -1, -1, false, -1, NULL, -1,
-        -1, -1, -1, -1, -1, NULL, -1, -1, NULL, -1, -1,
-        NULL, -1, -1, NULL, false, false, -1, NULL, -1, false, 101, -1 // error_string_code
+        -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, 101, -1 // error_string_code
     );
     ASSUME_NOT_EQUAL_I32(0, result);
 }

@@ -68,7 +68,6 @@ int fossil_squid_network(
     int receive_size,
     ccstring address_parse_ip,
     int address_parse_port,
-    int address_to_string_id,
     ccstring resolve_hostname,
     bool hostname,
     bool mac_get,
@@ -302,35 +301,6 @@ int fossil_squid_network(
             fossil_io_error("[%s] %s", "parse.invalid", fossil_io_what("parse.invalid"));
             return fossil_io_code("parse.invalid");
         }
-        return fossil_io_code("system.ok");
-    }
-
-    // Address to string
-    if (address_to_string_id >= 0)
-    {
-        fossil_net_socket_t *sock = find_by_id(address_to_string_id);
-        char buffer[128];
-        if (!sock)
-        {
-            fossil_io_error("[%s] %s", "resource.handle", fossil_io_what("resource.handle"));
-            return fossil_io_code("resource.handle");
-        }
-        // You need to obtain the address from the socket, or store it elsewhere as needed.
-        // For demonstration, assume you want to convert the socket's local address to string.
-        fossil_net_address_t addr;
-        result = fossil_net_socket_get_local_address(sock, &addr);
-        if (result != 0)
-        {
-            fossil_io_error("[%s] %s", "resource.handle", fossil_io_what("resource.handle"));
-            return fossil_io_code("resource.handle");
-        }
-        result = fossil_net_socket_address_to_string(&addr, buffer, sizeof(buffer));
-        if (result != 0)
-        {
-            fossil_io_error("[%s] %s", "format.invalid", fossil_io_what("format.invalid"));
-            return fossil_io_code("format.invalid");
-        }
-        // You might want to return or print buffer here
         return fossil_io_code("system.ok");
     }
 

@@ -164,7 +164,6 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("  {cyan,bold}--send <id> <data>{normal}           Send data\n");
             fossil_io_printf("  {cyan,bold}--receive <id> <size>{normal}        Receive data\n");
             fossil_io_printf("  {cyan,bold}--address-parse <ip> <port>{normal}  Parse address\n");
-            fossil_io_printf("  {cyan,bold}--address-to-string <id>{normal}     Format address as string\n");
             fossil_io_printf("  {cyan,bold}--resolve <hostname>{normal}         Resolve hostname to IP\n");
             fossil_io_printf("  {cyan,bold}--hostname{normal}                   Get local hostname\n");
             fossil_io_printf("  {cyan,bold}--mac-get{normal}                    Get primary MAC address\n");

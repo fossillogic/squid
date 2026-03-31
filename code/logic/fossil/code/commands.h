@@ -255,7 +255,6 @@ int fossil_squid_this(bool system,
  * @param receive_size Number of bytes to receive (--receive <id> <size>)
  * @param address_parse_ip IP address to parse (--address-parse <ip> <port>)
  * @param address_parse_port Port to parse (--address-parse <ip> <port>)
- * @param address_to_string_id Address ID to format as string (--address-to-string <id>)
  * @param resolve_hostname Hostname to resolve (--resolve <hostname>)
  * @param hostname Get local hostname (--hostname)
  * @param mac_get Get primary MAC address (--mac-get)
@@ -291,7 +290,6 @@ int fossil_squid_network(
     int receive_size,
     ccstring address_parse_ip,
     int address_parse_port,
-    int address_to_string_id,
     ccstring resolve_hostname,
     bool hostname,
     bool mac_get,
