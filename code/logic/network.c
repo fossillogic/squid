@@ -308,7 +308,7 @@ int fossil_squid_network(
     // Address to string
     if (address_to_string_id >= 0)
     {
-        fossil_net_address_t addr;
+        fossil_net_address_t addr = {0};
         char buffer[128];
         result = fossil_net_socket_address_to_string(&addr, buffer, sizeof(buffer));
         if (result != 0)
@@ -362,7 +362,7 @@ int fossil_squid_network(
     // MAC to string
     if (mac_to_string_id >= 0)
     {
-        fossil_net_mac_t mac;
+        fossil_net_mac_t mac = {0};
         char buffer[32];
         result = fossil_net_socket_mac_to_string(&mac, buffer, sizeof(buffer));
         if (result != 0)
