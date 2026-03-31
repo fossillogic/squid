@@ -308,9 +308,14 @@ int fossil_squid_network(
     // Address to string
     if (address_to_string_id >= 0)
     {
-        fossil_net_address_t addr = {0};
+        fossil_net_address_t *addr = find_by_id(address_to_string_id) ? &((find_by_id(address_to_string_id))->address) : NULL;
         char buffer[128];
-        result = fossil_net_socket_address_to_string(&addr, buffer, sizeof(buffer));
+        if (!addr)
+        {
+            fossil_io_error("[%s] %s", "resource.handle", fossil_io_what("resource.handle"));
+            return fossil_io_code("resource.handle");
+        }
+        result = fossil_net_socket_address_to_string(addr, buffer, sizeof(buffer));
         if (result != 0)
         {
             fossil_io_error("[%s] %s", "format.invalid", fossil_io_what("format.invalid"));
@@ -362,7 +367,13 @@ int fossil_squid_network(
     // MAC to string
     if (mac_to_string_id >= 0)
     {
-        fossil_net_mac_t mac = {0};
+        fossil_net_mac_t mac;
+        result = fossil_net_socket_mac_get(&mac);
+        if (result != 0)
+        {
+            fossil_io_error("[%s] %s", "network.unreachable", fossil_io_what("network.unreachable"));
+            return fossil_io_code("network.unreachable");
+        }
         char buffer[32];
         result = fossil_net_socket_mac_to_string(&mac, buffer, sizeof(buffer));
         if (result != 0)
