@@ -381,32 +381,25 @@ int fossil_squid_network(
             }
         }
         result = fossil_net_socket_poll(poll_socks, count, (uint32_t)poll_timeout_ms);
-        if (result != 0)
+        if (result < 0)
         {
             fossil_io_error("[%s] %s", "network.timeout", fossil_io_what("network.timeout"));
             return fossil_io_code("network.timeout");
         }
-        return fossil_io_code("system.ok");
+        return result;
     }
 
     // Error handling
     if (error_last)
     {
         result = fossil_net_socket_error_last();
-        if (result != 0)
-        {
-            fossil_io_error("[%s] %s", "system.internal", fossil_io_what("system.internal"));
-            return fossil_io_code("system.internal");
-        }
-        return fossil_io_code("system.ok");
+        return result;
     }
     if (error_string_code != 0)
     {
-        // error_string_code is assumed to be a symbolic code index or string
-        // For demonstration, treat as symbolic code string
-        const char *errstr = fossil_io_what((const char *)(intptr_t)error_string_code);
-        fossil_io_error("[%s] %s", (const char *)(intptr_t)error_string_code, errstr);
-        return fossil_io_code((const char *)(intptr_t)error_string_code);
+        const char *errstr = fossil_net_socket_error_string(error_string_code);
+        fossil_io_error("[%s] %s", "system.error", errstr);
+        return fossil_io_code("system.error");
     }
 
     // Sleep
