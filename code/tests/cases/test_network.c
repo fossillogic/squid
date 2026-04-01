@@ -77,7 +77,7 @@ FOSSIL_TEST(c_test_network_init_shutdown)
         true,  // shutdown
         NULL, NULL, -1, -1, false, -1, NULL, -1,
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
-        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result_init);
     ASSUME_ITS_EQUAL_I32(0, result_shutdown);
@@ -91,7 +91,7 @@ FOSSIL_TEST(c_test_network_create_close_socket)
         "tcp", "ipv4", // create_type, create_family
         -1, -1, false, -1, NULL, -1,
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
-        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1, -1
     );
     ASSUME_ITS_TRUE(sock_id >= 0);
     int result_close = fossil_squid_network(
@@ -100,7 +100,7 @@ FOSSIL_TEST(c_test_network_create_close_socket)
         sock_id, // close_id
         -1, false, -1, NULL, -1,
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
-        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result_close);
 }
@@ -122,7 +122,7 @@ FOSSIL_TEST(c_test_network_set_blocking)
         -1, sock_id, true, // set_blocking_id, set_blocking_on
         -1, NULL, -1,
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
-        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result_block);
     fossil_squid_network(
@@ -131,7 +131,7 @@ FOSSIL_TEST(c_test_network_set_blocking)
         sock_id, // close_id
         -1, false, -1, NULL, -1,
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
-        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1, -1
     ); // cleanup
 }
 
@@ -143,7 +143,7 @@ FOSSIL_TEST(c_test_network_address_parse)
         NULL, NULL, -1, -1, false, -1, NULL, -1,
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
         "127.0.0.1", 8080, // address_parse_ip, address_parse_port
-        NULL, false, false, -1, NULL, -1, false, -1, -1
+        NULL, false, false, -1, NULL, -1, false, -1, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result);
 }
@@ -156,7 +156,7 @@ FOSSIL_TEST(c_test_network_resolve_hostname)
         NULL, NULL, -1, -1, false, -1, NULL, -1,
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
         NULL, -1, "localhost", // resolve_hostname
-        false, false, -1, NULL, -1, false, -1, -1
+        false, false, -1, NULL, -1, false, -1, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result);
 }
@@ -170,7 +170,7 @@ FOSSIL_TEST(c_test_network_hostname)
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
         NULL, -1, NULL,
         true, // hostname
-        false, -1, NULL, -1, false, -1, -1
+        false, -1, NULL, -1, false, -1, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result);
 }
@@ -185,7 +185,7 @@ FOSSIL_TEST(c_test_network_mac_get)
         NULL, -1, NULL,
         false, // hostname
         true,  // mac_get
-        -1, NULL, -1, false, -1, -1
+        -1, NULL, -1, false, -1, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result);
 }
@@ -197,7 +197,7 @@ FOSSIL_TEST(c_test_network_sleep)
         false, false,
         NULL, NULL, -1, -1, false, -1, NULL, -1,
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
-        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, 10 // sleep_ms
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, 10, -1 // sleep_ms
     );
     ASSUME_ITS_EQUAL_I32(0, result);
 }
@@ -209,7 +209,7 @@ FOSSIL_TEST(c_test_network_error_last)
         false, false,
         NULL, NULL, -1, -1, false, -1, NULL, -1,
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
-        NULL, -1, NULL, false, false, -1, NULL, -1, true, -1, -1 // error_last
+        NULL, -1, NULL, false, false, -1, NULL, -1, true, -1, -1, -1 // error_last
     );
     ASSUME_ITS_EQUAL_I32(0, result);
 }
@@ -221,7 +221,7 @@ FOSSIL_TEST(c_test_network_error_string)
         false, false,
         NULL, NULL, -1, -1, false, -1, NULL, -1,
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
-        NULL, -1, NULL, false, false, -1, NULL, -1, false, 101, -1 // error_string_code
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, 101, -1, -1 // error_string_code
     );
     ASSUME_NOT_EQUAL_I32(0, result);
 }
