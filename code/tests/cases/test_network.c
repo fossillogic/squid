@@ -77,7 +77,7 @@ FOSSIL_TEST(c_test_network_init_shutdown)
         true,  // shutdown
         cnullptr, cnullptr, -1, -1, false, -1, cnullptr, -1,
         -1, -1, -1, -1, -1, cnullptr, -1, cnullptr, -1, -1,
-        cnullptr, -1, cnullptr, false, false, -1, cnullptr, -1, false, -1, -1, -1
+        cnullptr, -1, cnullptr, false, false, -1, cnullptr, -1, false, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result_init);
     ASSUME_ITS_EQUAL_I32(0, result_shutdown);
@@ -91,7 +91,7 @@ FOSSIL_TEST(c_test_network_create_close_socket)
         "tcp", "ipv4", // create_type, create_family
         -1, -1, false, -1, cnullptr, -1,
         -1, -1, -1, -1, -1, cnullptr, -1, cnullptr, -1, -1,
-        cnullptr, -1, cnullptr, false, false, -1, cnullptr, -1, false, -1, -1, -1
+        cnullptr, -1, cnullptr, false, false, -1, cnullptr, -1, false, -1, -1
     );
     ASSUME_ITS_TRUE(sock_id >= 0);
     int result_close = fossil_squid_network(
@@ -100,7 +100,7 @@ FOSSIL_TEST(c_test_network_create_close_socket)
         sock_id, // close_id
         -1, false, -1, cnullptr, -1,
         -1, -1, -1, -1, -1, cnullptr, -1, cnullptr, -1, -1,
-        cnullptr, -1, cnullptr, false, false, -1, cnullptr, -1, false, -1, -1, -1
+        cnullptr, -1, cnullptr, false, false, -1, cnullptr, -1, false, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result_close);
 }
@@ -122,7 +122,7 @@ FOSSIL_TEST(c_test_network_set_blocking)
         -1, sock_id, true, // set_blocking_id, set_blocking_on
         -1, cnullptr, -1,
         -1, -1, -1, -1, -1, cnullptr, -1, cnullptr, -1, -1,
-        cnullptr, -1, cnullptr, false, false, -1, cnullptr, -1, false, -1, -1, -1
+        cnullptr, -1, cnullptr, false, false, -1, cnullptr, -1, false, -1, -1
     );
     ASSUME_ITS_EQUAL_I32(0, result_block);
     fossil_squid_network(
@@ -131,7 +131,7 @@ FOSSIL_TEST(c_test_network_set_blocking)
         sock_id, // close_id
         -1, false, -1, cnullptr, -1,
         -1, -1, -1, -1, -1, cnullptr, -1, cnullptr, -1, -1,
-        cnullptr, -1, cnullptr, false, false, -1, cnullptr, -1, false, -1, -1, -1
+        cnullptr, -1, cnullptr, false, false, -1, cnullptr, -1, false, -1, -1
     ); // cleanup
 }
 
