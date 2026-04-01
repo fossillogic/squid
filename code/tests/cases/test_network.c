@@ -113,7 +113,7 @@ FOSSIL_TEST(c_test_network_set_blocking)
         "tcp", "ipv4", // create_type, create_family
         -1, -1, false, -1, NULL, -1,
         -1, -1, -1, -1, -1, NULL, -1, NULL, -1, -1,
-        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1
+        NULL, -1, NULL, false, false, -1, NULL, -1, false, -1, -1, -1
     );
     ASSUME_ITS_TRUE(sock_id >= 0);
     int result_block = fossil_squid_network(
