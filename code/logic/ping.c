@@ -95,7 +95,14 @@ int fossil_squid_ping(
         fossil_net_socket_t sock;
         memset(&sock, 0, sizeof(sock));
 
-        const char *family = ipv6 ? "ipv6" : "ipv4";
+        /* select IP family based on flags */
+        const char *family = "ipv4"; // default
+        if (ipv6 && !ipv4)
+            family = "ipv6";
+        else if (ipv4 && !ipv6)
+            family = "ipv4";
+        else if (ipv4 && ipv6)
+            family = "ipv4"; // or implement preference logic here
 
         if (fossil_net_socket_create(&sock, "tcp", family) != 0)
         {
