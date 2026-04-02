@@ -41,6 +41,8 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         fossil_io_printf("  {cyan,bold}env{normal}         - Inspect or set environment variables.\n");
         fossil_io_printf("  {cyan,bold}echo{normal}        - Print text or system information.\n");
         fossil_io_printf("  {cyan,bold}this{normal}        - Display a comprehensive system profile.\n");
+        fossil_io_printf("  {cyan,bold}ping{normal}        - Test host reachability and latency.\n");
+        fossil_io_printf("  {cyan,bold}scan{normal}        - Scan host ports and detect services.\n");
         fossil_io_printf("  {cyan,bold}help{normal}        - Display help for commands.\n");
 
         fossil_io_printf("\n{blue,bold,underline}Global Flags & Special Commands:{normal}\n");
@@ -171,6 +173,29 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("  {cyan,bold}--all{normal}                Show everything\n");
             fossil_io_printf("  {cyan,bold}--json{normal}               Structured output\n");
         }
+        else if (fossil_io_cstring_equals(command, "ping"))
+        {
+            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}ping [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Test host reachability and measure latency.\n");
+            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
+            fossil_io_printf("  {cyan,bold}--host <hostname|ip>{normal}      Target host\n");
+            fossil_io_printf("  {cyan,bold}--count <n>{normal}               Number of pings\n");
+            fossil_io_printf("  {cyan,bold}--interval <ms>{normal}           Delay between pings\n");
+            fossil_io_printf("  {cyan,bold}--tcp <port>{normal}              TCP-based ping\n");
+            fossil_io_printf("  {cyan,bold}--stats{normal}                   Show summary only\n");
+            fossil_io_printf("  {cyan,bold}--timeout <ms>{normal}            Per-ping timeout\n");
+        }
+        else if (fossil_io_cstring_equals(command, "scan"))
+        {
+            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}scan [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Scan host ports and detect services.\n");
+            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
+            fossil_io_printf("  {cyan,bold}--host <hostname|ip>{normal}      Target host\n");
+            fossil_io_printf("  {cyan,bold}--ports <range>{normal}           Ports to scan (e.g., 1-1024)\n");
+            fossil_io_printf("  {cyan,bold}--top <n>{normal}                 Scan top N ports only\n");
+            fossil_io_printf("  {cyan,bold}--service{normal}                 Attempt service detection\n");
+            fossil_io_printf("  {cyan,bold}--timeout <ms>{normal}            Per-port timeout\n");
+        }
         else if (fossil_io_cstring_equals(command, "help"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}help [command]{normal}\n");
@@ -205,6 +230,10 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
                 fossil_io_printf("  {cyan,bold}squid this --system --cpu --memory --json{normal}\n");
             else if (fossil_io_cstring_equals(command, "help"))
                 fossil_io_printf("  {cyan,bold}squid help --command process{normal}\n");
+            else if (fossil_io_cstring_equals(command, "ping"))
+                fossil_io_printf("  {cyan,bold}squid ping --host example.com --count 4{normal}\n");
+            else if (fossil_io_cstring_equals(command, "scan"))
+                fossil_io_printf("  {cyan,bold}squid scan --host 192.168.1.1 --ports 1-1024 --service{normal}\n");
         }
 
         if (cunlikely(full_manual))

@@ -40,64 +40,126 @@ int fossil_squid_echo(
 )
 {
     if (!text || !*text) {
-        return 1; // Nothing to echo
+        fossil_io_error("[%s] %s", "user.input", fossil_io_what("user.input"));
+        return fossil_io_code("user.input"); // Nothing to echo
     }
 
-    // Apply string transformations as requested
     cstring transformed = fossil_io_cstring_create(text);
+    if (!transformed) {
+        fossil_io_error("[%s] %s", "memory.alloc", fossil_io_what("memory.alloc"));
+        return fossil_io_code("memory.alloc");
+    }
 
     if (mocking) {
         cstring tmp = fossil_io_cstring_mocking(transformed);
+        if (!tmp) {
+            fossil_io_error("[%s] %s", "memory.alloc", fossil_io_what("memory.alloc"));
+            fossil_io_cstring_free(transformed);
+            return fossil_io_code("memory.alloc");
+        }
         fossil_io_cstring_free(transformed);
         transformed = tmp;
     }
     if (rot13) {
         cstring tmp = fossil_io_cstring_rot13(transformed);
+        if (!tmp) {
+            fossil_io_error("[%s] %s", "memory.alloc", fossil_io_what("memory.alloc"));
+            fossil_io_cstring_free(transformed);
+            return fossil_io_code("memory.alloc");
+        }
         fossil_io_cstring_free(transformed);
         transformed = tmp;
     }
     if (shuffle) {
         cstring tmp = fossil_io_cstring_shuffle(transformed);
+        if (!tmp) {
+            fossil_io_error("[%s] %s", "memory.alloc", fossil_io_what("memory.alloc"));
+            fossil_io_cstring_free(transformed);
+            return fossil_io_code("memory.alloc");
+        }
         fossil_io_cstring_free(transformed);
         transformed = tmp;
     }
     if (piglatin) {
         cstring tmp = fossil_io_cstring_create(NULL);
-        fossil_io_cstring_piglatin(transformed, tmp, 4096);
+        if (!tmp) {
+            fossil_io_error("[%s] %s", "memory.alloc", fossil_io_what("memory.alloc"));
+            fossil_io_cstring_free(transformed);
+            return fossil_io_code("memory.alloc");
+        }
+        if (!fossil_io_cstring_piglatin(transformed, tmp, 4096)) {
+            fossil_io_error("[%s] %s", "data.invalid", fossil_io_what("data.invalid"));
+            fossil_io_cstring_free(transformed);
+            fossil_io_cstring_free(tmp);
+            return fossil_io_code("data.invalid");
+        }
         fossil_io_cstring_free(transformed);
         transformed = tmp;
     }
     if (leet) {
         cstring tmp = fossil_io_cstring_create(NULL);
-        fossil_io_cstring_leetspeak(transformed, tmp, 4096);
+        if (!tmp) {
+            fossil_io_error("[%s] %s", "memory.alloc", fossil_io_what("memory.alloc"));
+            fossil_io_cstring_free(transformed);
+            return fossil_io_code("memory.alloc");
+        }
+        if (!fossil_io_cstring_leetspeak(transformed, tmp, 4096)) {
+            fossil_io_error("[%s] %s", "data.invalid", fossil_io_what("data.invalid"));
+            fossil_io_cstring_free(transformed);
+            fossil_io_cstring_free(tmp);
+            return fossil_io_code("data.invalid");
+        }
         fossil_io_cstring_free(transformed);
         transformed = tmp;
     }
     if (upper_snake) {
         cstring tmp = fossil_io_cstring_upper_snake(transformed);
+        if (!tmp) {
+            fossil_io_error("[%s] %s", "memory.alloc", fossil_io_what("memory.alloc"));
+            fossil_io_cstring_free(transformed);
+            return fossil_io_code("memory.alloc");
+        }
         fossil_io_cstring_free(transformed);
         transformed = tmp;
     }
     if (silly) {
         cstring tmp = fossil_io_cstring_create(NULL);
-        fossil_io_cstring_silly(transformed, tmp, 4096);
+        if (!tmp) {
+            fossil_io_error("[%s] %s", "memory.alloc", fossil_io_what("memory.alloc"));
+            fossil_io_cstring_free(transformed);
+            return fossil_io_code("memory.alloc");
+        }
+        if (!fossil_io_cstring_silly(transformed, tmp, 4096)) {
+            fossil_io_error("[%s] %s", "data.invalid", fossil_io_what("data.invalid"));
+            fossil_io_cstring_free(transformed);
+            fossil_io_cstring_free(tmp);
+            return fossil_io_code("data.invalid");
+        }
         fossil_io_cstring_free(transformed);
         transformed = tmp;
     }
 
-    // Handle cipher flag if provided
     if (cipher_type && *cipher_type) {
         char *ciphered = fossil_io_cipher_encode(transformed, cipher_type);
-        if (ciphered) {
+        if (!ciphered) {
+            fossil_io_error("[%s] %s", "security.encryption", fossil_io_what("security.encryption"));
             fossil_io_cstring_free(transformed);
-            transformed = fossil_io_cstring_create(ciphered);
-            free(ciphered);
+            return fossil_io_code("security.encryption");
+        }
+        fossil_io_cstring_free(transformed);
+        transformed = fossil_io_cstring_create(ciphered);
+        free(ciphered);
+        if (!transformed) {
+            fossil_io_error("[%s] %s", "memory.alloc", fossil_io_what("memory.alloc"));
+            return fossil_io_code("memory.alloc");
         }
     }
 
-    // If env_key is provided, print it as a prefix
     if (env_key && *env_key) {
         const char *env_val = fossil_sys_env_get(env_key);
+        if (!env_val) {
+            fossil_io_error("[%s] %s", "config.env", fossil_io_what("config.env"));
+        }
         if (env_val) {
             if (color) {
                 fossil_io_printf("{cyan,bold}%s:{reset} %s ", env_key, env_val);
@@ -128,5 +190,5 @@ int fossil_squid_echo(
     }
 
     fossil_io_cstring_free(transformed);
-    return 0;
+    return fossil_io_code("system.ok");
 }

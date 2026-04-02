@@ -72,13 +72,22 @@ int fossil_squid_process(
                 );
             }
         }
+        else
+        {
+            fossil_io_error("[process.spawn] %s", fossil_io_what("process.spawn"));
+        }
         return rc;
     }
 
     // Check if process exists
     if (exists_pid > 0)
     {
-        return fossil_sys_process_exists((uint32_t)exists_pid);
+        int rc = fossil_sys_process_exists((uint32_t)exists_pid);
+        if (rc < 0)
+        {
+            fossil_io_error("[process.exit] %s", fossil_io_what("process.exit"));
+        }
+        return rc;
     }
 
     // Show process info
@@ -102,6 +111,10 @@ int fossil_squid_process(
                 info.cpu_percent, info.thread_count
             );
         }
+        else
+        {
+            fossil_io_error("[process.exec] %s", fossil_io_what("process.exec"));
+        }
         return rc;
     }
 
@@ -113,6 +126,10 @@ int fossil_squid_process(
         if (rc >= 0)
         {
             fossil_io_printf("{blue}%.*s{reset}\n", rc, buffer);
+        }
+        else
+        {
+            fossil_io_error("[process.exec] %s", fossil_io_what("process.exec"));
         }
         return rc;
     }
@@ -126,6 +143,10 @@ int fossil_squid_process(
         {
             fossil_io_printf("{blue}%s{reset}\n", buffer);
         }
+        else
+        {
+            fossil_io_error("[process.exec] %s", fossil_io_what("process.exec"));
+        }
         return rc;
     }
 
@@ -135,6 +156,8 @@ int fossil_squid_process(
         int ppid = fossil_sys_process_get_ppid((uint32_t)ppid_pid);
         if (ppid >= 0)
             fossil_io_printf("{blue}%d{reset}\n", ppid);
+        else
+            fossil_io_error("[process.exec] %s", fossil_io_what("process.exec"));
         return (ppid >= 0) ? 0 : -1;
     }
 
@@ -147,49 +170,88 @@ int fossil_squid_process(
         {
             fossil_io_printf("{blue}%d{reset}\n", priority);
         }
+        else
+        {
+            fossil_io_error("[process.priority] %s", fossil_io_what("process.priority"));
+        }
         return rc;
     }
 
     // Set process priority
     if (set_priority_pid > 0)
     {
-        return fossil_sys_process_set_priority((uint32_t)set_priority_pid, set_priority_value);
+        int rc = fossil_sys_process_set_priority((uint32_t)set_priority_pid, set_priority_value);
+        if (rc != 0)
+        {
+            fossil_io_error("[process.priority] %s", fossil_io_what("process.priority"));
+        }
+        return rc;
     }
 
     // Suspend process
     if (suspend_pid > 0)
     {
-        return fossil_sys_process_suspend((uint32_t)suspend_pid);
+        int rc = fossil_sys_process_suspend((uint32_t)suspend_pid);
+        if (rc != 0)
+        {
+            fossil_io_error("[process.signal] %s", fossil_io_what("process.signal"));
+        }
+        return rc;
     }
 
     // Resume process
     if (resume_pid > 0)
     {
-        return fossil_sys_process_resume((uint32_t)resume_pid);
+        int rc = fossil_sys_process_resume((uint32_t)resume_pid);
+        if (rc != 0)
+        {
+            fossil_io_error("[process.signal] %s", fossil_io_what("process.signal"));
+        }
+        return rc;
     }
 
     // Terminate process gracefully
     if (terminate_pid > 0)
     {
-        return fossil_sys_process_terminate((uint32_t)terminate_pid, 0);
+        int rc = fossil_sys_process_terminate((uint32_t)terminate_pid, 0);
+        if (rc != 0)
+        {
+            fossil_io_error("[process.kill] %s", fossil_io_what("process.kill"));
+        }
+        return rc;
     }
 
     // Force kill process
     if (kill_pid > 0)
     {
-        return fossil_sys_process_terminate((uint32_t)kill_pid, 1);
+        int rc = fossil_sys_process_terminate((uint32_t)kill_pid, 1);
+        if (rc != 0)
+        {
+            fossil_io_error("[process.kill] %s", fossil_io_what("process.kill"));
+        }
+        return rc;
     }
 
     // Send signal to process
     if (signal_pid > 0 && signal_value > 0)
     {
-        return fossil_sys_process_send_signal((uint32_t)signal_pid, signal_value);
+        int rc = fossil_sys_process_send_signal((uint32_t)signal_pid, signal_value);
+        if (rc != 0)
+        {
+            fossil_io_error("[process.signal] %s", fossil_io_what("process.signal"));
+        }
+        return rc;
     }
 
     // Wait for process exit
     if (wait_pid > 0)
     {
-        return fossil_sys_process_wait((uint32_t)wait_pid, NULL, wait_timeout_ms);
+        int rc = fossil_sys_process_wait((uint32_t)wait_pid, NULL, wait_timeout_ms);
+        if (rc != 0)
+        {
+            fossil_io_error("[process.exit] %s", fossil_io_what("process.exit"));
+        }
+        return rc;
     }
 
     // Spawn new process
@@ -197,7 +259,12 @@ int fossil_squid_process(
     {
         uint32_t new_pid = 0;
         char *const *args = (char *const *)spawn_args;
-        return fossil_sys_process_spawn(spawn_exe, args, NULL, &new_pid);
+        int rc = fossil_sys_process_spawn(spawn_exe, args, NULL, &new_pid);
+        if (rc != 0)
+        {
+            fossil_io_error("[process.spawn] %s", fossil_io_what("process.spawn"));
+        }
+        return rc;
     }
 
     // Get process name by PID
@@ -208,6 +275,10 @@ int fossil_squid_process(
         if (rc == 0)
         {
             fossil_io_printf("{blue}%s{reset}\n", name);
+        }
+        else
+        {
+            fossil_io_error("[process.exec] %s", fossil_io_what("process.exec"));
         }
         return rc;
     }
@@ -235,6 +306,10 @@ int fossil_squid_process(
                     );
                 }
             }
+        }
+        else
+        {
+            fossil_io_error("[process.exec] %s", fossil_io_what("process.exec"));
         }
         return rc;
     }

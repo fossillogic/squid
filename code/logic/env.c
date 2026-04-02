@@ -73,7 +73,7 @@ int fossil_squid_env(bool list,
         if (val)
             fossil_io_printf("{green}%s{reset}={yellow}%s{reset}\n", get, val);
         else
-            fossil_io_printf("{green}%s{reset} {red}is not set{reset}\n", get);
+            fossil_io_error("[%s] %s: %s", "config.env", fossil_io_what("config.env"), get);
         return 0;
     }
 
@@ -81,7 +81,7 @@ int fossil_squid_env(bool list,
     if (set) {
         const char *eq = strchr(set, '=');
         if (!eq || eq == set || !*(eq + 1)) {
-            fossil_io_printf("{red}Invalid set format. Use key=value{reset}\n");
+            fossil_io_error("[%s] %s: %s", "parse.syntax", fossil_io_what("parse.syntax"), set ? set : "<null>");
             return 1;
         }
         char key[256];
@@ -94,7 +94,7 @@ int fossil_squid_env(bool list,
             fossil_io_printf("{green}Set %s={yellow}%s{reset}\n", key, value);
             return 0;
         } else {
-            fossil_io_printf("{red}Failed to set %s{reset}\n", key);
+            fossil_io_error("[%s] %s: %s", "config.env", fossil_io_what("config.env"), key);
             return 1;
         }
     }
@@ -105,7 +105,7 @@ int fossil_squid_env(bool list,
             fossil_io_printf("{yellow}Unset %s{reset}\n", unset);
             return 0;
         } else {
-            fossil_io_printf("{red}Failed to unset %s{reset}\n", unset);
+            fossil_io_error("[%s] %s: %s", "config.env", fossil_io_what("config.env"), unset);
             return 1;
         }
     }
@@ -115,7 +115,7 @@ int fossil_squid_env(bool list,
         fossil_io_filesys_file_t file;
         int32_t rc = fossil_io_filesys_file_open(&file, export_file, "w");
         if (rc < 0 || !file.is_open) {
-            fossil_io_printf("{red}Failed to open %s for writing{reset}\n", export_file);
+            fossil_io_error("[%s] %s: %s", "fs.permission", fossil_io_what("fs.permission"), export_file);
             return 1;
         }
         const char *keys[] = {
@@ -147,7 +147,12 @@ int fossil_squid_env(bool list,
                 char line[512];
                 int len = fossil_io_snprintf(line, sizeof(line), "%s=%s\n", keys[i], val);
                 if (len > 0) {
-                    fossil_io_fputs(&file, line);
+                    size_t written = fossil_io_filesys_file_write(&file, line, 1, (size_t)len);
+                    if (written != (size_t)len) {
+                        fossil_io_error("[%s] %s: %s", "io.write", fossil_io_what("io.write"), export_file);
+                        fossil_io_filesys_file_close(&file);
+                        return 1;
+                    }
                 }
             }
         }
@@ -155,5 +160,6 @@ int fossil_squid_env(bool list,
         fossil_io_printf("{green}Exported environment to {yellow}%s{reset}\n", export_file);
         return 0;
     }
+    fossil_io_error("[%s] %s", "user.input", fossil_io_what("user.input"));
     return 1;
 }

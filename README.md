@@ -83,9 +83,10 @@ Ensure you have the following installed before starting:
 | `system` | System-level operations (like `systemctl`). | `--info` (system info)<br>`--uptime`<br>`--shutdown`<br>`--reboot`<br>`--update`<br>`--config <file>` |
 | `permit` | Adjust permissions for users, files, or services. | `--user <name>`<br>`--file <path>`<br>`--service <name>`<br>`--grant <perm>`<br>`--revoke <perm>` |
 | `env` | Inspect or set environment variables. | `--list`<br>`--get <key>`<br>`--set <key>=<value>`<br>`--unset <key>`<br>`--export <file>` |
-| `inspect` | Inspect files, directories, processes, and services. | `--file <path>`<br>`--dir <path>`<br>`--process <pid>`<br>`--service <name>`<br>`--json`<br>`--money-to-string <amount>` (format number as money)<br>`--string-to-money <str>` (parse money string)<br>`--money-currency <symbol>` (specify currency symbol)<br>`--number-from-words <str>` (parse English number words)<br>`--number-to-words <num>` (convert number to English words) |
 | `echo` | Print text or system information. | `--text <msg>`<br>`--env <key>`<br>`--json`<br>`--color`<br>`--mocking` (mocking SpongeBob case)<br>`--rot13` (ROT13 transform)<br>`--shuffle` (randomize characters)<br>`--piglatin` (Pig Latin transform)<br>`--leet` (Leet speak transform)<br>`--upper-snake` (UPPER_SNAKE_CASE)<br>`--silly` (random case/symbols)<br>`--cipher <type>` (encode text using a named cipher: `caesar`, `vigenere`, `base64`, `base32`, `binary`, `morse`, `baconian`, `railfence`, `haxor`, `leet`, `rot13`, `atbash`) |
 | `this` | Display a comprehensive system profile, with lookup features for each major host property. | `--system` (OS, kernel, hostname, user, domain, platform)<br>`--arch` (architecture, CPU, cores, threads, frequency)<br>`--memory` (total, free, used, available, swap)<br>`--endianness` (little/big endian)<br>`--power` (AC/battery, charging, battery %/time left)<br>`--cpu` (model, vendor, cores, threads, frequency, features)<br>`--gpu` (name, vendor, driver, memory)<br>`--storage` (device, mount, total/free/used, filesystem)<br>`--env` (shell, home, lang, path, term, user)<br>`--virtualization` (VM/container detection, hypervisor, container type)<br>`--uptime` (uptime, boot time)<br>`--network` (hostname, IP, MAC, interface, status)<br>`--process` (PID, PPID, exe, cwd, name, privileges)<br>`--limits` (max open files, max processes, page size)<br>`--time` (timezone, UTC offset, locale)<br>`--hardware` (manufacturer, product, serial, BIOS)<br>`--display` (count, resolution, refresh rate)<br>`--all` (show everything)<br>`--json` (structured output) |
+| `ping` | Test reachability and latency to a host (ICMP-style or TCP fallback). | `--host <addr>` (target hostname or IP)<br>`--count <n>` (number of packets to send)<br>`--interval <ms>` (delay between pings)<br>`--timeout <ms>` (per-packet timeout)<br>`--ipv4` / `--ipv6` (force protocol)<br>`--tcp <port>` (use TCP ping instead of ICMP)<br>`--stats` (show summary stats only)<br>`--flood` (rapid ping mode)<br>`--json` |
+| `scan` | Scan ports and detect open services on a host. | `--host <addr>`<br>`--ports <range>` (e.g. `1-1024`)<br>`--top <n>` (scan top common ports)<br>`--timeout <ms>`<br>`--tcp` / `--udp`<br>`--service` (attempt service detection)<br>`--banner` (grab service banners)<br>`--open` (show only open ports)<br>`--json` |
 | `help` | Display help for commands. | `--examples`<br>`--man`<br>`--command <cmd>` |
 
 ---
@@ -113,9 +114,12 @@ Ensure you have the following installed before starting:
 | `squid system --info` | Show system information. Uses `--info`. |
 | `squid permit --user alice --grant sudo` | Grant `sudo` permission to user `alice`. Uses `--user` and `--grant`. |
 | `squid env --get PATH` | Display the value of the `PATH` environment variable. Uses `--get PATH`. |
-| `squid inspect --file /etc/passwd` | Inspect the `/etc/passwd` file. Uses `--file`. |
 | `squid echo --text "Hello, Squid!" --upper-snake` | Print "Hello, Squid!" in UPPER_SNAKE_CASE. Uses `--text` and `--upper-snake`. |
 | `squid this --all --json` | Show a full system profile in JSON format. Uses `--all` and `--json`. |
+| `squid ping --host example.com --count 4` | Ping a host 4 times to measure latency and reachability. |
+| `squid ping --host 1.1.1.1 --tcp 443 --stats` | Perform TCP-based ping on port 443 and show summary statistics only. |
+| `squid scan --host example.com --ports 1-1024` | Scan ports 1–1024 on a host. |
+| `squid scan --host 192.168.1.1 --top 100 --service` | Scan top 100 ports and attempt service detection. |
 | `squid help --command process` | Show help for the `process` command. Uses `--command process`. |
 
 ---
@@ -131,9 +135,10 @@ Squid Tool consolidates many common **system administration utilities** into a *
 | `squid system`         | `uname`, `uptime`, `shutdown`, `reboot`, `cat /etc/os-release` | System-level operations: info, uptime, shutdown, reboot, update. |
 | `squid permit`         | `chmod`, `chown`, `usermod`, `setfacl`                     | Inspect and modify permissions for users, files, and services. |
 | `squid env`            | `env`, `printenv`, `export`, `unset`                       | List, get, set, unset, and export environment variables. |
-| `squid inspect`        | `lsof`, `ls`, `stat`, `file`, `/proc`, `pmap`              | Inspect files, directories, processes, and services with structured output. |
 | `squid echo`           | `echo`, `printf`, `env`, `jq`, `tr`, `awk`                 | Print text or system info, transform output, and format data. |
 | `squid this`           | `hostnamectl`, `lscpu`, `lsblk`, `free`, `ifconfig`, `dmidecode` | Display a comprehensive system profile (OS, hardware, CPU, memory, storage, network, etc.). |
+| `squid ping`           | `ping`, `hping`, `nc`                                     | Test host reachability and latency using ICMP or TCP fallback. |
+| `squid scan`           | `nmap`, `nc`, `masscan`                                   | Scan ports, detect services, and optionally grab banners. |
 | `squid help`           | `man`, `--help`, `info`                                    | Show help, usage, and examples for all commands.         |
 
 This table highlights how Squid Tool unifies and extends the capabilities of many traditional Linux/Unix utilities.

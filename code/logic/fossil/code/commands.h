@@ -230,6 +230,60 @@ int fossil_squid_this(bool system,
                          bool all,
                          bool json);
 
+/**
+ * Test reachability and latency to a host.
+ * @param host Target hostname or IP (--host <addr>)
+ * @param count Number of packets to send (--count <n>)
+ * @param interval_ms Delay between pings in milliseconds (--interval <ms>)
+ * @param timeout_ms Timeout per packet in milliseconds (--timeout <ms>)
+ * @param ipv4 Force IPv4 (--ipv4)
+ * @param ipv6 Force IPv6 (--ipv6)
+ * @param tcp_port Use TCP ping on specified port (--tcp <port>)
+ * @param stats_only Show summary statistics only (--stats)
+ * @param flood Enable rapid ping mode (--flood)
+ * @param json Output in JSON format (--json)
+ * @return 0 on success, non-zero on error
+ */
+int fossil_squid_ping(
+    ccstring host,
+    int count,
+    int interval_ms,
+    int timeout_ms,
+    bool ipv4,
+    bool ipv6,
+    int tcp_port,
+    bool stats_only,
+    bool flood,
+    bool json
+);
+
+/**
+ * Scan ports and detect services on a host.
+ * @param host Target hostname or IP (--host <addr>)
+ * @param ports Port range string (e.g. "1-1024") (--ports <range>)
+ * @param top_n Scan top N common ports (--top <n>)
+ * @param timeout_ms Timeout per probe in milliseconds (--timeout <ms>)
+ * @param tcp Use TCP scanning (--tcp)
+ * @param udp Use UDP scanning (--udp)
+ * @param service Detect service types (--service)
+ * @param banner Grab service banners (--banner)
+ * @param open_only Show only open ports (--open)
+ * @param json Output in JSON format (--json)
+ * @return 0 on success, non-zero on error
+ */
+int fossil_squid_scan(
+    ccstring host,
+    ccstring ports,
+    int top_n,
+    int timeout_ms,
+    bool tcp,
+    bool udp,
+    bool service,
+    bool banner,
+    bool open_only,
+    bool json
+);
+
 #ifdef __cplusplus
 }
 #endif

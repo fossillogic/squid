@@ -43,7 +43,7 @@ int fossil_squid_system(bool info,
         }
         else
         {
-            fossil_io_printf("{red,bold}Failed to get system info.{reset}\n");
+            fossil_io_error("[%s] %s", "system.unknown", fossil_io_what("system.unknown"));
         }
     }
 
@@ -56,28 +56,40 @@ int fossil_squid_system(bool info,
         }
         else
         {
-            fossil_io_printf("{red,bold}Failed to get uptime.{reset}\n");
+            fossil_io_error("[%s] %s", "system.unknown", fossil_io_what("system.unknown"));
         }
     }
 
     if (shutdown)
     {
         fossil_io_printf("{yellow,bold}System will shutdown now.{reset}\n");
-        fossil_sys_call_execute("shutdown -h now");
+        int rc = fossil_sys_call_execute("shutdown -h now");
+        if (rc != 0)
+        {
+            fossil_io_error("[%s] %s", "system.shutdown", fossil_io_what("system.shutdown"));
+        }
         return 0;
     }
 
     if (reboot)
     {
         fossil_io_printf("{yellow,bold}System will reboot now.{reset}\n");
-        fossil_sys_call_execute("reboot");
+        int rc = fossil_sys_call_execute("reboot");
+        if (rc != 0)
+        {
+            fossil_io_error("[%s] %s", "system.restart", fossil_io_what("system.restart"));
+        }
         return 0;
     }
 
     if (update)
     {
         fossil_io_printf("{blue,bold}System update requested.{reset}\n");
-        fossil_sys_call_execute("sudo apt update && sudo apt upgrade -y");
+        int rc = fossil_sys_call_execute("sudo apt update && sudo apt upgrade -y");
+        if (rc != 0)
+        {
+            fossil_io_error("[%s] %s", "system.upgrade", fossil_io_what("system.upgrade"));
+        }
     }
 
     if (config_file && fossil_sys_call_file_exists(config_file))
@@ -86,7 +98,7 @@ int fossil_squid_system(bool info,
     }
     else if (config_file)
     {
-        fossil_io_printf("{red}Config file '{bold}%s{reset}{red}' does not exist.{reset}\n", config_file);
+        fossil_io_error("[%s] %s: %s", "config.missing", fossil_io_what("config.missing"), config_file);
     }
 
     return 0;
