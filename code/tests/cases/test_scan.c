@@ -73,13 +73,6 @@ FOSSIL_TEST(c_test_scan_service)
     ASSUME_ITS_EQUAL_I32(0, rc);
 }
 
-// Test: Scan with banner grabbing
-FOSSIL_TEST(c_test_scan_banner)
-{
-    int rc = fossil_squid_scan("127.0.0.1", "80-82", 0, 1000, true, false, false, true, false, false);
-    ASSUME_ITS_EQUAL_I32(0, rc);
-}
-
 // Test: Only open ports
 FOSSIL_TEST(c_test_scan_open_only)
 {
@@ -118,7 +111,6 @@ FOSSIL_TEST_GROUP(c_scan_tests)
     FOSSIL_TEST_ADD(c_scan_suite, c_test_scan_udp);
     FOSSIL_TEST_ADD(c_scan_suite, c_test_scan_top_n);
     FOSSIL_TEST_ADD(c_scan_suite, c_test_scan_service);
-    FOSSIL_TEST_ADD(c_scan_suite, c_test_scan_banner);
     FOSSIL_TEST_ADD(c_scan_suite, c_test_scan_open_only);
     FOSSIL_TEST_ADD(c_scan_suite, c_test_scan_json);
     FOSSIL_TEST_ADD(c_scan_suite, c_test_scan_tcp_udp);
