@@ -40,8 +40,9 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
         fossil_io_printf("  {cyan,bold}permit{normal}      - Adjust permissions for users, files, or services.\n");
         fossil_io_printf("  {cyan,bold}env{normal}         - Inspect or set environment variables.\n");
         fossil_io_printf("  {cyan,bold}echo{normal}        - Print text or system information.\n");
-        fossil_io_printf("  {cyan,bold}network{normal}     - Manage network sockets, addresses, and connections.\n");
         fossil_io_printf("  {cyan,bold}this{normal}        - Display a comprehensive system profile.\n");
+        fossil_io_printf("  {cyan,bold}ping{normal}        - Test host reachability and latency.\n");
+        fossil_io_printf("  {cyan,bold}scan{normal}        - Scan host ports and detect services.\n");
         fossil_io_printf("  {cyan,bold}help{normal}        - Display help for commands.\n");
 
         fossil_io_printf("\n{blue,bold,underline}Global Flags & Special Commands:{normal}\n");
@@ -147,32 +148,6 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("  {cyan,bold}--silly{normal}              Random case/symbols\n");
             fossil_io_printf("  {cyan,bold}--cipher <type>{normal}      Encode text using a specified cipher\n");
         }
-        else if (fossil_io_cstring_equals(command, "network"))
-        {
-            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}network [options]{normal}\n");
-            fossil_io_printf("{blue,bold,underline}Description:{normal} Manage network sockets, addresses, and connections.\n");
-            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
-            fossil_io_printf("  {cyan,bold}--init{normal}                       Initialize networking subsystem\n");
-            fossil_io_printf("  {cyan,bold}--shutdown{normal}                   Shutdown networking subsystem\n");
-            fossil_io_printf("  {cyan,bold}--create <type> <family>{normal}     Create socket: TCP/UDP/RAW, IPv4/IPv6\n");
-            fossil_io_printf("  {cyan,bold}--close <id>{normal}                 Close socket by ID\n");
-            fossil_io_printf("  {cyan,bold}--set-blocking <id> <on/off>{normal} Set blocking mode\n");
-            fossil_io_printf("  {cyan,bold}--bind <id> <ip> <port>{normal}      Bind socket to address/port\n");
-            fossil_io_printf("  {cyan,bold}--listen <id> <backlog>{normal}      Listen for incoming connections\n");
-            fossil_io_printf("  {cyan,bold}--accept <server-id> <client-id>{normal} Accept connection\n");
-            fossil_io_printf("  {cyan,bold}--connect <id> <ip> <port>{normal}   Connect to remote address\n");
-            fossil_io_printf("  {cyan,bold}--send <id> <data>{normal}           Send data\n");
-            fossil_io_printf("  {cyan,bold}--receive <id> <size>{normal}        Receive data\n");
-            fossil_io_printf("  {cyan,bold}--address-parse <ip> <port>{normal}  Parse address\n");
-            fossil_io_printf("  {cyan,bold}--resolve <hostname>{normal}         Resolve hostname to IP\n");
-            fossil_io_printf("  {cyan,bold}--hostname{normal}                   Get local hostname\n");
-            fossil_io_printf("  {cyan,bold}--mac-get{normal}                    Get primary MAC address\n");
-            fossil_io_printf("  {cyan,bold}--mac-to-string <id>{normal}         Format MAC as string\n");
-            fossil_io_printf("  {cyan,bold}--poll <id-list> <timeout-ms>{normal} Poll sockets for readiness\n");
-            fossil_io_printf("  {cyan,bold}--error-last{normal}                 Get last socket error code\n");
-            fossil_io_printf("  {cyan,bold}--error-string <code>{normal}        Describe error code\n");
-            fossil_io_printf("  {cyan,bold}--sleep <ms>{normal}                 Sleep for milliseconds\n");
-        }
         else if (fossil_io_cstring_equals(command, "this"))
         {
             fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}this [options]{normal}\n");
@@ -197,6 +172,29 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
             fossil_io_printf("  {cyan,bold}--display{normal}            Count, resolution, refresh rate\n");
             fossil_io_printf("  {cyan,bold}--all{normal}                Show everything\n");
             fossil_io_printf("  {cyan,bold}--json{normal}               Structured output\n");
+        }
+        else if (fossil_io_cstring_equals(command, "ping"))
+        {
+            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}ping [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Test host reachability and measure latency.\n");
+            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
+            fossil_io_printf("  {cyan,bold}--host <hostname|ip>{normal}      Target host\n");
+            fossil_io_printf("  {cyan,bold}--count <n>{normal}               Number of pings\n");
+            fossil_io_printf("  {cyan,bold}--interval <ms>{normal}           Delay between pings\n");
+            fossil_io_printf("  {cyan,bold}--tcp <port>{normal}              TCP-based ping\n");
+            fossil_io_printf("  {cyan,bold}--stats{normal}                   Show summary only\n");
+            fossil_io_printf("  {cyan,bold}--timeout <ms>{normal}            Per-ping timeout\n");
+        }
+        else if (fossil_io_cstring_equals(command, "scan"))
+        {
+            fossil_io_printf("{blue,bold,underline}Usage:{normal} {green}scan [options]{normal}\n");
+            fossil_io_printf("{blue,bold,underline}Description:{normal} Scan host ports and detect services.\n");
+            fossil_io_printf("{blue,bold,underline}Options:{normal}\n");
+            fossil_io_printf("  {cyan,bold}--host <hostname|ip>{normal}      Target host\n");
+            fossil_io_printf("  {cyan,bold}--ports <range>{normal}           Ports to scan (e.g., 1-1024)\n");
+            fossil_io_printf("  {cyan,bold}--top <n>{normal}                 Scan top N ports only\n");
+            fossil_io_printf("  {cyan,bold}--service{normal}                 Attempt service detection\n");
+            fossil_io_printf("  {cyan,bold}--timeout <ms>{normal}            Per-port timeout\n");
         }
         else if (fossil_io_cstring_equals(command, "help"))
         {
@@ -232,8 +230,10 @@ int fossil_squid_help(ccstring command, bool show_examples, bool full_manual)
                 fossil_io_printf("  {cyan,bold}squid this --system --cpu --memory --json{normal}\n");
             else if (fossil_io_cstring_equals(command, "help"))
                 fossil_io_printf("  {cyan,bold}squid help --command process{normal}\n");
-            else if (fossil_io_cstring_equals(command, "network"))
-                fossil_io_printf("  {cyan,bold}squid network --resolve example.com{normal}\n");
+            else if (fossil_io_cstring_equals(command, "ping"))
+                fossil_io_printf("  {cyan,bold}squid ping --host example.com --count 4{normal}\n");
+            else if (fossil_io_cstring_equals(command, "scan"))
+                fossil_io_printf("  {cyan,bold}squid scan --host 192.168.1.1 --ports 1-1024 --service{normal}\n");
         }
 
         if (cunlikely(full_manual))

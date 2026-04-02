@@ -11,7 +11,8 @@ app_lib = static_library('app-code',
         'echo.c',
         'env.c',
         'permit.c',
-        'network.c',
+        'scan.c',
+        'ping.c'
         'this.c'
     ),
     install: true,
