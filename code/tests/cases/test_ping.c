@@ -98,7 +98,7 @@ FOSSIL_TEST(c_test_ping_ipv4_ipv6)
 FOSSIL_TEST(c_test_ping_invalid_host)
 {
     int rc = fossil_squid_ping("invalid.host.local", 2, 1000, 1000, true, false, 80, false, false, false);
-    ASSUME_ITS_NOT_EQUAL_I32(0, rc);
+    ASSUME_NOT_EQUAL_I32(0, rc);
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * *

@@ -105,7 +105,7 @@ FOSSIL_TEST(c_test_scan_tcp_udp)
 FOSSIL_TEST(c_test_scan_invalid_host)
 {
     int rc = fossil_squid_scan("invalid.host.local", "1-10", 0, 1000, true, false, false, false, false, false);
-    ASSUME_ITS_NOT_EQUAL_I32(0, rc);
+    ASSUME_NOT_EQUAL_I32(0, rc);
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * *
