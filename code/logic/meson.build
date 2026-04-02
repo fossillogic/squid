@@ -12,7 +12,7 @@ app_lib = static_library('app-code',
         'env.c',
         'permit.c',
         'scan.c',
-        'ping.c'
+        'ping.c',
         'this.c'
     ),
     install: true,
